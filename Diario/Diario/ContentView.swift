@@ -39,7 +39,6 @@ struct ContentView: View {
     @StateObject var diaryContentView = DiaryContentView()
     
     var body: some View {
-        Text(diaryContentView.storedEntries)
         NavigationStack {
             VStack {
                 HStack {
