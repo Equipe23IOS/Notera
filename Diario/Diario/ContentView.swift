@@ -7,20 +7,50 @@
 
 import SwiftUI
 
+class DiaryContentView: ObservableObject {
+    @AppStorage("diaryEntries") var storedEntries: String = ""
+    @Published var entries: [DiaryContent] = []
+    
+    init() {
+        loadEntries()
+    }
+    
+    func createEntry (_ title: String, _ entry: String) {
+        let page = DiaryContent(title: title, entry: entry)
+        entries.append(page)
+        storedEntries = String(data: try! JSONEncoder().encode(entries), encoding: .utf8) ?? ""
+        print(storedEntries)
+    }
+    
+    func loadEntries() {
+        if let data = storedEntries.data(using: .utf8) {
+            let decoded = try! JSONDecoder().decode([DiaryContent].self, from: data)
+            entries.append(contentsOf: decoded)
+        }
+    }
+}
+
+struct DiaryContent: Codable {
+    var title: String
+    var entry: String
+}
+
 struct ContentView: View {
+    @StateObject var diaryContentView = DiaryContentView()
     
     var body: some View {
+        Text(diaryContentView.storedEntries)
         NavigationStack {
             VStack {
                 HStack {
-                    Text("Entrys")
+                    Text("Entries")
                         .font(.title)
                         .fontWeight(.bold)
                     
                     Spacer()
                     
                     NavigationLink(destination: {
-                        Diary()
+                        Diary(diaryContentView: diaryContentView)
                     }, label: {
                         Text("New")
                     })
@@ -36,6 +66,7 @@ struct ContentView: View {
 struct Diary: View {
     @State private var diaryTitle: String = ""
     @State private var diaryEntry: String = ""
+    @ObservedObject var diaryContentView: DiaryContentView
     
     var body: some View {
         VStack {
@@ -50,7 +81,7 @@ struct Diary: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button("Save") {
-                    print("Salvar: \(diaryTitle) - \(diaryEntry)")
+                    diaryContentView.createEntry(diaryTitle, diaryEntry)
                 }
             }
         }
