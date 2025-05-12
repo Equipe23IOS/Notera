@@ -23,9 +23,16 @@ class DiaryContentView: ObservableObject {
     }
     
     func loadEntries() {
-        if let data = storedEntries.data(using: .utf8) {
-            let decoded = try! JSONDecoder().decode([DiaryContent].self, from: data)
+        guard !storedEntries.isEmpty, let data = storedEntries.data(using: .utf8) else {
+            return print("storedEntries is empty or invalid")
+        }
+        
+        do {
+            let decoded = try JSONDecoder().decode([DiaryContent].self, from: data)
             entries.append(contentsOf: decoded)
+        } catch {
+            print("error decoding jason file")
+            storedEntries = ""
         }
     }
 }
@@ -37,6 +44,16 @@ struct DiaryContent: Codable {
 
 struct ContentView: View {
     @StateObject var diaryContentView = DiaryContentView()
+    
+    func loadDiaryCards() -> some View {
+        ScrollView {
+            VStack {
+                ForEach(diaryContentView.entries.indices, id: \.self) { i in
+                    return DiaryCard(title: diaryContentView.entries[i].title)
+                }
+            }
+        }
+    }
     
     var body: some View {
         NavigationStack {
@@ -56,9 +73,31 @@ struct ContentView: View {
                 }
                 .padding()
                 
+                loadDiaryCards()
+                
                 Spacer()
             }
         }
+    }
+}
+
+struct DiaryCard: View {
+    @State var title: String
+    
+    var body: some View {
+        RoundedRectangle(cornerRadius: 15)
+            .fill(Color.white)
+            .frame(maxWidth: .infinity, minHeight: 50)
+            .overlay(
+                RoundedRectangle(cornerRadius: 15)
+                    .stroke(Color.gray, lineWidth: 2)
+            )
+            .overlay(
+                Text(title)
+                    .foregroundColor(.black)
+            )
+            .padding(.horizontal, 10)
+            .padding(.vertical, 1)
     }
 }
 
