@@ -22,6 +22,12 @@ class DiaryContentView: ObservableObject {
         print(storedEntries)
     }
     
+    func updateDiaryPage(_ title: String, _ entry: String, indexOfPage: Int) {
+        entries[indexOfPage] = DiaryContent(title: title, entry: entry)
+        entries = entries
+        storedEntries = String(data: try! JSONEncoder().encode(entries), encoding: .utf8) ?? ""
+    }
+    
     func loadEntries() {
         guard !storedEntries.isEmpty, let data = storedEntries.data(using: .utf8) else {
             return print("storedEntries is empty or invalid")

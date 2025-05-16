@@ -8,8 +8,10 @@
 import SwiftUI
 
 struct Diary: View {
-    @State private var diaryTitle: String = ""
-    @State private var diaryEntry: String = ""
+    @State var diaryTitle: String = ""
+    @State var diaryEntry: String = ""
+    @State var alreadyExists: Bool = false
+    @State var indexOfPage: Int = 0
     @ObservedObject var diaryContentView: DiaryContentView
     
     var body: some View {
@@ -25,7 +27,11 @@ struct Diary: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button("Save") {
-                    diaryContentView.createEntry(diaryTitle, diaryEntry)
+                    if alreadyExists {
+                        diaryContentView.updateDiaryPage(diaryTitle, diaryEntry, indexOfPage: indexOfPage)
+                    } else {
+                        diaryContentView.createEntry(diaryTitle, diaryEntry)
+                    }
                 }
             }
         }
