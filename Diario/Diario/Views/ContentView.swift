@@ -14,7 +14,7 @@ struct ContentView: View {
         ScrollView {
             VStack {
                 ForEach(diaryContentView.entries.indices, id: \.self) { i in
-                    return DiaryCard(title: diaryContentView.entries[i].title, index: i,diaryContentView: diaryContentView)
+                    return DiaryCard(title: $diaryContentView.entries[i].title, index: i,diaryContentView: diaryContentView)
                 }
             }
         }
