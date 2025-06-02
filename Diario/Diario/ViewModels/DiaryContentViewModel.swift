@@ -10,6 +10,7 @@ import SwiftUI
 class DiaryContentView: ObservableObject {
     @AppStorage("diaryEntries") var storedEntries: String = ""
     @Published var entries: [DiaryContent] = []
+    @Published var notebooksViewModel: NotebooksViewModel?
     
     init() {
         loadEntries()

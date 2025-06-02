@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     @StateObject var diaryContentView = DiaryContentView()
+    @StateObject var notebookViewModel = NotebooksViewModel()
     
     func loadDiaryCards() -> some View {
         ScrollView {
@@ -16,6 +17,14 @@ struct ContentView: View {
                 ForEach(diaryContentView.entries.indices, id: \.self) { i in
                     return DiaryCard(title: $diaryContentView.entries[i].title, index: i,diaryContentView: diaryContentView)
                 }
+            }
+        }
+    }
+    
+    func loadNotebooks() -> some View {
+        ScrollView(.horizontal) {
+            ForEach(notebookViewModel.notebooks) { i in
+                
             }
         }
     }
@@ -39,9 +48,13 @@ struct ContentView: View {
                 .padding()
                 
                 loadDiaryCards()
-                
+            
                 Spacer()
             }
+        }
+        
+        .onAppear() {
+            diaryContentView.notebooksViewModel = NotebooksViewModel()
         }
     }
 }
