@@ -10,6 +10,7 @@ import SwiftUI
 struct ContentView: View {
     @StateObject var diaryContentView = DiaryContentView()
     @StateObject var notebookViewModel = NotebooksViewModel()
+    @State var activateSheet: Bool = false
     
     func loadDiaryCards() -> some View {
         ScrollView {
@@ -39,11 +40,11 @@ struct ContentView: View {
                     
                     Spacer()
                     
-                    NavigationLink(destination: {
-                        Diary(diaryContentView: diaryContentView)
-                    }, label: {
+                    Button(action: {
+                        activateSheet = true
+                    }) {
                         Text("New")
-                    })
+                    }
                 }
                 .padding()
                 
@@ -55,6 +56,10 @@ struct ContentView: View {
         
         .onAppear() {
             diaryContentView.notebooksViewModel = NotebooksViewModel()
+        }
+        
+        .sheet(isPresented: $activateSheet) {
+            CreationNotebookView(activateSheet: $activateSheet)
         }
     }
 }
