@@ -8,15 +8,15 @@
 import SwiftUI
 
 struct ContentView: View {
-    @StateObject var diaryContentView = DiaryContentView()
+    @StateObject var diaryContentViewModel = DiaryContentViewModel()
     @StateObject var notebookViewModel = NotebooksViewModel()
     @State var activateSheet: Bool = false
     
     func loadDiaryCards() -> some View {
         ScrollView {
             VStack {
-                ForEach(diaryContentView.entries.indices, id: \.self) { i in
-                    return DiaryCard(title: $diaryContentView.entries[i].title, index: i,diaryContentView: diaryContentView)
+                ForEach(diaryContentViewModel.entries.indices, id: \.self) { i in
+                    return DiaryCard(title: $diaryContentViewModel.entries[i].title, index: i,diaryContentViewModel: diaryContentViewModel)
                 }
             }
         }
@@ -24,9 +24,14 @@ struct ContentView: View {
     
     func loadNotebooks() -> some View {
         ScrollView(.horizontal) {
-            ForEach(notebookViewModel.notebooks) { i in
-                
+            HStack(spacing: 25) {
+                ForEach(notebookViewModel.notebooks) { i in
+                    RoundedRectangle(cornerRadius: 15)
+                        .fill(Color.black)
+                        .frame(minWidth: 120, maxHeight: 200)
+                }
             }
+            .padding()
         }
     }
     
@@ -48,18 +53,25 @@ struct ContentView: View {
                 }
                 .padding()
                 
-                loadDiaryCards()
+                loadNotebooks()
+                
+                if(notebookViewModel.notebooks.isEmpty) {
+                    Text("Create a new notebook and start writing right away!")
+                } else {
+                    Text("Recent entries")
+                    loadDiaryCards()
+                }
             
                 Spacer()
             }
         }
         
         .onAppear() {
-            diaryContentView.notebooksViewModel = NotebooksViewModel()
+            diaryContentViewModel.notebooksViewModel = NotebooksViewModel()
         }
         
         .sheet(isPresented: $activateSheet) {
-            CreationNotebookView(activateSheet: $activateSheet)
+            CreationNotebookView(activateSheet: $activateSheet, notebookViewModel: notebookViewModel)
         }
     }
 }

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-class DiaryContentView: ObservableObject {
+class DiaryContentViewModel: ObservableObject {
     @AppStorage("diaryEntries") var storedEntries: String = ""
     @Published var entries: [DiaryContent] = []
     @Published var notebooksViewModel: NotebooksViewModel?

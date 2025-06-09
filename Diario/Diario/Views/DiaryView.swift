@@ -12,7 +12,7 @@ struct Diary: View {
     @State var diaryEntry: String = ""
     @State var alreadyExists: Bool = false
     @State var indexOfPage: Int = 0
-    @ObservedObject var diaryContentView: DiaryContentView
+    @ObservedObject var diaryContentViewModel: DiaryContentViewModel
     
     var body: some View {
         VStack {
@@ -28,9 +28,9 @@ struct Diary: View {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button("Save") {
                     if alreadyExists {
-                        diaryContentView.updateDiaryPage(diaryTitle, diaryEntry, indexOfPage: indexOfPage)
+                        diaryContentViewModel.updateDiaryPage(diaryTitle, diaryEntry, indexOfPage: indexOfPage)
                     } else {
-                        diaryContentView.createEntry(diaryTitle, diaryEntry)
+                        diaryContentViewModel.createEntry(diaryTitle, diaryEntry)
                     }
                 }
             }

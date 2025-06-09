@@ -10,17 +10,17 @@ import SwiftUI
 struct DiaryCard: View {
     @Binding var title: String
     let index: Int
-    @ObservedObject var diaryContentView: DiaryContentView
+    @ObservedObject var diaryContentViewModel: DiaryContentViewModel
     
     
     var body: some View {
         NavigationLink(destination:
             Diary(
-                diaryTitle: diaryContentView.entries[index].title,
-                diaryEntry: diaryContentView.entries[index].entry,
+                diaryTitle: diaryContentViewModel.entries[index].title,
+                diaryEntry: diaryContentViewModel.entries[index].entry,
                 alreadyExists: true,
                 indexOfPage: index,
-                diaryContentView: diaryContentView
+                diaryContentViewModel: diaryContentViewModel
             ),
             label: {
             RoundedRectangle(cornerRadius: 15)

@@ -11,4 +11,5 @@ struct NotebookModel: Identifiable {
     let id = UUID()
     var entries: [DiaryContent] = []
     let date: Date = Date()
+    var name: String
 }

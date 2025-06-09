@@ -9,7 +9,8 @@ import SwiftUI
 
 struct CreationNotebookView: View{
     @Binding var activateSheet: Bool
-    @State var NotebookName: String = ""
+    @State var notebookName: String = ""
+    @ObservedObject var notebookViewModel: NotebooksViewModel
     
     var body:  some View {
         VStack{
@@ -18,13 +19,14 @@ struct CreationNotebookView: View{
                 .fontWeight(.bold)
                 .padding()
             
-            TextField("Notebook Name", text: $NotebookName)
+            TextField("Notebook Name", text: $notebookName)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .padding()
             
             
             Button(action: {
                 activateSheet.toggle()
+                notebookViewModel.createNotebook(notebookName)
             }) {
                 Text("Create Notebook")
                     .padding()

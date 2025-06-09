@@ -10,8 +10,8 @@ import SwiftUI
 class NotebooksViewModel: ObservableObject {
     @Published var notebooks: [NotebookModel] = []
     
-    func createNotebook() {
-        let notebook = NotebookModel()
+    func createNotebook(_ name: String) {
+        let notebook = NotebookModel(name: name)
         notebooks.append(notebook)
         print(notebooks)
     }
