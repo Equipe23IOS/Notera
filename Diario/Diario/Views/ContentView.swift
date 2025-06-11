@@ -26,9 +26,12 @@ struct ContentView: View {
         ScrollView(.horizontal) {
             HStack(spacing: 25) {
                 ForEach(notebookViewModel.notebooks) { i in
-                    RoundedRectangle(cornerRadius: 15)
-                        .fill(Color.black)
-                        .frame(minWidth: 120, maxHeight: 200)
+                    NavigationLink(destination: NotebookPageView(diaryContentViewModel: diaryContentViewModel, notebookViewModel: notebookViewModel),
+                        label: {
+                            RoundedRectangle(cornerRadius: 15)
+                                .fill(Color.black)
+                                .frame(minWidth: 120, maxHeight: 200)
+                    })
                 }
             }
             .padding()
@@ -39,7 +42,7 @@ struct ContentView: View {
         NavigationStack {
             VStack {
                 HStack {
-                    Text("Entries")
+                    Text("Notera")
                         .font(.title)
                         .fontWeight(.bold)
                     
@@ -56,7 +59,7 @@ struct ContentView: View {
                 loadNotebooks()
                 
                 if(notebookViewModel.notebooks.isEmpty) {
-                    Text("Create a new notebook and start writing right away!")
+                    Text("Create a new notebook\nstart writing right away!")
                 } else {
                     Text("Recent entries")
                     loadDiaryCards()
