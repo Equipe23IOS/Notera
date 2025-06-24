@@ -1,27 +1,33 @@
-// !!!tutorial from: A Swiftly Tilting Planet(Youtube)
 //  OnBoardingView.swift
 //  Apresentação do App
-//  Created by iredefbmac_36 on 06/06/25.
+//  Created by iredefbmac_36
 
 import SwiftUI
 
+
+
 struct OnBoardingView: View {
-    @AppStorage("isWelcomeSheetShowing") var isWelcomeSheetShowing = true
+    @AppStorage("hasSeenWelcome") var hasSeenWelcome: Bool = false
+        
     
     var body: some View {
-        VStack{
-            
+        if hasSeenWelcome{
+            ContentView()
+        }
+        else{
+            WelcomeView()
         }
         
-        .sheet(isPresented: $isWelcomeSheetShowing) {
-            WelcomeView(isWelcomeSheetShowing: $isWelcomeSheetShowing)
-        }
+        
     }
 }
 
 #Preview {
-    //OnBoardingView()
-    WelcomeView(isWelcomeSheetShowing: .constant(true))
+    OnBoardingView()
+        .onAppear {
+                    UserDefaults.standard.set(false, forKey: "hasSeenWelcome")
+                }
+    
 }
 
 let pages = [
@@ -32,17 +38,17 @@ let pages = [
 ]
 
 struct WelcomeView: View {
-    @Binding var isWelcomeSheetShowing: Bool
-    var body: some View{
-        VStack{
-            TabView{
+    @AppStorage("hasSeenWelcome") var hasSeenWelcome: Bool = false
+    var body: some View {
+        VStack {
+            TabView {
                 ForEach(pages) { page in
-                    VStack{
+                    VStack {
                         Text(page.label)
                             .font(.largeTitle)
                             .fontWeight(.bold)
                             .multilineTextAlignment(.center)
-                            
+
                         Text(page.text)
                             .fontWeight(.medium)
                             .multilineTextAlignment(.center)
@@ -50,22 +56,20 @@ struct WelcomeView: View {
                     }
                 }
             }
-            
-            Button{
-                isWelcomeSheetShowing.toggle()
+
+            Button {
+            hasSeenWelcome = true
             } label: {
-                Text("Pular introdução")
+                Text("Tela inicial")
                     .font(.title3)
                     .fontWeight(.medium)
             }
-            
-            
         }
-            .interactiveDismissDisabled()
-            .tabViewStyle(.page)
-            .onAppear{
-                UIPageControl.appearance().currentPageIndicatorTintColor = .label
-                UIPageControl.appearance().pageIndicatorTintColor = .systemGray
-            }
+        .tabViewStyle(.page)
+        .onAppear {
+            UIPageControl.appearance().currentPageIndicatorTintColor = .label
+            UIPageControl.appearance().pageIndicatorTintColor = .systemGray
+        }
     }
 }
+
