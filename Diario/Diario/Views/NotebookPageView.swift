@@ -10,6 +10,7 @@ import SwiftUI
 struct NotebookPageView: View {
     @ObservedObject var diaryContentViewModel: DiaryContentViewModel
     @ObservedObject var notebookViewModel: NotebooksViewModel
+    var notebookID: UUID
     
     var body: some View {
         NavigationStack {
@@ -20,8 +21,13 @@ struct NotebookPageView: View {
                 
                 ScrollView {
                     VStack {
-                        ForEach(diaryContentViewModel.entries.indices, id: \.self) { i in
-                            return DiaryCard(title: $diaryContentViewModel.entries[i].title, index: i,diaryContentViewModel: diaryContentViewModel)
+                        ForEach(notebookViewModel.notebooks) { i in
+                            if(i.id == notebookID) {
+                                ForEach(i.entries.indices, id: \.self) { j in
+                                    let s = i.entries
+                                    return DiaryCard(title: s[j].title, index: j, notebookID: s[j].id, diaryContentViewModel: diaryContentViewModel)
+                                }
+                            }
                         }
                     }
                 }
@@ -34,7 +40,7 @@ struct NotebookPageView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     NavigationLink(destination: {
-                        Diary(diaryContentViewModel: diaryContentViewModel)
+                        Diary(diaryContentViewModel: diaryContentViewModel, notebookID: notebookID)
                     }, label: {
                         Text("New")
                     })

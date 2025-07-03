@@ -13,6 +13,7 @@ struct Diary: View {
     @State var alreadyExists: Bool = false
     @State var indexOfPage: Int = 0
     @ObservedObject var diaryContentViewModel: DiaryContentViewModel
+    var notebookID: UUID?
     
     var body: some View {
         VStack {
@@ -30,7 +31,7 @@ struct Diary: View {
                     if alreadyExists {
                         diaryContentViewModel.updateDiaryPage(diaryTitle, diaryEntry, indexOfPage: indexOfPage)
                     } else {
-                        diaryContentViewModel.createEntry(diaryTitle, diaryEntry)
+                        diaryContentViewModel.createEntry(diaryTitle, diaryEntry, notebookID)
                     }
                 }
             }

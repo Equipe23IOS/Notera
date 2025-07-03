@@ -7,7 +7,8 @@
 
 import SwiftUI
 
-struct DiaryContent: Codable {
+struct DiaryContent: Codable, Identifiable {
+    var id = UUID()
     var title: String
     var entry: String
 }

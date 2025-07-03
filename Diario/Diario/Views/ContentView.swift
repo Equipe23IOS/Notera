@@ -8,15 +8,21 @@
 import SwiftUI
 
 struct ContentView: View {
-    @StateObject var diaryContentViewModel = DiaryContentViewModel()
-    @StateObject var notebookViewModel = NotebooksViewModel()
+    @StateObject private var notebookViewModel: NotebooksViewModel
+    @StateObject private var diaryContentViewModel: DiaryContentViewModel
     @State var activateSheet: Bool = false
+    
+    init() {
+        let notebooks = NotebooksViewModel()
+        _notebookViewModel = StateObject(wrappedValue: notebooks)
+        _diaryContentViewModel = StateObject(wrappedValue: DiaryContentViewModel(notebooksViewModel: notebooks))
+    }
     
     func loadDiaryCards() -> some View {
         ScrollView {
             VStack {
                 ForEach(diaryContentViewModel.entries.indices, id: \.self) { i in
-                    return DiaryCard(title: $diaryContentViewModel.entries[i].title, index: i,diaryContentViewModel: diaryContentViewModel)
+                    return DiaryCard(title: diaryContentViewModel.entries[i].title, index: i,diaryContentViewModel: diaryContentViewModel)
                 }
             }
         }
@@ -26,11 +32,11 @@ struct ContentView: View {
         ScrollView(.horizontal) {
             HStack(spacing: 25) {
                 ForEach(notebookViewModel.notebooks) { i in
-                    NavigationLink(destination: NotebookPageView(diaryContentViewModel: diaryContentViewModel, notebookViewModel: notebookViewModel),
-                        label: {
-                            RoundedRectangle(cornerRadius: 15)
-                                .fill(Color.black)
-                                .frame(minWidth: 120, maxHeight: 200)
+                    NavigationLink(destination: NotebookPageView(diaryContentViewModel: diaryContentViewModel, notebookViewModel: notebookViewModel, notebookID: i.id),
+                                   label: {
+                        RoundedRectangle(cornerRadius: 15)
+                            .fill(Color.black)
+                            .frame(minWidth: 120, maxHeight: 200)
                     })
                 }
             }

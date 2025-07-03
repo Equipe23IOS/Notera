@@ -8,8 +8,9 @@
 import SwiftUI
 
 struct DiaryCard: View {
-    @Binding var title: String
+    var title: String
     let index: Int
+    var notebookID: UUID?
     @ObservedObject var diaryContentViewModel: DiaryContentViewModel
     
     
@@ -20,7 +21,8 @@ struct DiaryCard: View {
                 diaryEntry: diaryContentViewModel.entries[index].entry,
                 alreadyExists: true,
                 indexOfPage: index,
-                diaryContentViewModel: diaryContentViewModel
+                diaryContentViewModel: diaryContentViewModel,
+                notebookID: notebookID
             ),
             label: {
             RoundedRectangle(cornerRadius: 15)

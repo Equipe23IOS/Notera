@@ -10,17 +10,29 @@ import SwiftUI
 class DiaryContentViewModel: ObservableObject {
     @AppStorage("diaryEntries") var storedEntries: String = ""
     @Published var entries: [DiaryContent] = []
-    @Published var notebooksViewModel: NotebooksViewModel?
+    @ObservedObject var notebooksViewModel: NotebooksViewModel
     
-    init() {
+    init(notebooksViewModel: NotebooksViewModel) {
+        self.notebooksViewModel = notebooksViewModel
         loadEntries()
     }
     
-    func createEntry (_ title: String, _ entry: String) {
+    func createEntry (_ title: String, _ entry: String, _ notebookID: UUID?) {
+        
+        guard let teste = notebookID else {
+            return print("teste")
+        }
+        
         let page = DiaryContent(title: title, entry: entry)
-        entries.append(page)
-        storedEntries = String(data: try! JSONEncoder().encode(entries), encoding: .utf8) ?? ""
-        print(storedEntries)
+        
+        guard let index = notebooksViewModel.notebooks.firstIndex(where: { i in
+            i.id == teste
+        }) else {
+            return print("Error")
+        }
+        
+        notebooksViewModel.notebooks[index].entries.append(page)
+        print(notebooksViewModel.notebooks[index].entries)
     }
     
     func updateDiaryPage(_ title: String, _ entry: String, indexOfPage: Int) {
