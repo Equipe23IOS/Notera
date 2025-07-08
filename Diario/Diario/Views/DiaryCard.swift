@@ -13,12 +13,19 @@ struct DiaryCard: View {
     var notebookID: UUID?
     @ObservedObject var diaryContentViewModel: DiaryContentViewModel
     
+    func positioninArray(id: UUID?) -> Int? {
+        return diaryContentViewModel.notebooksViewModel.notebooks.firstIndex { i in
+            i.id == id
+        }
+    }
     
     var body: some View {
+        let notebookIndex = positioninArray(id: notebookID)
+        
         NavigationLink(destination:
             Diary(
-                diaryTitle: diaryContentViewModel.entries[index].title,
-                diaryEntry: diaryContentViewModel.entries[index].entry,
+                diaryTitle: notebookIndex != nil ? diaryContentViewModel.notebooksViewModel.notebooks[notebookIndex!].entries[index].title : "",
+                diaryEntry: notebookIndex != nil ? diaryContentViewModel.notebooksViewModel.notebooks[notebookIndex!].entries[index].entry : "",
                 alreadyExists: true,
                 indexOfPage: index,
                 diaryContentViewModel: diaryContentViewModel,

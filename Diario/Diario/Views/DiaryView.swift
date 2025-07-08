@@ -29,7 +29,7 @@ struct Diary: View {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button("Save") {
                     if alreadyExists {
-                        diaryContentViewModel.updateDiaryPage(diaryTitle, diaryEntry, indexOfPage: indexOfPage)
+                        diaryContentViewModel.updateDiaryPage(diaryTitle, diaryEntry, indexOfPage, notebookID!)
                     } else {
                         diaryContentViewModel.createEntry(diaryTitle, diaryEntry, notebookID)
                     }

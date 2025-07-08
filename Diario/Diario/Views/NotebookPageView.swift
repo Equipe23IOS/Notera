@@ -25,7 +25,7 @@ struct NotebookPageView: View {
                             if(i.id == notebookID) {
                                 ForEach(i.entries.indices, id: \.self) { j in
                                     let s = i.entries
-                                    return DiaryCard(title: s[j].title, index: j, notebookID: s[j].id, diaryContentViewModel: diaryContentViewModel)
+                                    return DiaryCard(title: s[j].title, index: j, notebookID: i.id, diaryContentViewModel: diaryContentViewModel)
                                 }
                             }
                         }
