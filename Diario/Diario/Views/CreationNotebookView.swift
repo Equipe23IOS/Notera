@@ -13,34 +13,40 @@ struct CreationNotebookView: View{
     @ObservedObject var notebookViewModel: NotebooksViewModel
     
     var body:  some View {
-        VStack{
-            Text("New Notebook")
-                .font(.title)
-                .fontWeight(.bold)
-                .padding()
-            
-            TextField("Notebook Name", text: $notebookName)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-                .padding()
-            
-            
-            Button(action: {
-                activateSheet.toggle()
-                notebookViewModel.createNotebook(notebookName)
-            }) {
-                Text("Create Notebook")
+        ZStack{
+            Color(.linen)
+            VStack{
+                Text("New Notebook")
+                    .foregroundColor(.espresso)
+                    .font(.custom("Georgia", size: 32))
+                    .fontWeight(.bold)
                     .padding()
-                    .frame(maxWidth: .infinity)
-                    .background(Color.brown)
-                    .foregroundColor(.white)
-                    .cornerRadius(15)
+                
+                TextField("Notebook Name", text: $notebookName)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .padding()
+                
+                
+                Button(action: {
+                    activateSheet.toggle()
+                    notebookViewModel.createNotebook(notebookName)
+                }) {
+                    Text("Create Notebook")
+                        .font(.custom("Georgia", size: 22))
+                        .padding()
+                        .frame(maxWidth: .infinity)
+                        .background(Color.toast)
+                        .foregroundColor(.white)
+                        .cornerRadius(15)
+                }
+                .padding()
+                
+                Spacer()
+                
             }
-            
             .padding()
-            
-            Spacer()
-            
-            }
-        .padding()
+        }
     }
 }
+
+
