@@ -46,41 +46,53 @@ struct ContentView: View {
     
     var body: some View {
         NavigationStack {
-            VStack {
-                HStack {
+            ZStack {
+                Color(.canvas).edgesIgnoringSafeArea(.all)
+                VStack {
+                    HStack {
+                        Button(action: {
+                            activateSheet = true
+                        }) {
+                            Text("New")
+                                .multilineTextAlignment(.trailing)
+                                .foregroundColor(.espresso)
+                                .font(.custom("Georgia", size: 23))
+                                .fontWeight(.bold)
+                                .padding(.leading, 290.0)
+                        }
+                    }
+                    
                     Text("Notera")
-                        .font(.title)
+                        .multilineTextAlignment(.center)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        .foregroundColor(.espresso)
+                        .font(.custom("Georgia", size: 32))
                         .fontWeight(.bold)
+                        .padding(.top, 320.0)
+                    
+                    loadNotebooks()
+                    
+                    if(notebookViewModel.notebooks.isEmpty) {
+                        Text("Create your new Notebook\n right away!")
+                            .lineLimit(nil)
+                            .foregroundColor(.bark)
+                            .font(.custom("Georgia", size: 23))
+                            .multilineTextAlignment(.center)
+                        
+                        Spacer(minLength: 320)
+                        
+                    } else {
+                        Text("Recent entries")
+                        loadDiaryCards()
+                    }
                     
                     Spacer()
-                    
-                    Button(action: {
-                        activateSheet = true
-                    }) {
-                        Text("New")
-                    }
                 }
-                .padding()
-                
-                loadNotebooks()
-                
-                if(notebookViewModel.notebooks.isEmpty) {
-                    Text("Create a new notebook\nstart writing right away!")
-                } else {
-                    Text("Recent entries")
-                    loadDiaryCards()
-                }
-            
-                Spacer()
             }
-        }
-        
-        .onAppear() {
-            diaryContentViewModel.notebooksViewModel = NotebooksViewModel()
-        }
-        
-        .sheet(isPresented: $activateSheet) {
-            CreationNotebookView(activateSheet: $activateSheet, notebookViewModel: notebookViewModel)
+            
+            .sheet(isPresented: $activateSheet) {
+                CreationNotebookView(activateSheet: $activateSheet, notebookViewModel: notebookViewModel)
+            }
         }
     }
 }
