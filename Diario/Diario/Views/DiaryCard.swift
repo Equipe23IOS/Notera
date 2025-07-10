@@ -11,6 +11,7 @@ struct DiaryCard: View {
     var title: String
     let index: Int
     var notebookID: UUID?
+    var pageID: UUID
     @ObservedObject var diaryContentViewModel: DiaryContentViewModel
     
     func positioninArray(id: UUID?) -> Int? {
@@ -28,6 +29,7 @@ struct DiaryCard: View {
                 diaryEntry: notebookIndex != nil ? diaryContentViewModel.notebooksViewModel.notebooks[notebookIndex!].entries[index].entry : "",
                 alreadyExists: true,
                 indexOfPage: index,
+                pageID: pageID,
                 diaryContentViewModel: diaryContentViewModel,
                 notebookID: notebookID
             ),

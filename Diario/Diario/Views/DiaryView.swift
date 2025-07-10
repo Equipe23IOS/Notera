@@ -30,6 +30,7 @@ struct Diary: View {
                 Button("Save") {
                     if alreadyExists {
                         diaryContentViewModel.updateDiaryPage(diaryTitle, diaryEntry, indexOfPage, notebookID!)
+                        diaryContentViewModel.updateRecentEntries(diaryTitle, diaryEntry, pageID)
                     } else {
                         diaryContentViewModel.createEntry(diaryTitle, diaryEntry, notebookID)
                     }

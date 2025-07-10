@@ -14,7 +14,6 @@ class DiaryContentViewModel: ObservableObject {
     
     init(notebooksViewModel: NotebooksViewModel) {
         self.notebooksViewModel = notebooksViewModel
-        loadEntries()
     }
     
     func createEntry (_ title: String, _ entry: String, _ notebookID: UUID?) {
@@ -31,6 +30,7 @@ class DiaryContentViewModel: ObservableObject {
         }
         
         notebooksViewModel.notebooks[index].entries.append(page)
+        loadRecentEntries(page)
         print(notebooksViewModel.notebooks[index].entries)
     }
     
@@ -47,17 +47,20 @@ class DiaryContentViewModel: ObservableObject {
         notebooksViewModel.notebooks[notebookID].entries[indexOfPage].entry = entry
     }
     
-    func loadEntries() {
-        guard !storedEntries.isEmpty, let data = storedEntries.data(using: .utf8) else {
-            return print("storedEntries is empty or invalid")
+    func updateRecentEntries(_ title: String, _ entry: String, _ pageID: UUID?) {
+        let pageID = recentEntries.firstIndex { i in
+            i.id == pageID
         }
         
-        do {
-            let decoded = try JSONDecoder().decode([DiaryContent].self, from: data)
-            recentEntries.append(contentsOf: decoded)
-        } catch {
-            print("error decoding jason file")
-            storedEntries = ""
+        guard let pageID = pageID else {
+            return print("Erro em updateRecentEntries")
         }
+        
+        recentEntries[pageID].title = title
+        recentEntries[pageID].entry = entry
+    }
+    
+    func loadRecentEntries(_ entry: DiaryContent) {
+        recentEntries.append(entry)
     }
 }
