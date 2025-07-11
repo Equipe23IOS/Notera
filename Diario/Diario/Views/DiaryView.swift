@@ -12,6 +12,7 @@ struct Diary: View {
     @State var diaryEntry: String = ""
     @State var alreadyExists: Bool = false
     @State var indexOfPage: Int = 0
+    var pageID: UUID?
     @ObservedObject var diaryContentViewModel: DiaryContentViewModel
     var notebookID: UUID?
     
