@@ -34,17 +34,26 @@ class DiaryContentViewModel: ObservableObject {
         print(notebooksViewModel.notebooks[index].entries)
     }
     
-    func updateDiaryPage(_ title: String, _ entry: String, _ indexOfPage: Int, _ notebookID: UUID) {
-        let notebookID = notebooksViewModel.notebooks.firstIndex { i in
+    func updateDiaryPage(_ title: String, _ entry: String, _ pageID: UUID, _ notebookID: UUID) {
+        let notebookIndex = notebooksViewModel.notebooks.firstIndex { i in
             i.id == notebookID
         }
         
-        guard let notebookID = notebookID else {
-            return print("Something went wrong updating this page")
+        guard let notebookIndex = notebookIndex else {
+            return print("Notebook not found")
         }
         
-        notebooksViewModel.notebooks[notebookID].entries[indexOfPage].title = title
-        notebooksViewModel.notebooks[notebookID].entries[indexOfPage].entry = entry
+        for i in notebooksViewModel.notebooks {
+            for j in i.entries {
+                if(j.id == pageID) {
+                    let pageIndex = i.entries.firstIndex { i in
+                        i.id == j.id
+                    }
+                    notebooksViewModel.notebooks[notebookIndex].entries[pageIndex!].title = title
+                    notebooksViewModel.notebooks[notebookIndex].entries[pageIndex!].entry = entry
+                }
+            }
+        }
     }
     
     func updateRecentEntries(_ title: String, _ entry: String, _ pageID: UUID?) {

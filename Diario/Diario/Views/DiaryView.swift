@@ -29,9 +29,21 @@ struct Diary: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button("Save") {
-                    if alreadyExists {
-                        diaryContentViewModel.updateDiaryPage(diaryTitle, diaryEntry, indexOfPage, notebookID!)
-                        diaryContentViewModel.updateRecentEntries(diaryTitle, diaryEntry, pageID)
+                    if(alreadyExists) {
+                        if(notebookID == nil) {
+                            for i in diaryContentViewModel.notebooksViewModel.notebooks {
+                                for j in i.entries {
+                                    if(j.id == pageID!) {
+                                        print(j.id)
+                                        diaryContentViewModel.updateDiaryPage(diaryTitle, diaryEntry, pageID!, i.id)
+                                    }
+                                }
+                            }
+                            diaryContentViewModel.updateRecentEntries(diaryTitle, diaryEntry, pageID)
+                        } else {
+                            diaryContentViewModel.updateDiaryPage(diaryTitle, diaryEntry, pageID!, notebookID!)
+                            diaryContentViewModel.updateRecentEntries(diaryTitle, diaryEntry, pageID)
+                        }
                     } else {
                         diaryContentViewModel.createEntry(diaryTitle, diaryEntry, notebookID)
                     }
