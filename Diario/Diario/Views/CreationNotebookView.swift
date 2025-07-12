@@ -10,6 +10,7 @@ import SwiftUI
 struct CreationNotebookView: View{
     @Binding var activateSheet: Bool
     @State var notebookName: String = ""
+    @State var showPopup: Bool = false
     @ObservedObject var notebookViewModel: NotebooksViewModel
     
     var body:  some View {
@@ -28,8 +29,12 @@ struct CreationNotebookView: View{
                 
                 
                 Button(action: {
-                    activateSheet.toggle()
-                    notebookViewModel.createNotebook(notebookName)
+                    if(notebookName == "") {
+                        showPopup.toggle()
+                    } else {
+                        activateSheet.toggle()
+                        notebookViewModel.createNotebook(notebookName)
+                    }
                 }) {
                     Text("Create Notebook")
                         .font(.custom("Georgia", size: 22))
@@ -38,6 +43,11 @@ struct CreationNotebookView: View{
                         .background(Color.toast)
                         .foregroundColor(.white)
                         .cornerRadius(15)
+                }
+                .alert("Erro", isPresented: $showPopup) {
+                    Button("OK", role: .cancel) { }
+                } message: {
+                    Text("O nome do notebook não pode estar vazio.")
                 }
                 .padding()
                 
@@ -48,5 +58,3 @@ struct CreationNotebookView: View{
         }
     }
 }
-
-
