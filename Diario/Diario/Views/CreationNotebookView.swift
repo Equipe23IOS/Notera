@@ -44,10 +44,10 @@ struct CreationNotebookView: View{
                         .foregroundColor(.white)
                         .cornerRadius(15)
                 }
-                .alert("Erro", isPresented: $showPopup) {
+                .alert("Error", isPresented: $showPopup) {
                     Button("OK", role: .cancel) { }
                 } message: {
-                    Text("O nome do notebook não pode estar vazio.")
+                    Text("Notebook name can’t be empty.")
                 }
                 .padding()
                 

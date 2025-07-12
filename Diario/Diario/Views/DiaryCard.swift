@@ -33,8 +33,8 @@ struct DiaryCard: View {
                 diaryEntry: notebookIndex != nil && pageIndex != nil ? diaryContentViewModel.notebooksViewModel.notebooks[notebookIndex!].entries[index].entry : diaryContentViewModel.recentEntries[pageIndex!].entry,
                 alreadyExists: true,
                 indexOfPage: index,
-                pageID: pageID,
                 diaryContentViewModel: diaryContentViewModel,
+                pageID: pageID,
                 notebookID: notebookID
             ),
             label: {
