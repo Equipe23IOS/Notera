@@ -35,7 +35,6 @@ struct NotebookPageView: View {
                 Spacer()
             }
             .padding()
-            .navigationTitle("")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {

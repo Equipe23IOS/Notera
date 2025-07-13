@@ -14,65 +14,108 @@ struct Diary: View {
     @State var indexOfPage: Int = 0
     @State private var emptyNotebookPopup: Bool = false
     @State private var emptyEntryPopup: Bool = false
+    @State var isEditing: Bool = false
     @ObservedObject var diaryContentViewModel: DiaryContentViewModel
     var pageID: UUID?
     var notebookID: UUID?
     
     var body: some View {
-        VStack {
-            TextField("Title", text: $diaryTitle)
-                .font(.title)
-            
-            TextField("Write your ideas", text: $diaryEntry)
-            
-            Spacer()
-        }
-        .padding()
-        .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
-                //TO DO mudar toda essa logica pra ViewModel no polimento do codigo mais a frente
-                Button("Save") {
-                    if(alreadyExists) {
-                        if(notebookID == nil) {
-                            for i in diaryContentViewModel.notebooksViewModel.notebooks {
-                                for j in i.entries {
-                                    if(j.id == pageID!) {
-                                        print(j.id)
-                                        diaryContentViewModel.updateDiaryPage(diaryTitle, diaryEntry, pageID!, i.id)
-                                        break
+        NavigationStack {
+            ZStack {
+                Color.linen
+                
+                VStack {
+                    TextField("Title", text: $diaryTitle)
+                        .font(.title)
+                    
+                    TextEditor(text: $diaryEntry)
+                        .scrollContentBackground(.hidden)
+                        .background(.canvas)
+                        .frame(maxHeight: .infinity)
+                        .overlay(alignment: .topLeading) {
+                            if diaryEntry.isEmpty && !isEditing {
+                                Text("Write your ideas")
+                                    .foregroundColor(.gray)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    .onTapGesture {
+                                        isEditing = true
+                                    }
+                                
+                                Spacer()
+                            }
+                        }
+                        .onTapGesture {
+                            isEditing = true
+                        }
+                    
+                    Spacer()
+                }
+                .padding()
+                .background(.canvas)
+            }
+            .padding()
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    //TO DO mudar toda essa logica pra ViewModel no polimento do codigo mais a frente
+                    Button(action: {
+                        if(alreadyExists) {
+                            if(notebookID == nil) {
+                                for i in diaryContentViewModel.notebooksViewModel.notebooks {
+                                    for j in i.entries {
+                                        if(j.id == pageID!) {
+                                            print(j.id)
+                                            diaryContentViewModel.updateDiaryPage(diaryTitle, diaryEntry, pageID!, i.id)
+                                            break
+                                        }
                                     }
                                 }
+                                diaryContentViewModel.updateRecentEntries(diaryTitle, diaryEntry, pageID)
+                            } else {
+                                diaryContentViewModel.updateDiaryPage(diaryTitle, diaryEntry, pageID!, notebookID!)
+                                diaryContentViewModel.updateRecentEntries(diaryTitle, diaryEntry, pageID)
                             }
-                            diaryContentViewModel.updateRecentEntries(diaryTitle, diaryEntry, pageID)
                         } else {
-                            diaryContentViewModel.updateDiaryPage(diaryTitle, diaryEntry, pageID!, notebookID!)
-                            diaryContentViewModel.updateRecentEntries(diaryTitle, diaryEntry, pageID)
+                            if(diaryTitle == "") {
+                                emptyNotebookPopup.toggle()
+                            } else if(diaryEntry == "") {
+                                emptyEntryPopup.toggle()
+                            } else {
+                                diaryContentViewModel.createEntry(diaryTitle, diaryEntry, notebookID)
+                            }
                         }
-                    } else {
-                        if(diaryTitle == "") {
-                            emptyNotebookPopup.toggle()
-                        } else if(diaryEntry == "") {
-                            emptyEntryPopup.toggle()
-                        } else {
+                    }, label: {
+                        Capsule()
+                            .fill(Color.toast)
+                            .frame(width: 80, height: 30)
+                            .overlay() {
+                                Text("Save")
+                                    .foregroundColor(.linen)
+                                    .fontWeight(.medium)
+                            }
+                    })
+                    
+                    .alert("Error", isPresented: $emptyNotebookPopup) {
+                        Button("OK", role: .cancel) { }
+                    } message: {
+                        Text("The title can’t be empty.")
+                    }
+                    
+                    .alert("Alert", isPresented: $emptyEntryPopup) {
+                        Button("Proceed") {
                             diaryContentViewModel.createEntry(diaryTitle, diaryEntry, notebookID)
                         }
+                        Button("Go back", role: .cancel) { }
+                    } message: {
+                        Text("The diary entry is empty. Do you still want to proceed?")
                     }
-                }
-                .alert("Error", isPresented: $emptyNotebookPopup) {
-                    Button("OK", role: .cancel) { }
-                } message: {
-                    Text("The title can’t be empty.")
-                }
-                
-                .alert("Alert", isPresented: $emptyEntryPopup) {
-                    Button("Proceed") {
-                        diaryContentViewModel.createEntry(diaryTitle, diaryEntry, notebookID)
-                    }
-                    Button("Go back", role: .cancel) { }
-                } message: {
-                    Text("The diary entry is empty. Do you still want to proceed?")
                 }
             }
         }
+        .padding()
+        .navigationTitle(diaryTitle)
+        .navigationBarTitleDisplayMode(.inline)
+        .frame(maxWidth: .infinity, minHeight: 200)
+        .toolbarBackground(.canvas, for: .navigationBar)
+        .toolbarBackground(.visible, for: .navigationBar)
     }
 }
