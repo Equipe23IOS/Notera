@@ -34,26 +34,25 @@ class DiaryContentViewModel: ObservableObject {
         print(notebooksViewModel.notebooks[index].entries)
     }
     
-    func updateDiaryPage(_ title: String, _ entry: String, _ pageID: UUID, _ notebookID: UUID) {
-        let notebookIndex = notebooksViewModel.notebooks.firstIndex { i in
-            i.id == notebookID
-        }
-        
-        guard let notebookIndex = notebookIndex else {
-            return print("Notebook not found")
-        }
-        
-        for i in notebooksViewModel.notebooks {
-            for j in i.entries {
-                if(j.id == pageID) {
-                    let pageIndex = i.entries.firstIndex { i in
-                        i.id == j.id
-                    }
-                    notebooksViewModel.notebooks[notebookIndex].entries[pageIndex!].title = title
-                    notebooksViewModel.notebooks[notebookIndex].entries[pageIndex!].entry = entry
+    func updateDiaryPage(_ title: String, _ entry: String, _ pageID: UUID, _ notebookID: UUID?) {
+        guard let notebookIndex = notebooksViewModel.notebooks.firstIndex(where: { $0.id == notebookID }),
+              let pageIndex = notebooksViewModel.notebooks[notebookIndex].entries.firstIndex(where: { $0.id == pageID })
+        else {
+            for i in 0..<notebooksViewModel.notebooks.count {
+                guard let pageIndex = notebooksViewModel.notebooks[i].entries.firstIndex(where: { $0.id == pageID })
+                else {
+                    print("Error in updateDiaryPage")
+                    continue
                 }
+                notebooksViewModel.notebooks[i].entries[pageIndex].title = title
+                notebooksViewModel.notebooks[i].entries[pageIndex].entry = entry
+                return
             }
+            return
         }
+        
+        notebooksViewModel.notebooks[notebookIndex].entries[pageIndex].title = title
+        notebooksViewModel.notebooks[notebookIndex].entries[pageIndex].entry = entry
     }
     
     func updateRecentEntries(_ title: String, _ entry: String, _ pageID: UUID?) {

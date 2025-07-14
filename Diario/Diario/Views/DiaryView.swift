@@ -73,19 +73,10 @@ struct Diary: View {
                 }
                 
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    //TO DO mudar toda essa logica pra ViewModel no polimento do codigo mais a frente
                     Button(action: {
                         if(alreadyExists) {
                             if(notebookID == nil) {
-                                for i in diaryContentViewModel.notebooksViewModel.notebooks {
-                                    for j in i.entries {
-                                        if(j.id == pageID!) {
-                                            print(j.id)
-                                            diaryContentViewModel.updateDiaryPage(diaryTitle, diaryEntry, pageID!, i.id)
-                                            break
-                                        }
-                                    }
-                                }
+                                diaryContentViewModel.updateDiaryPage(diaryTitle, diaryEntry, pageID!, nil)
                                 diaryContentViewModel.updateRecentEntries(diaryTitle, diaryEntry, pageID)
                             } else {
                                 diaryContentViewModel.updateDiaryPage(diaryTitle, diaryEntry, pageID!, notebookID!)
