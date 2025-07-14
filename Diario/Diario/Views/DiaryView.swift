@@ -16,45 +16,62 @@ struct Diary: View {
     @State private var emptyEntryPopup: Bool = false
     @State var isEditing: Bool = false
     @ObservedObject var diaryContentViewModel: DiaryContentViewModel
+    @Environment(\.dismiss) var dismiss
     var pageID: UUID?
     var notebookID: UUID?
     
     var body: some View {
         NavigationStack {
-            ZStack {
-                Color.linen
+            VStack {
+                TextField("Title", text: $diaryTitle)
+                    .font(.title)
                 
-                VStack {
-                    TextField("Title", text: $diaryTitle)
-                        .font(.title)
-                    
-                    TextEditor(text: $diaryEntry)
-                        .scrollContentBackground(.hidden)
-                        .background(.canvas)
-                        .frame(maxHeight: .infinity)
-                        .overlay(alignment: .topLeading) {
-                            if diaryEntry.isEmpty && !isEditing {
-                                Text("Write your ideas")
-                                    .foregroundColor(.gray)
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                    .onTapGesture {
-                                        isEditing = true
-                                    }
-                                
-                                Spacer()
-                            }
+                Divider()
+                    .frame(height: 1)
+                    .padding(.horizontal, 30)
+                    .background(Color.gray)
+                
+                TextEditor(text: $diaryEntry)
+                    .scrollContentBackground(.hidden)
+                    .background(.canvas)
+                    .frame(maxHeight: .infinity)
+                    .overlay(alignment: .topLeading) {
+                        if diaryEntry.isEmpty && !isEditing {
+                            Text("Write your ideas")
+                                .foregroundColor(.gray)
+                                .opacity(0.5)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .onTapGesture {
+                                    isEditing = true
+                                }
+                            
+                            Spacer()
                         }
-                        .onTapGesture {
-                            isEditing = true
-                        }
-                    
-                    Spacer()
-                }
-                .padding()
-                .background(.canvas)
+                    }
+                    .onTapGesture {
+                        isEditing = true
+                    }
+                
+                Spacer()
             }
             .padding()
+            .background(.canvas)
+            .cornerRadius(30)
             .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button(action: {
+                        dismiss()
+                    }, label: {
+                        HStack {
+                            Image(systemName: "chevron.left")
+                                .foregroundColor(.toast)
+                            
+                            Text("Back")
+                                .foregroundColor(.toast)
+                        }
+                    })
+                }
+                
                 ToolbarItem(placement: .navigationBarTrailing) {
                     //TO DO mudar toda essa logica pra ViewModel no polimento do codigo mais a frente
                     Button(action: {
@@ -112,9 +129,11 @@ struct Diary: View {
             }
         }
         .padding()
+        .background(.linen)
         .navigationTitle(diaryTitle)
         .navigationBarTitleDisplayMode(.inline)
         .frame(maxWidth: .infinity, minHeight: 200)
+        .navigationBarBackButtonHidden(true)
         .toolbarBackground(.canvas, for: .navigationBar)
         .toolbarBackground(.visible, for: .navigationBar)
     }
