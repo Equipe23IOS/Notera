@@ -32,7 +32,7 @@ class DiaryContentViewModel: ObservableObject {
         print(notebooksViewModel.notebooks[index].entries)
     }
     
-    func updateDiaryPage(_ title: String, _ entry: String, _ pageID: UUID, _ notebookID: UUID?) {
+    func updateNotebook(_ title: String, _ entry: String, _ pageID: UUID, _ notebookID: UUID?) {
         guard let notebookIndex = notebooksViewModel.notebooks.firstIndex(where: { $0.id == notebookID }),
               let pageIndex = notebooksViewModel.notebooks[notebookIndex].entries.firstIndex(where: { $0.id == pageID })
         else {
@@ -42,6 +42,7 @@ class DiaryContentViewModel: ObservableObject {
                     print("Error in updateDiaryPage")
                     continue
                 }
+                
                 notebooksViewModel.notebooks[i].entries[pageIndex].title = title
                 notebooksViewModel.notebooks[i].entries[pageIndex].entry = entry
                 return
@@ -54,15 +55,43 @@ class DiaryContentViewModel: ObservableObject {
     }
     
     func updateRecentEntries(_ title: String, _ entry: String, _ pageID: UUID?) {
-        guard let pageID = recentEntries.firstIndex(where: { $0.id == pageID }) else {
+        guard let pageIndex = recentEntries.firstIndex(where: { $0.id == pageID }) else {
             return print("Error in updateRecentEntries")
         }
         
-        recentEntries[pageID].title = title
-        recentEntries[pageID].entry = entry
+        recentEntries[pageIndex].title = title
+        recentEntries[pageIndex].entry = entry
     }
     
     func loadRecentEntries(_ entry: DiaryContent) {
         recentEntries.append(entry)
+    }
+    
+    func deleteEntryFromNotebook(_ pageID: UUID, _ notebookID: UUID) {
+        guard let notebookIndex = notebooksViewModel.notebooks.firstIndex(where: { $0.id == notebookID }),
+              let pageIndex = notebooksViewModel.notebooks[notebookIndex].entries.firstIndex(where: { $0.id == pageID })
+        else {
+            for i in 0..<notebooksViewModel.notebooks.count {
+                guard let pageIndex = notebooksViewModel.notebooks[i].entries.firstIndex(where: { $0.id == pageID })
+                else {
+                    print("Error in updateDiaryPage")
+                    continue
+                }
+                
+                notebooksViewModel.notebooks[i].entries.remove(at: pageIndex)
+                return
+            }
+            return
+        }
+        
+        notebooksViewModel.notebooks[notebookIndex].entries.remove(at: pageIndex)
+    }
+    
+    func deleteEntryFromRecentEntries(_ pageID: UUID) {
+        guard let pageIndex = recentEntries.firstIndex(where: { $0.id == pageID }) else {
+            return print("Error in deleteEntryFromRecentEntries")
+        }
+        
+        recentEntries.remove(at: pageIndex)
     }
 }
