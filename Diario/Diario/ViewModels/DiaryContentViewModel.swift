@@ -18,16 +18,14 @@ class DiaryContentViewModel: ObservableObject {
     
     func createEntry (_ title: String, _ entry: String, _ notebookID: UUID?) {
         guard let notebookID = notebookID else {
-            return print("something went wrong")
+            return print("NotebookID is nil")
+        }
+
+        guard let index = notebooksViewModel.notebooks.firstIndex(where: { $0.id == notebookID }) else {
+            return print("Notebook not found in list")
         }
         
         let page = DiaryContent(title: title, entry: entry)
-        
-        guard let index = notebooksViewModel.notebooks.firstIndex(where: { i in
-            i.id == notebookID
-        }) else {
-            return print("Error")
-        }
         
         notebooksViewModel.notebooks[index].entries.append(page)
         loadRecentEntries(page)
@@ -56,12 +54,8 @@ class DiaryContentViewModel: ObservableObject {
     }
     
     func updateRecentEntries(_ title: String, _ entry: String, _ pageID: UUID?) {
-        let pageID = recentEntries.firstIndex { i in
-            i.id == pageID
-        }
-        
-        guard let pageID = pageID else {
-            return print("Erro em updateRecentEntries")
+        guard let pageID = recentEntries.firstIndex(where: { $0.id == pageID }) else {
+            return print("Error in updateRecentEntries")
         }
         
         recentEntries[pageID].title = title
