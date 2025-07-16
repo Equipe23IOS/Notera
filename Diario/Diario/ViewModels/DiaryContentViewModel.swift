@@ -10,6 +10,7 @@ import SwiftUI
 class DiaryContentViewModel: ObservableObject {
     @AppStorage("diaryEntries") var storedEntries: String = ""
     @Published var recentEntries: [DiaryContent] = []
+    @Published var wasDeleted: Bool = false
     @ObservedObject var notebooksViewModel: NotebooksViewModel
     
     init(notebooksViewModel: NotebooksViewModel) {
@@ -67,7 +68,7 @@ class DiaryContentViewModel: ObservableObject {
         recentEntries.append(entry)
     }
     
-    func deleteEntryFromNotebook(_ pageID: UUID, _ notebookID: UUID) {
+    func deleteEntryFromNotebook(_ pageID: UUID, _ notebookID: UUID?) {
         guard let notebookIndex = notebooksViewModel.notebooks.firstIndex(where: { $0.id == notebookID }),
               let pageIndex = notebooksViewModel.notebooks[notebookIndex].entries.firstIndex(where: { $0.id == pageID })
         else {
@@ -93,5 +94,9 @@ class DiaryContentViewModel: ObservableObject {
         }
         
         recentEntries.remove(at: pageIndex)
+    }
+    
+    func returnDelete() {
+        wasDeleted = true
     }
 }

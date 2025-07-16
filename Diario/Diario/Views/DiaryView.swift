@@ -76,10 +76,10 @@ struct Diary: View {
                     Button(action: {
                         if(alreadyExists) {
                             if(notebookID == nil) {
-                                diaryContentViewModel.updateDiaryPage(diaryTitle, diaryEntry, pageID!, nil)
+                                diaryContentViewModel.updateNotebook(diaryTitle, diaryEntry, pageID!, nil)
                                 diaryContentViewModel.updateRecentEntries(diaryTitle, diaryEntry, pageID)
                             } else {
-                                diaryContentViewModel.updateDiaryPage(diaryTitle, diaryEntry, pageID!, notebookID!)
+                                diaryContentViewModel.updateNotebook(diaryTitle, diaryEntry, pageID!, notebookID!)
                                 diaryContentViewModel.updateRecentEntries(diaryTitle, diaryEntry, pageID)
                             }
                         } else {
