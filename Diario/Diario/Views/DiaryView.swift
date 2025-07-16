@@ -11,7 +11,6 @@ struct Diary: View {
     @State var diaryTitle: String = ""
     @State var diaryEntry: String = ""
     @State var alreadyExists: Bool = false
-    @State var indexOfPage: Int = 0
     @State private var emptyNotebookPopup: Bool = false
     @State private var emptyEntryPopup: Bool = false
     @State var isEditing: Bool = false

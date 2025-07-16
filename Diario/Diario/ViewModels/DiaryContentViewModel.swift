@@ -97,6 +97,6 @@ class DiaryContentViewModel: ObservableObject {
     }
     
     func returnDelete() {
-        wasDeleted = true
+        //wasDeleted = true
     }
 }

@@ -9,7 +9,6 @@ import SwiftUI
 
 struct DiaryCard: View {
     var title: String
-    @State var index: Int?
     var notebookID: UUID?
     var pageID: UUID
     @ObservedObject var diaryContentViewModel: DiaryContentViewModel
@@ -31,15 +30,26 @@ struct DiaryCard: View {
             if(pageIndex == nil || index == nil) {
                 EmptyView()
             } else {
-                Diary(
-                    diaryTitle: notebookIndex != nil && pageIndex != nil ? diaryContentViewModel.notebooksViewModel.notebooks[notebookIndex!].entries[diaryContentViewModel.wasDeleted ? index! - 1 : index!].title : diaryContentViewModel.recentEntries[pageIndex!].title,
-                    diaryEntry: notebookIndex != nil && pageIndex != nil ? diaryContentViewModel.notebooksViewModel.notebooks[notebookIndex!].entries[diaryContentViewModel.wasDeleted ? index! - 1 : index!].entry : diaryContentViewModel.recentEntries[pageIndex!].entry,
-                    alreadyExists: true,
-                    indexOfPage: index!,
-                    diaryContentViewModel: diaryContentViewModel,
-                    pageID: pageID,
-                    notebookID: notebookID
-                )
+                let notebooks = diaryContentViewModel.notebooksViewModel.notebooks.filter { notebookModel in
+                    return notebookModel.id == notebookID
+                }.first
+                
+                let entries = notebooks?.entries.filter({ diaryContent in
+                    return diaryContent.id == pageID
+                }).first
+                
+                if let notebooks = notebooks, let entries = entries {
+                    Diary(
+                        diaryTitle: notebookIndex != nil && pageIndex != nil ? entries.title : diaryContentViewModel.recentEntries[pageIndex!].title,
+                        diaryEntry: notebookIndex != nil && pageIndex != nil ? entries.entry : diaryContentViewModel.recentEntries[pageIndex!].entry,
+                        
+                        
+                        alreadyExists: true,
+                        diaryContentViewModel: diaryContentViewModel,
+                        pageID: pageID,
+                        notebookID: notebookID
+                    )
+                }
             }
         }, label: {
             HStack {
@@ -59,7 +69,6 @@ struct DiaryCard: View {
                     diaryContentViewModel.deleteEntryFromNotebook(pageID, notebookID)
                     diaryContentViewModel.deleteEntryFromRecentEntries(pageID)
                     pageIndex = nil
-                    index = nil
                     diaryContentViewModel.returnDelete()
                 }, label: {
                     Image(systemName: "trash")
