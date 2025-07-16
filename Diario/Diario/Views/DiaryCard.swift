@@ -27,23 +27,28 @@ struct DiaryCard: View {
         }
         
         NavigationLink(destination: {
-            if(pageIndex == nil || index == nil) {
-                EmptyView()
+            if(false) {
+                Text("Bacon")
             } else {
                 let notebooks = diaryContentViewModel.notebooksViewModel.notebooks.filter { notebookModel in
                     return notebookModel.id == notebookID
                 }.first
                 
-                let entries = notebooks?.entries.filter({ diaryContent in
+                let notebookRecentEntries = diaryContentViewModel.recentEntries.filter { diaryContent in
+                    return diaryContent.id == pageID
+                }.first
+                
+                
+                let entriesNotebookPage = notebooks?.entries.filter({ diaryContent in
                     return diaryContent.id == pageID
                 }).first
                 
+                let entries = entriesNotebookPage ?? notebookRecentEntries
+                
                 if let notebooks = notebooks, let entries = entries {
                     Diary(
-                        diaryTitle: notebookIndex != nil && pageIndex != nil ? entries.title : diaryContentViewModel.recentEntries[pageIndex!].title,
-                        diaryEntry: notebookIndex != nil && pageIndex != nil ? entries.entry : diaryContentViewModel.recentEntries[pageIndex!].entry,
-                        
-                        
+                        diaryTitle: entries.title,
+                        diaryEntry: entries.entry,
                         alreadyExists: true,
                         diaryContentViewModel: diaryContentViewModel,
                         pageID: pageID,
