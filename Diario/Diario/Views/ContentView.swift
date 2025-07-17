@@ -49,44 +49,68 @@ struct ContentView: View {
             ZStack {
                 Color(.canvas).edgesIgnoringSafeArea(.all)
                 VStack {
-                    HStack {
-                        Button(action: {
-                            activateSheet = true
-                        }) {
-                            Text("New")
-                                .multilineTextAlignment(.trailing)
-                                .foregroundColor(.espresso)
-                                .font(.custom("Georgia", size: 23))
-                                .fontWeight(.bold)
-                                .padding(.leading, 290.0)
-                        }
-                    }
-                    
-                    Text("Notera")
-                        .multilineTextAlignment(.center)
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
-                        .foregroundColor(.espresso)
-                        .font(.custom("Georgia", size: 32))
-                        .fontWeight(.bold)
-                        .padding(.top, 320.0)
-                    
-                    loadNotebooks()
-                    
                     if(notebookViewModel.notebooks.isEmpty) {
+                        Spacer()
+                        
+                        Text("Notera")
+                            .multilineTextAlignment(.center)
+                            .foregroundColor(.espresso)
+                            .font(.custom("Georgia", size: 32))
+                            .fontWeight(.bold)
+                            .padding()
+                        
                         Text("Create your new Notebook\n right away!")
                             .lineLimit(nil)
                             .foregroundColor(.bark)
                             .font(.custom("Georgia", size: 23))
                             .multilineTextAlignment(.center)
+                            .padding()
                         
-                        Spacer(minLength: 320)
+                        Button(action: {
+                            activateSheet = true
+                        }, label: {
+                            Capsule()
+                                .fill(Color.toast)
+                                .frame(width: 150, height: 50)
+                                .overlay() {
+                                    Text("New")
+                                        .foregroundColor(.canvas)
+                                        .fontWeight(.medium)
+                                        .font(.custom("Georgia", size: 25))
+                                }
+                        })
                         
+                        Spacer()
                     } else {
+                        HStack {
+                            Text("Notera")
+                                .foregroundColor(.bark)
+                                .font(.custom("Georgia", size: 25))
+                            
+                            Spacer()
+                            
+                            Button(action: {
+                                activateSheet = true
+                            }, label: {
+                                Capsule()
+                                    .fill(Color.toast)
+                                    .frame(width: 80, height: 30)
+                                    .overlay() {
+                                        Text("New")
+                                            .foregroundColor(.canvas)
+                                            .fontWeight(.medium)
+                                            .font(.custom("Georgia", size: 15))
+                                    }
+                            })
+                        }
+                        .padding()
+                        
+                        loadNotebooks()
+                        
                         Text("Recent entries")
+                        
                         loadDiaryCards()
                     }
-                    
-                    Spacer()
                 }
             }
             
