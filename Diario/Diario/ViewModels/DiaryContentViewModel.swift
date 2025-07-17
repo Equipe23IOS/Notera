@@ -10,7 +10,6 @@ import SwiftUI
 class DiaryContentViewModel: ObservableObject {
     @AppStorage("diaryEntries") var storedEntries: String = ""
     @Published var recentEntries: [DiaryContent] = []
-    @Published var wasDeleted: Bool = false
     @ObservedObject var notebooksViewModel: NotebooksViewModel
     
     init(notebooksViewModel: NotebooksViewModel) {

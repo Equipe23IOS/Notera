@@ -126,8 +126,5 @@ struct Diary: View {
         .navigationBarBackButtonHidden(true)
         .toolbarBackground(.canvas, for: .navigationBar)
         .toolbarBackground(.visible, for: .navigationBar)
-        .task {
-            print("Teste")
-        }
     }
 }
