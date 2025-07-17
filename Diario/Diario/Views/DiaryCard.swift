@@ -15,33 +15,47 @@ struct DiaryCard: View {
     
     var body: some View {
         NavigationLink(destination: {
-            if(false) {
-                Text("Bacon")
-            } else {
-                // Aqui ele retorna um notebookModel, que pode ser optional
-                let notebooks = diaryContentViewModel.notebooksViewModel.notebooks.filter { notebookModel in
-                    return notebookModel.id == notebookID
-                }.first
-                
-                // Aqui pega diretamente o objeto cujo id seja igual ao id passado previamente
-                let recentEntriesPage = diaryContentViewModel.recentEntries.filter { diaryContent in
-                    return diaryContent.id == pageID
-                }.first
-                
-                
-                let entriesNotebookPage = notebooks?.entries.filter({ diaryContent in
-                    return diaryContent.id == pageID
-                }).first
-                
+            // Aqui ele retorna um notebookModel, que pode ser optional
+            let notebooks = diaryContentViewModel.notebooksViewModel.notebooks.filter { notebookModel in
+                return notebookModel.id == notebookID
+            }.first
+            
+            // Aqui pega diretamente o objeto cujo id seja igual ao id passado previamente
+            let recentEntriesPage = diaryContentViewModel.recentEntries.filter { diaryContent in
+                return diaryContent.id == pageID
+            }.first
+            
+            // Aqui ele retorna exatamente a entrada que tem que aberta
+            let entriesNotebookPage = notebooks?.entries.filter({ diaryContent in
+                return diaryContent.id == pageID
+            }).first
+            
+            // Faz uma checagem se entrou pelo notebook, se sim roda o codigo
+            if let entriesNotebookPage = entriesNotebookPage {
                 Diary(
-                    diaryTitle: notebooks != nil ? entriesNotebookPage!.title : recentEntriesPage!.title,
-                    diaryEntry: notebooks != nil ? entriesNotebookPage!.entry : recentEntriesPage!.entry,
+                    diaryTitle: entriesNotebookPage.title,
+                    diaryEntry: entriesNotebookPage.entry,
                     alreadyExists: true,
                     diaryContentViewModel: diaryContentViewModel,
                     pageID: pageID,
                     notebookID: notebookID
                 )
+            } else {
+                // Se entrou pela tela inical, verifica se a entrada existe
+                if(recentEntriesPage != nil) {
+                    Diary(
+                        diaryTitle: recentEntriesPage!.title,
+                        diaryEntry: recentEntriesPage!.entry,
+                        alreadyExists: true,
+                        diaryContentViewModel: diaryContentViewModel,
+                        pageID: pageID,
+                        notebookID: notebookID
+                    )
+                } else {
+                    Text("bacon")
+                }
             }
+            
         }, label: {
             HStack {
                 RoundedRectangle(cornerRadius: 15)
