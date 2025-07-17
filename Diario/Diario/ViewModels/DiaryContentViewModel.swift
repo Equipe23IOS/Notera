@@ -95,8 +95,4 @@ class DiaryContentViewModel: ObservableObject {
         
         recentEntries.remove(at: pageIndex)
     }
-    
-    func returnDelete() {
-        //wasDeleted = true
-    }
 }

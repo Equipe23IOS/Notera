@@ -13,28 +13,18 @@ struct DiaryCard: View {
     var pageID: UUID
     @ObservedObject var diaryContentViewModel: DiaryContentViewModel
     
-    func positioninArray(id: UUID?) -> Int? {
-        return diaryContentViewModel.notebooksViewModel.notebooks.firstIndex { i in
-            i.id == id
-        }
-    }
-    
     var body: some View {
-        let notebookIndex = positioninArray(id: notebookID)
-        
-        var pageIndex = diaryContentViewModel.recentEntries.firstIndex { i in
-            i.id == pageID
-        }
-        
         NavigationLink(destination: {
             if(false) {
                 Text("Bacon")
             } else {
+                // Aqui ele retorna um notebookModel, que pode ser optional
                 let notebooks = diaryContentViewModel.notebooksViewModel.notebooks.filter { notebookModel in
                     return notebookModel.id == notebookID
                 }.first
                 
-                let notebookRecentEntries = diaryContentViewModel.recentEntries.filter { diaryContent in
+                // Aqui pega diretamente o objeto cujo id seja igual ao id passado previamente
+                let recentEntriesPage = diaryContentViewModel.recentEntries.filter { diaryContent in
                     return diaryContent.id == pageID
                 }.first
                 
@@ -43,18 +33,14 @@ struct DiaryCard: View {
                     return diaryContent.id == pageID
                 }).first
                 
-                let entries = entriesNotebookPage ?? notebookRecentEntries
-                
-                if let notebooks = notebooks, let entries = entries {
-                    Diary(
-                        diaryTitle: entries.title,
-                        diaryEntry: entries.entry,
-                        alreadyExists: true,
-                        diaryContentViewModel: diaryContentViewModel,
-                        pageID: pageID,
-                        notebookID: notebookID
-                    )
-                }
+                Diary(
+                    diaryTitle: notebooks != nil ? entriesNotebookPage!.title : recentEntriesPage!.title,
+                    diaryEntry: notebooks != nil ? entriesNotebookPage!.entry : recentEntriesPage!.entry,
+                    alreadyExists: true,
+                    diaryContentViewModel: diaryContentViewModel,
+                    pageID: pageID,
+                    notebookID: notebookID
+                )
             }
         }, label: {
             HStack {
@@ -73,8 +59,6 @@ struct DiaryCard: View {
                 Button(action: {
                     diaryContentViewModel.deleteEntryFromNotebook(pageID, notebookID)
                     diaryContentViewModel.deleteEntryFromRecentEntries(pageID)
-                    pageIndex = nil
-                    diaryContentViewModel.returnDelete()
                 }, label: {
                     Image(systemName: "trash")
                         .foregroundColor(.toast)
