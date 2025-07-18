@@ -54,12 +54,12 @@ struct ContentView: View {
                         
                         Text("Notera")
                             .multilineTextAlignment(.center)
-                            .foregroundColor(.espresso)
+                            .foregroundColor(.toast)
                             .font(.custom("Georgia", size: 32))
                             .fontWeight(.bold)
                             .padding()
                         
-                        Text("Create your new Notebook\n right away!")
+                        Text("Get started with a new notebook\n It's quick and easy!")
                             .lineLimit(nil)
                             .foregroundColor(.bark)
                             .font(.custom("Georgia", size: 23))
@@ -85,7 +85,8 @@ struct ContentView: View {
                         HStack {
                             Text("Notera")
                                 .foregroundColor(.bark)
-                                .font(.custom("Georgia", size: 25))
+                                .font(.custom("Georgia", size: 30))
+                                .fontWeight(.bold)
                             
                             Spacer()
                             
@@ -104,12 +105,23 @@ struct ContentView: View {
                             })
                         }
                         .padding()
+                        .background(.linen)
                         
                         loadNotebooks()
                         
                         Text("Recent entries")
+                            .font(.custom("Georgia", size: 20))
                         
-                        loadDiaryCards()
+                        if(diaryContentViewModel.recentEntries.isEmpty) {
+                            Text("You havent written anything yet\n Fill it with something great!")
+                                .padding()
+                                .font(.custom("Georgia", size: 20))
+                                .multilineTextAlignment(.center)
+                        } else {
+                            loadDiaryCards()
+                        }
+                        
+                        Spacer()
                     }
                 }
             }
