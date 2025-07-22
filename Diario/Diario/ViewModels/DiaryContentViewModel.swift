@@ -94,4 +94,12 @@ class DiaryContentViewModel: ObservableObject {
         
         recentEntries.remove(at: pageIndex)
     }
+    
+    func evaluateDeletedNotebook(_ notebookID: UUID) {
+        let notebookModel = notebooksViewModel.notebooks.filter({ $0.id == notebookID }).first
+        
+        for i in notebookModel!.entries {
+            recentEntries.removeAll(where: { $0.id == i.id })
+        }
+    }
 }

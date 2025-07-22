@@ -39,6 +39,7 @@ struct ContentView: View {
                             .frame(minWidth: 120, maxHeight: 200)
                             .overlay() {
                                 Button(action: {
+                                    diaryContentViewModel.evaluateDeletedNotebook(i.id)
                                     notebookViewModel.deleteNotebook(i.id)
                                 }, label: {
                                     Image(systemName: "trash")
