@@ -113,7 +113,7 @@ struct ContentView: View {
                             .font(.custom("Georgia", size: 20))
                         
                         if(diaryContentViewModel.recentEntries.isEmpty) {
-                            Text("You havent written anything yet\n Fill it with something great!")
+                            Text("You haven't written anything yet\n Fill it with something great!")
                                 .padding()
                                 .font(.custom("Georgia", size: 20))
                                 .multilineTextAlignment(.center)

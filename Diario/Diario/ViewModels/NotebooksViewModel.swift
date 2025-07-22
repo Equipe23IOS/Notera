@@ -15,4 +15,12 @@ class NotebooksViewModel: ObservableObject {
         notebooks.append(notebook)
         print(notebooks)
     }
+    
+    func deleteNotebook(_ notebookID: UUID) {
+        guard let notebookIndex = notebooks.firstIndex(where: { $0.id == notebookID }) else {
+            return
+        }
+        
+        notebooks.remove(at: notebookIndex)
+    }
 }
