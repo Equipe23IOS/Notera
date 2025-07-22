@@ -37,6 +37,14 @@ struct ContentView: View {
                         RoundedRectangle(cornerRadius: 15)
                             .fill(Color.black)
                             .frame(minWidth: 120, maxHeight: 200)
+                            .overlay() {
+                                Button(action: {
+                                    notebookViewModel.deleteNotebook(i.id)
+                                }, label: {
+                                    Image(systemName: "trash")
+                                        .frame(width: 25, height: 25, alignment: .topTrailing)
+                                })
+                            }
                     })
                 }
             }
