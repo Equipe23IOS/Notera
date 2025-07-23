@@ -77,9 +77,11 @@ struct Diary: View {
                             if(notebookID == nil) {
                                 diaryContentViewModel.updateNotebook(diaryTitle, diaryEntry, pageID!, nil)
                                 diaryContentViewModel.updateRecentEntries(diaryTitle, diaryEntry, pageID)
+                                dismiss()
                             } else {
                                 diaryContentViewModel.updateNotebook(diaryTitle, diaryEntry, pageID!, notebookID!)
                                 diaryContentViewModel.updateRecentEntries(diaryTitle, diaryEntry, pageID)
+                                dismiss()
                             }
                         } else {
                             if(diaryTitle == "") {
@@ -88,6 +90,7 @@ struct Diary: View {
                                 emptyEntryPopup.toggle()
                             } else {
                                 diaryContentViewModel.createEntry(diaryTitle, diaryEntry, notebookID)
+                                dismiss()
                             }
                         }
                     }, label: {
@@ -110,6 +113,7 @@ struct Diary: View {
                     .alert("Alert", isPresented: $emptyEntryPopup) {
                         Button("Proceed") {
                             diaryContentViewModel.createEntry(diaryTitle, diaryEntry, notebookID)
+                            dismiss()
                         }
                         Button("Go back", role: .cancel) { }
                     } message: {
