@@ -29,9 +29,30 @@
 		C2C938922DC9203C00618E8A /* DiarioUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DiarioUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		C27B2FCB2E35A86F00FD2466 /* Exceptions for "Diario" folder in "DiarioTests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Resources/Leorio.ttf,
+			);
+			target = C2C938872DC9203C00618E8A /* DiarioTests */;
+		};
+		C27B2FCD2E35A9D800FD2466 /* Exceptions for "Diario" folder in "Diario" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = C2C938762DC9203B00618E8A /* Diario */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		C2C938792DC9203B00618E8A /* Diario */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				C27B2FCD2E35A9D800FD2466 /* Exceptions for "Diario" folder in "Diario" target */,
+				C27B2FCB2E35A86F00FD2466 /* Exceptions for "Diario" folder in "DiarioTests" target */,
+			);
 			path = Diario;
 			sourceTree = "<group>";
 		};
@@ -394,6 +415,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"Diario/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Diario/Info.plist;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -432,6 +454,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"Diario/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Diario/Info.plist;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
