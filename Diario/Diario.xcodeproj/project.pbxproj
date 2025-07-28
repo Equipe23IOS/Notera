@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		C2A75BDA2E37B4C200698D48 /* KeychainSwift in Frameworks */ = {isa = PBXBuildFile; productRef = C2A75BD92E37B4C200698D48 /* KeychainSwift */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		C2C938892DC9203C00618E8A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -73,6 +77,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C2A75BDA2E37B4C200698D48 /* KeychainSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -93,12 +98,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C2A75BD82E37B4C200698D48 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		C2C9386E2DC9203B00618E8A = {
 			isa = PBXGroup;
 			children = (
 				C2C938792DC9203B00618E8A /* Diario */,
 				C2C9388B2DC9203C00618E8A /* DiarioTests */,
 				C2C938952DC9203C00618E8A /* DiarioUITests */,
+				C2A75BD82E37B4C200698D48 /* Frameworks */,
 				C2C938782DC9203B00618E8A /* Products */,
 			);
 			sourceTree = "<group>";
@@ -133,6 +146,7 @@
 			);
 			name = Diario;
 			packageProductDependencies = (
+				C2A75BD92E37B4C200698D48 /* KeychainSwift */,
 			);
 			productName = Diario;
 			productReference = C2C938772DC9203B00618E8A /* Diario.app */;
@@ -216,6 +230,9 @@
 			);
 			mainGroup = C2C9386E2DC9203B00618E8A;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				C2A75BD72E37B4AE00698D48 /* XCRemoteSwiftPackageReference "keychain-swift" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = C2C938782DC9203B00618E8A /* Products */;
 			projectDirPath = "";
@@ -608,6 +625,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		C2A75BD72E37B4AE00698D48 /* XCRemoteSwiftPackageReference "keychain-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/evgenyneu/keychain-swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 24.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		C2A75BD92E37B4C200698D48 /* KeychainSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C2A75BD72E37B4AE00698D48 /* XCRemoteSwiftPackageReference "keychain-swift" */;
+			productName = KeychainSwift;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = C2C9386F2DC9203B00618E8A /* Project object */;
 }
