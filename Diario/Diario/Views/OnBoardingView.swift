@@ -9,7 +9,7 @@ struct OnBoardingView: View {
     
     var body: some View {
         if hasSeenWelcome {
-            ContentView()
+            PasswordFlowView()
         }
         else {
             WelcomeView()

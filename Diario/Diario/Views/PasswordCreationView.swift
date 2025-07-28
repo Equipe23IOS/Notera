@@ -10,7 +10,7 @@ import SwiftUI
 struct PasswordCreationView: View {
     @State var password: String = ""
     @State var isSecure: Bool = false
-    @StateObject var passwordViewModel: PasswordViewModel = PasswordViewModel()
+    @ObservedObject var passwordViewModel: PasswordViewModel
     
     var body: some View {
         VStack(spacing: 20) {
@@ -64,8 +64,4 @@ struct PasswordCreationView: View {
             .padding()
         }
     }
-}
-
-#Preview {
-    PasswordCreationView()
 }
