@@ -8,13 +8,19 @@
 import SwiftUI
 
 struct PasswordFlowView: View {
+    @State var goToNotera: Bool = false
+    @AppStorage("goToValidation") var goToValidation: Bool = false
     @StateObject var passwordViewModel: PasswordViewModel = PasswordViewModel()
     
     var body: some View {
-        if(passwordViewModel.keychain.get("userPassword") == nil) {
-            PasswordCreationView(passwordViewModel: passwordViewModel)
-        } else {
-            PasswordValidationView(passwordViewModel: passwordViewModel)
+        Group {
+            if(goToNotera) {
+                ContentView()
+            } else if(goToValidation) {
+                PasswordValidationView(goToNotera: $goToNotera, passwordViewModel: passwordViewModel)
+            } else {
+                PasswordCreationView(passwordViewModel: passwordViewModel)
+            }
         }
     }
 }

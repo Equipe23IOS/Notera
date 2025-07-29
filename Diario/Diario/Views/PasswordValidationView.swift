@@ -11,7 +11,7 @@ struct PasswordValidationView: View {
     @State var password: String = ""
     @State var isSecure: Bool = false
     @State var showPopup: Bool = false
-    @State var goToNextPage: Bool = false
+    @Binding var goToNotera: Bool
     @ObservedObject var passwordViewModel: PasswordViewModel
     
     var body: some View {
@@ -45,7 +45,7 @@ struct PasswordValidationView: View {
         
         Button(action: {
             if(passwordViewModel.validatePasswrd(password)) {
-                goToNextPage.toggle()
+                goToNotera.toggle()
             } else {
                 showPopup.toggle()
             }
