@@ -6,10 +6,16 @@
 //
 
 import SwiftUI
+import SwiftData
 
-struct NotebookModel: Identifiable {
-    let id = UUID()
+@Model
+class NotebookModel: Identifiable {
+    var id = UUID()
     var entries: [DiaryContent] = []
-    let date: Date = Date()
+    var date: Date = Date()
     var name: String
+    
+    init(name: String) {
+        self.name = name
+    }
 }
