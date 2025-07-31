@@ -14,6 +14,7 @@ class DiaryContentViewModel: ObservableObject {
     
     init(notebooksViewModel: NotebooksViewModel) {
         self.notebooksViewModel = notebooksViewModel
+        loadRecentEntries()
     }
     
     func createEntry (_ title: String, _ entry: String, _ notebookID: UUID?) {
@@ -28,7 +29,7 @@ class DiaryContentViewModel: ObservableObject {
         let page = DiaryContent(title: title, entry: entry)
         
         notebooksViewModel.notebooks[index].entries.append(page)
-        loadRecentEntries(page)
+        appendRecentEntries(page)
         print(notebooksViewModel.notebooks[index].entries)
     }
     
@@ -63,7 +64,7 @@ class DiaryContentViewModel: ObservableObject {
         recentEntries[pageIndex].entry = entry
     }
     
-    func loadRecentEntries(_ entry: DiaryContent) {
+    func appendRecentEntries(_ entry: DiaryContent) {
         recentEntries.append(entry)
     }
     
@@ -85,6 +86,12 @@ class DiaryContentViewModel: ObservableObject {
         }
         
         notebooksViewModel.notebooks[notebookIndex].entries.remove(at: pageIndex)
+    }
+    
+    func loadRecentEntries() {
+        for i in notebooksViewModel.notebooks {
+            recentEntries.append(contentsOf: i.entries)
+        }
     }
     
     func deleteEntryFromRecentEntries(_ pageID: UUID) {
