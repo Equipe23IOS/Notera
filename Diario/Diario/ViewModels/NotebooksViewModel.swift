@@ -6,14 +6,21 @@
 //
 
 import SwiftUI
+import SwiftData
 
 class NotebooksViewModel: ObservableObject {
-    @Published var notebooks: [NotebookModel] = []
+    let database = DataSource.shared
+    @Published var notebooks: [NotebookModel]
+    
+    init() {
+        self.notebooks = database.fetchNotebooks()
+    }
     
     func createNotebook(_ name: String) {
         let notebook = NotebookModel(name: name)
         notebooks.append(notebook)
-        print(notebooks)
+        database.appendNotebook(notebook: notebook)
+        print(database.fetchNotebooks())
     }
     
     func deleteNotebook(_ notebookID: UUID) {
@@ -22,5 +29,12 @@ class NotebooksViewModel: ObservableObject {
         }
         
         notebooks.remove(at: notebookIndex)
+        guard let deletedNotebook = database.fetchNotebooks().first(where: { fetchedNotebook in
+            fetchedNotebook.id == notebookID
+        }) else {
+            return
+        }
+        
+        database.deleteNotebook(notebook: deletedNotebook)
     }
 }
