@@ -11,6 +11,7 @@ struct PasswordValidationView: View {
     @State var password: String = ""
     @State var isSecure: Bool = false
     @State var showPopup: Bool = false
+    @Binding var hasJustCreatedPassword: Bool
     @Binding var goToNotera: Bool
     @ObservedObject var passwordViewModel: PasswordViewModel
     
@@ -20,12 +21,21 @@ struct PasswordValidationView: View {
                 .ignoresSafeArea()
             
             VStack {
-                Text("Welcome back!")
-                    .font(.custom("Leorio", size: 24))
-                    .fontWeight(.medium)
-                    .multilineTextAlignment(.center)
-                    .padding()
-                    .foregroundColor(.caramel)
+                if(hasJustCreatedPassword) {
+                    Text("Insert the password you just created")
+                        .font(.custom("Leorio", size: 24))
+                        .fontWeight(.medium)
+                        .multilineTextAlignment(.center)
+                        .padding()
+                        .foregroundColor(.caramel)
+                } else {
+                    Text("Welcome back!")
+                        .font(.custom("Leorio", size: 24))
+                        .fontWeight(.medium)
+                        .multilineTextAlignment(.center)
+                        .padding()
+                        .foregroundColor(.caramel)
+                }
                 
                 ZStack {
                     Group {
@@ -80,7 +90,3 @@ struct PasswordValidationView: View {
     }
 }
 
-#Preview {
-    @Previewable @State var PH = false
-    PasswordValidationView(goToNotera: $PH, passwordViewModel: PasswordViewModel())
-}

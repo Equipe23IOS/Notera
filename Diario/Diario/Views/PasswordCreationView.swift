@@ -11,6 +11,7 @@ struct PasswordCreationView: View {
     @State var password: String = ""
     @State var isSecure: Bool = false
     @AppStorage("goToValidation") var goToValidation: Bool = false
+    @Binding var hasJustCreatedPassword: Bool
     @ObservedObject var passwordViewModel: PasswordViewModel
     
     var body: some View {
@@ -54,6 +55,7 @@ struct PasswordCreationView: View {
             Button(action: {
                 passwordViewModel.createPassword(password)
                 goToValidation.toggle()
+                hasJustCreatedPassword.toggle()
             }, label: {
                 Text("Create password")
                     .font(.custom("Georgia", size: 22))

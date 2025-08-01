@@ -9,6 +9,7 @@ import SwiftUI
 
 struct PasswordFlowView: View {
     @State var goToNotera: Bool = false
+    @State var hasJustCreatedPassword: Bool = false
     @AppStorage("goToValidation") var goToValidation: Bool = false
     @StateObject var passwordViewModel: PasswordViewModel = PasswordViewModel()
     
@@ -17,9 +18,9 @@ struct PasswordFlowView: View {
             if(goToNotera) {
                 ContentView()
             } else if(goToValidation) {
-                PasswordValidationView(goToNotera: $goToNotera, passwordViewModel: passwordViewModel)
+                PasswordValidationView(hasJustCreatedPassword: $hasJustCreatedPassword, goToNotera: $goToNotera, passwordViewModel: passwordViewModel)
             } else {
-                PasswordCreationView(passwordViewModel: passwordViewModel)
+                PasswordCreationView(hasJustCreatedPassword: $hasJustCreatedPassword, passwordViewModel: passwordViewModel)
             }
         }
     }
