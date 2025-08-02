@@ -85,6 +85,11 @@ struct PasswordValidationView: View {
                                 .foregroundColor(.canvas)
                         }
                 })
+                .alert("Error", isPresented: $showPopup) {
+                                    Button("OK", role: .cancel) { }
+                                } message: {
+                                    Text("The password is wrong")
+                                }
             }
         }
     }
