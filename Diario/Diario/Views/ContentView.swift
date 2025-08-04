@@ -61,15 +61,14 @@ struct ContentView: View {
                         
                         Text("Notera")
                             .multilineTextAlignment(.center)
-                            .foregroundColor(.toast)
-                            .font(.custom("Georgia", size: 32))
+                            .foregroundColor(.caramel)
+                            .font(.custom("Leorio", size: 36))
                             .fontWeight(.bold)
                             .padding()
                         
                         Text("Get started with a new notebook\n It's quick and easy!")
-                            .lineLimit(nil)
-                            .foregroundColor(.bark)
-                            .font(.custom("Georgia", size: 23))
+                            .foregroundColor(.caramel)
+                            .font(.custom("Leorio", size: 20))
                             .multilineTextAlignment(.center)
                             .padding()
                         
@@ -78,12 +77,12 @@ struct ContentView: View {
                         }, label: {
                             Capsule()
                                 .fill(Color.toast)
-                                .frame(width: 150, height: 50)
+                                .frame(width: 160, height: 40)
                                 .overlay() {
                                     Text("New")
                                         .foregroundColor(.canvas)
                                         .fontWeight(.medium)
-                                        .font(.custom("Georgia", size: 25))
+                                        .font(.custom("Leorio", size: 25))
                                 }
                         })
                         
@@ -91,8 +90,8 @@ struct ContentView: View {
                     } else {
                         HStack {
                             Text("Notera")
-                                .foregroundColor(.bark)
-                                .font(.custom("Georgia", size: 30))
+                                .foregroundColor(.espresso)
+                                .font(.custom("Leorio", size: 30))
                                 .fontWeight(.bold)
                             
                             Spacer()
@@ -107,7 +106,7 @@ struct ContentView: View {
                                         Text("New")
                                             .foregroundColor(.canvas)
                                             .fontWeight(.medium)
-                                            .font(.custom("Georgia", size: 15))
+                                            .font(.custom("Leorio", size: 15))
                                     }
                             })
                         }
@@ -117,13 +116,15 @@ struct ContentView: View {
                         loadNotebooks()
                         
                         Text("Recent entries")
-                            .font(.custom("Georgia", size: 20))
+                            .font(.custom("Leorio", size: 20))
+                            .foregroundColor(.espresso)
                         
                         if(diaryContentViewModel.recentEntries.isEmpty) {
                             Text("You haven't written anything yet\n Fill it with something great!")
                                 .padding()
-                                .font(.custom("Georgia", size: 20))
+                                .font(.custom("Leorio", size: 20))
                                 .multilineTextAlignment(.center)
+                                .foregroundColor(.espresso)
                         } else {
                             loadDiaryCards()
                         }
