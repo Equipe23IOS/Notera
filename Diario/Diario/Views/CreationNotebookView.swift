@@ -19,14 +19,20 @@ struct CreationNotebookView: View{
             VStack{
                 Text("New Notebook")
                     .foregroundColor(.espresso)
-                    .font(.custom("Georgia", size: 32))
+                    .font(.custom("Leorio", size: 36))
                     .fontWeight(.bold)
                     .padding()
                 
                 TextField("Notebook Name", text: $notebookName)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .padding()
+                    .font(.custom("Leorio", size: 12))
                 
+                ScrollView(.horizontal) {
+                    HStack {
+                        loadSprites()
+                    }
+                }
                 
                 Button(action: {
                     if(notebookName == "") {
@@ -35,15 +41,18 @@ struct CreationNotebookView: View{
                         activateSheet.toggle()
                         notebookViewModel.createNotebook(notebookName)
                     }
-                }) {
-                    Text("Create Notebook")
-                        .font(.custom("Georgia", size: 22))
-                        .padding()
-                        .frame(maxWidth: .infinity)
-                        .background(Color.toast)
-                        .foregroundColor(.white)
-                        .cornerRadius(15)
-                }
+                }, label: {
+                    Capsule()
+                        .fill(Color.toast)
+                        .frame(width: 160, height: 40)
+                        .overlay() {
+                            Text("Create Notebook")
+                                .padding()
+                                .font(.custom("Leorio", size: 16))
+                                .fontWeight(.medium)
+                                .foregroundColor(.linen)
+                        }
+                })
                 .alert("Error", isPresented: $showPopup) {
                     Button("OK", role: .cancel) { }
                 } message: {
