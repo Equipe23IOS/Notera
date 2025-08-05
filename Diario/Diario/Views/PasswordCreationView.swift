@@ -15,57 +15,71 @@ struct PasswordCreationView: View {
     @ObservedObject var passwordViewModel: PasswordViewModel
     
     var body: some View {
-        VStack(spacing: 20) {
-            Text("Password")
-                .font(.custom("Georgia", size: 25))
+        ZStack {
+            Color.canvas
+                .ignoresSafeArea()
             
-            Text("To protect your notebooks, set a password!")
-                .font(.custom("Georgia", size: 20))
-            
-            ZStack {
-                Group {
-                    if(isSecure) {
-                        TextField("Enter a password", text: $password)
-                            .textFieldStyle(RoundedBorderTextFieldStyle())
-                            .padding()
-                    } else {
-                        SecureField("Enter a password", text: $password)
-                            .textFieldStyle(RoundedBorderTextFieldStyle())
-                            .padding()
+            VStack(spacing: 20) {
+                Text("Password")
+                    .foregroundColor(.espresso)
+                    .font(.custom("Leorio", size: 36))
+                    .fontWeight(.bold)
+                    .padding()
+                
+                Text("To protect your notebooks, set a password!")
+                    .foregroundColor(.espresso)
+                    .font(.custom("Leorio", size: 24))
+                    .fontWeight(.bold)
+                    .multilineTextAlignment(.center)
+                    .padding()
+                
+                ZStack {
+                    Group {
+                        if(isSecure) {
+                            TextField("Enter a password", text: $password)
+                                .textFieldStyle(RoundedBorderTextFieldStyle())
+                                .padding()
+                                .font(.custom("Leorio", size: 20))
+                        } else {
+                            SecureField("Enter a password", text: $password)
+                                .textFieldStyle(RoundedBorderTextFieldStyle())
+                                .padding()
+                                .font(.custom("Leorio", size: 20))
+                        }
                     }
+                    
+                    HStack {
+                        Spacer()
+                        
+                        Button(action: {
+                            isSecure.toggle()
+                        }, label: {
+                            Image(systemName: isSecure ? "eye" : "eye.slash")
+                                .foregroundColor(.toast)
+                        })
+                    }
+                    .padding()
+                    .padding(.trailing, 10)
                 }
                 
-                HStack {
-                    Spacer()
-                    
-                    Button(action: {
-                        isSecure.toggle()
-                    }, label: {
-                        if(isSecure) {
-                            Image(systemName: "eye.slash")
-                        } else {
-                            Image(systemName: "eye")
+                Button(action: {
+                    passwordViewModel.createPassword(password)
+                    goToValidation.toggle()
+                    hasJustCreatedPassword.toggle()
+                }, label: {
+                    Capsule()
+                        .fill(Color.toast)
+                        .frame(width: 200, height: 40)
+                        .overlay() {
+                            Text("Create password")
+                                .padding()
+                                .font(.custom("Leorio", size: 20))
+                                .fontWeight(.medium)
+                                .foregroundColor(.linen)
                         }
-                    })
-                }
+                })
                 .padding()
-                .padding(.trailing, 10)
             }
-            
-            Button(action: {
-                passwordViewModel.createPassword(password)
-                goToValidation.toggle()
-                hasJustCreatedPassword.toggle()
-            }, label: {
-                Text("Create password")
-                    .font(.custom("Georgia", size: 22))
-                    .padding()
-                    .frame(maxWidth: .infinity)
-                    .background(Color.toast)
-                    .foregroundColor(.white)
-                    .cornerRadius(15)
-            })
-            .padding()
         }
     }
 }
