@@ -16,8 +16,8 @@ class NotebooksViewModel: ObservableObject {
         self.notebooks = database.fetchNotebooks()
     }
     
-    func createNotebook(_ name: String) {
-        let notebook = NotebookModel(name: name)
+    func createNotebook(_ name: String, _ sprite: String) {
+        let notebook = NotebookModel(name: name, sprite: sprite)
         notebooks.append(notebook)
         database.appendNotebook(notebook: notebook)
         print(database.fetchNotebooks())

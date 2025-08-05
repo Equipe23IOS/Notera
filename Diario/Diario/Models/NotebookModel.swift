@@ -12,10 +12,12 @@ import SwiftData
 class NotebookModel: Identifiable {
     var id = UUID()
     var entries: [DiaryContent] = []
+    var sprite: String
     var date: Date = Date()
     var name: String
     
-    init(name: String) {
+    init(name: String, sprite: String) {
         self.name = name
+        self.sprite = sprite
     }
 }

@@ -34,7 +34,7 @@ struct ContentView: View {
                 ForEach(notebookViewModel.notebooks) { i in
                     NavigationLink(destination: NotebookPageView(diaryContentViewModel: diaryContentViewModel, notebookViewModel: notebookViewModel, notebookID: i.id),
                                    label: {
-                        Image("NotebookSpr1")
+                        Image(i.sprite)
                             .overlay() {
                                 Button(action: {
                                     diaryContentViewModel.evaluateDeletedNotebook(i.id)
