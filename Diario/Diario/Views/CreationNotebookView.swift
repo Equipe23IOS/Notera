@@ -60,7 +60,9 @@ struct CreationNotebookView: View{
                 
                 Button(action: {
                     if(notebookName == "") {
-                        showPopup.toggle()
+                        showPopupEmptyName.toggle()
+                    } else if(selectedSprite == "") {
+                        showPopupEmptySprite.toggle()
                     } else {
                         activateSheet.toggle()
                         notebookViewModel.createNotebook(notebookName, selectedSprite)
@@ -77,10 +79,17 @@ struct CreationNotebookView: View{
                                 .foregroundColor(.linen)
                         }
                 })
-                .alert("Error", isPresented: $showPopup) {
+                .alert("Error", isPresented: $showPopupEmptyName) {
                     Button("OK", role: .cancel) { }
                 } message: {
                     Text("Notebook name can’t be empty.")
+                }
+                .padding()
+                
+                .alert("Error", isPresented: $showPopupEmptySprite) {
+                    Button("OK", role: .cancel) { }
+                } message: {
+                    Text("You didn’t choose a notebook.")
                 }
                 .padding()
                 
