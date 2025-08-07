@@ -30,20 +30,43 @@ struct NotebookPageView: View {
                             }
                         }
                     }
-                }
 
-                Spacer()
-            }
-            .padding()
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    NavigationLink(destination: {
-                        Diary(diaryContentViewModel: diaryContentViewModel, notebookID: notebookID)
-                    }, label: {
-                        Text("New")
-                    })
+                    Spacer()
                 }
+                .padding()
+                .navigationBarTitleDisplayMode(.inline)
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        Button(action: {
+                            dismiss()
+                        }, label: {
+                            HStack {
+                                Image(systemName: "chevron.left")
+                                    .foregroundColor(.toast)
+                                
+                                Text("Back")
+                                    .foregroundColor(.toast)
+                                    .font(.custom("Leorio", size: 20))
+                            }
+                        })
+                    }
+
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        NavigationLink(destination: {
+                            Diary(diaryContentViewModel: diaryContentViewModel, notebookID: notebookID)
+                        }, label: {
+                            Text("Write")
+                                .foregroundColor(.toast)
+                                .font(.custom("Leorio", size: 20))
+                            
+                            Image(systemName: "pencil.and.scribble")
+                                .foregroundColor(.toast)
+                            
+                        })
+                    }
+                }
+                .toolbarBackground(.linen, for: .navigationBar)
+                .toolbarBackground(.visible, for: .navigationBar)
             }
         }
     }
