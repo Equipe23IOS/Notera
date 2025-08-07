@@ -61,7 +61,7 @@ struct DiaryCard: View {
                 RoundedRectangle(cornerRadius: 15)
                     .fill(Color.canvas)
                     .frame(maxWidth: .infinity, minHeight: 48, maxHeight: 48)
-                    .shadow(color: .linen, radius: 5, y: 12)
+                    .shadow(color: .caramel, radius: 5, y: 8)
                     .overlay () {
                         RoundedRectangle(cornerRadius: 15)
                             .stroke(Color.toast, lineWidth: 2)

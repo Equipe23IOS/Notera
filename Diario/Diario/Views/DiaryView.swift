@@ -61,79 +61,89 @@ struct Diary: View {
             .padding()
             .background(.canvas)
             .cornerRadius(30)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button(action: {
-                        dismiss()
-                    }, label: {
-                        HStack {
-                            Image(systemName: "chevron.left")
-                                .foregroundColor(.toast)
-                            
-                            Text("Back")
-                                .foregroundColor(.toast)
-                        }
-                    })
-                }
-                
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button(action: {
-                        if(alreadyExists) {
-                            if(notebookID == nil) {
-                                diaryContentViewModel.updateNotebook(diaryTitle, diaryEntry, pageID!, nil)
-                                diaryContentViewModel.updateRecentEntries(diaryTitle, diaryEntry, pageID)
-                                dismiss()
-                            } else {
-                                diaryContentViewModel.updateNotebook(diaryTitle, diaryEntry, pageID!, notebookID!)
-                                diaryContentViewModel.updateRecentEntries(diaryTitle, diaryEntry, pageID)
-                                dismiss()
-                            }
-                        } else {
-                            if(diaryTitle == "") {
-                                emptyNotebookPopup.toggle()
-                            } else if(diaryEntry == "") {
-                                emptyEntryPopup.toggle()
-                            } else {
-                                diaryContentViewModel.createEntry(diaryTitle, diaryEntry, notebookID)
-                                dismiss()
-                            }
-                        }
-                    }, label: {
-                        Capsule()
-                            .fill(Color.toast)
-                            .frame(width: 80, height: 30)
-                            .overlay() {
-                                Text("Save")
-                                    .foregroundColor(.linen)
-                                    .fontWeight(.medium)
-                            }
-                    })
-                    
-                    .alert("Error", isPresented: $emptyNotebookPopup) {
-                        Button("OK", role: .cancel) { }
-                    } message: {
-                        Text("The title can’t be empty.")
-                    }
-                    
-                    .alert("Alert", isPresented: $emptyEntryPopup) {
-                        Button("Proceed") {
-                            diaryContentViewModel.createEntry(diaryTitle, diaryEntry, notebookID)
-                            dismiss()
-                        }
-                        Button("Go back", role: .cancel) { }
-                    } message: {
-                        Text("The diary entry is empty. Do you still want to proceed?")
-                    }
-                }
-            }
+            .shadow(color: .caramel, radius: 12, y: 4)
         }
         .padding()
-        .background(.linen)
+        .background(.canvas)
         .navigationTitle(diaryTitle)
         .navigationBarTitleDisplayMode(.inline)
         .frame(maxWidth: .infinity, minHeight: 200)
         .navigationBarBackButtonHidden(true)
-        .toolbarBackground(.canvas, for: .navigationBar)
+        .toolbarBackground(.linen, for: .navigationBar)
         .toolbarBackground(.visible, for: .navigationBar)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button(action: {
+                    dismiss()
+                }, label: {
+                    HStack {
+                        Image(systemName: "chevron.left")
+                            .foregroundColor(.toast)
+                        
+                        Text("Back")
+                            .foregroundColor(.toast)
+                            .font(.custom("Leorio", size: 20))
+                    }
+                })
+            }
+            
+            
+            ToolbarItem(placement: .principal) {
+                Text(diaryTitle)
+                    .foregroundColor(.espresso)
+                    .font(.custom("Leorio", size: 28))
+                    .fontWeight(.bold)
+            }
+            
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button(action: {
+                    if(alreadyExists) {
+                        if(notebookID == nil) {
+                            diaryContentViewModel.updateNotebook(diaryTitle, diaryEntry, pageID!, nil)
+                            diaryContentViewModel.updateRecentEntries(diaryTitle, diaryEntry, pageID)
+                            dismiss()
+                        } else {
+                            diaryContentViewModel.updateNotebook(diaryTitle, diaryEntry, pageID!, notebookID!)
+                            diaryContentViewModel.updateRecentEntries(diaryTitle, diaryEntry, pageID)
+                            dismiss()
+                        }
+                    } else {
+                        if(diaryTitle == "") {
+                            emptyNotebookPopup.toggle()
+                        } else if(diaryEntry == "") {
+                            emptyEntryPopup.toggle()
+                        } else {
+                            diaryContentViewModel.createEntry(diaryTitle, diaryEntry, notebookID)
+                            dismiss()
+                        }
+                    }
+                }, label: {
+                    Capsule()
+                        .fill(Color.toast)
+                        .frame(width: 80, height: 30)
+                        .overlay() {
+                            Text("Save")
+                                .foregroundColor(.linen)
+                                .fontWeight(.medium)
+                        }
+                })
+                
+                .alert("Error", isPresented: $emptyNotebookPopup) {
+                    Button("OK", role: .cancel) { }
+                } message: {
+                    Text("The title can’t be empty.")
+                }
+                
+                .alert("Alert", isPresented: $emptyEntryPopup) {
+                    Button("Proceed") {
+                        diaryContentViewModel.createEntry(diaryTitle, diaryEntry, notebookID)
+                        dismiss()
+                    }
+                    Button("Go back", role: .cancel) { }
+                } message: {
+                    Text("The diary entry is empty. Do you still want to proceed?")
+                }
+            }
+        }
     }
 }
