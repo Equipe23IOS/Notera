@@ -32,7 +32,7 @@ struct ContentView: View {
         ScrollView(.horizontal) {
             HStack(spacing: 25) {
                 ForEach(notebookViewModel.notebooks) { i in
-                    NavigationLink(destination: NotebookPageView(diaryContentViewModel: diaryContentViewModel, notebookViewModel: notebookViewModel, notebookID: i.id),
+                    NavigationLink(destination: NotebookPageView(notebookModel: i, diaryContentViewModel: diaryContentViewModel, notebookViewModel: notebookViewModel, notebookID: i.id),
                                    label: {
                         Image(i.sprite)
                             .overlay() {

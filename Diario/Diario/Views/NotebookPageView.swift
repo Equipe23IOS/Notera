@@ -8,25 +8,23 @@
 import SwiftUI
 
 struct NotebookPageView: View {
+    @State var notebookModel: NotebookModel
     @ObservedObject var diaryContentViewModel: DiaryContentViewModel
     @ObservedObject var notebookViewModel: NotebooksViewModel
+    @Environment(\.dismiss) var dismiss
     var notebookID: UUID
     
     var body: some View {
-        NavigationStack {
-            VStack() {
-                Text("Entries")
-                    .font(.largeTitle)
-                    .bold()
-                
-                ScrollView {
-                    VStack {
-                        ForEach(notebookViewModel.notebooks) { i in
-                            if(i.id == notebookID) {
-                                ForEach(i.entries.indices, id: \.self) { j in
-                                    let s = i.entries
-                                    return DiaryCard(title: s[j].title, notebookID: i.id, pageID: s[j].id ,diaryContentViewModel: diaryContentViewModel)
-                                }
+        ZStack {
+            Color.canvas
+                .ignoresSafeArea()
+    
+            NavigationStack {
+                HStack() {
+                    ScrollView {
+                        VStack {
+                            ForEach(notebookModel.entries) { i in
+                                DiaryCard(title: i.title, notebookID: i.id, pageID: i.id , diaryContentViewModel: diaryContentViewModel)
                             }
                         }
                     }
@@ -50,6 +48,13 @@ struct NotebookPageView: View {
                             }
                         })
                     }
+                    
+                    ToolbarItem(placement: .principal) {
+                        Text(notebookModel.name)
+                            .foregroundColor(.espresso)
+                            .font(.custom("Leorio", size: 28))
+                            .fontWeight(.bold)
+                    }
 
                     ToolbarItem(placement: .navigationBarTrailing) {
                         NavigationLink(destination: {
@@ -58,13 +63,10 @@ struct NotebookPageView: View {
                             Text("Write")
                                 .foregroundColor(.toast)
                                 .font(.custom("Leorio", size: 20))
-                            
-                            Image(systemName: "pencil.and.scribble")
-                                .foregroundColor(.toast)
-                            
                         })
                     }
                 }
+                .navigationBarBackButtonHidden(true)
                 .toolbarBackground(.linen, for: .navigationBar)
                 .toolbarBackground(.visible, for: .navigationBar)
             }
