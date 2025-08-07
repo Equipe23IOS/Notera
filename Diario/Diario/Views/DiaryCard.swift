@@ -59,24 +59,34 @@ struct DiaryCard: View {
         }, label: {
             HStack {
                 RoundedRectangle(cornerRadius: 15)
-                    .fill(Color.white)
-                    .frame(maxWidth: .infinity, minHeight: 50)
-                    .overlay(
+                    .fill(Color.canvas)
+                    .frame(maxWidth: .infinity, minHeight: 48, maxHeight: 48)
+                    .shadow(color: .linen, radius: 5, y: 12)
+                    .overlay () {
                         RoundedRectangle(cornerRadius: 15)
-                            .stroke(Color.gray, lineWidth: 2)
-                    )
-                    .overlay(
-                        Text(title)
-                            .foregroundColor(.black)
-                    )
-                
-                Button(action: {
-                    diaryContentViewModel.deleteEntryFromNotebook(pageID, notebookID)
-                    diaryContentViewModel.deleteEntryFromRecentEntries(pageID)
-                }, label: {
-                    Image(systemName: "trash")
-                        .foregroundColor(.toast)
-                })
+                            .stroke(Color.toast, lineWidth: 2)
+                    }
+                    .overlay() {
+                        HStack {
+                            Text(title)
+                                .foregroundColor(.espresso)
+                                .font(.custom("Leorio", size: 16))
+                                .fontWeight(.bold)
+                                .multilineTextAlignment(.center)
+                            
+                            Spacer()
+                            
+                            Button(action: {
+                                diaryContentViewModel.deleteEntryFromNotebook(pageID, notebookID)
+                                diaryContentViewModel.deleteEntryFromRecentEntries(pageID)
+                            }, label: {
+                                Image(systemName: "xmark")
+                                    .foregroundColor(.toast)
+                            })
+                        }
+                        .padding()
+                        .padding(.horizontal, 8)
+                    }
             }
         })
         .padding(.horizontal, 10)
