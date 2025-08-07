@@ -23,7 +23,9 @@ struct Diary: View {
         NavigationStack {
             VStack {
                 TextField("Title", text: $diaryTitle)
-                    .font(.title)
+                    .foregroundColor(.espresso)
+                    .font(.custom("Leorio", size: 24))
+                    .fontWeight(.bold)
                 
                 Divider()
                     .frame(height: 1)
@@ -31,12 +33,15 @@ struct Diary: View {
                     .background(Color.gray)
                 
                 TextEditor(text: $diaryEntry)
+                    .foregroundColor(.espresso)
+                    .font(.custom("Leorio", size: 20))
                     .scrollContentBackground(.hidden)
                     .background(.canvas)
                     .frame(maxHeight: .infinity)
                     .overlay(alignment: .topLeading) {
                         if diaryEntry.isEmpty && !isEditing {
                             Text("Write your ideas")
+                                .font(.custom("Leorio", size: 16))
                                 .foregroundColor(.gray)
                                 .opacity(0.5)
                                 .frame(maxWidth: .infinity, alignment: .leading)
