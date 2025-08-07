@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C2989C402E44F858008D14F0 /* HorizonCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = C2989C3F2E44F858008D14F0 /* HorizonCalendar */; };
 		C2A75BDA2E37B4C200698D48 /* KeychainSwift in Frameworks */ = {isa = PBXBuildFile; productRef = C2A75BD92E37B4C200698D48 /* KeychainSwift */; };
 /* End PBXBuildFile section */
 
@@ -77,6 +78,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C2989C402E44F858008D14F0 /* HorizonCalendar in Frameworks */,
 				C2A75BDA2E37B4C200698D48 /* KeychainSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -147,6 +149,7 @@
 			name = Diario;
 			packageProductDependencies = (
 				C2A75BD92E37B4C200698D48 /* KeychainSwift */,
+				C2989C3F2E44F858008D14F0 /* HorizonCalendar */,
 			);
 			productName = Diario;
 			productReference = C2C938772DC9203B00618E8A /* Diario.app */;
@@ -232,6 +235,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				C2A75BD72E37B4AE00698D48 /* XCRemoteSwiftPackageReference "keychain-swift" */,
+				C2989C3E2E44F75F008D14F0 /* XCRemoteSwiftPackageReference "HorizonCalendar" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = C2C938782DC9203B00618E8A /* Products */;
@@ -627,6 +631,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		C2989C3E2E44F75F008D14F0 /* XCRemoteSwiftPackageReference "HorizonCalendar" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/HorizonCalendar.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 		C2A75BD72E37B4AE00698D48 /* XCRemoteSwiftPackageReference "keychain-swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/evgenyneu/keychain-swift.git";
@@ -638,6 +650,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		C2989C3F2E44F858008D14F0 /* HorizonCalendar */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C2989C3E2E44F75F008D14F0 /* XCRemoteSwiftPackageReference "HorizonCalendar" */;
+			productName = HorizonCalendar;
+		};
 		C2A75BD92E37B4C200698D48 /* KeychainSwift */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = C2A75BD72E37B4AE00698D48 /* XCRemoteSwiftPackageReference "keychain-swift" */;

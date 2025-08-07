@@ -6,33 +6,17 @@
 //
 
 import SwiftUI
+import HorizonCalendar
 
 struct HumorTrackerView: View {
-    @State var todaysMonth: Date = Date()
-    var daysOfEachMonth: [Int] = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
-
+    let calendar: Calendar = Calendar.current
+    var startDate: Date
+    var todaysDate: Date
+    @State var selectedDate: Date?
     
-    func getDays() -> Int {
-        let monthInt = Calendar.current.component(.month, from: todaysMonth)
-        let data: Int = daysOfEachMonth[monthInt - 1]
-        return data
-    }
-        
-    func loadDays() -> some View {
-        Grid(horizontalSpacing: 2, verticalSpacing: 2) {
-            ForEach(0..<6) { row in
-                GridRow {
-                    ForEach(0..<7) { column in
-                        RoundedRectangle(cornerRadius: 10)
-                            .fill(.cyan)
-                            .frame(width: 40, height: 40)
-                            .overlay() {
-                                Text(String(row) + String(column))
-                            }
-                    }
-                }
-            }
-        }
+    init() {
+        startDate = calendar.date(from: DateComponents(month: calendar.component(.month, from: Date())))!
+        todaysDate = calendar.date(from: DateComponents(month: calendar.component(.month, from: Date()), day: calendar.component(.day, from: Date())))!
     }
     
     var body: some View {
@@ -40,13 +24,23 @@ struct HumorTrackerView: View {
             Color.canvas
                 .ignoresSafeArea()
             
-            RoundedRectangle(cornerRadius: 10)
-                .frame(width: 360, height: 400)
-            
-            VStack() {
-                HStack() {
-                    loadDays()
-                }
+            VStack {
+                CalendarViewRepresentable(calendar: calendar, visibleDateRange: startDate...todaysDate, monthsLayout: .vertical(options: VerticalMonthsLayoutOptions()), dataDependency: nil)
+                    .days() { day in
+                        Text(String(day.day))
+                            .foregroundColor(.espresso)
+                            .font(.custom("Leorio", size: 20))
+                            .frame(width: 40, height: 40)
+                            .overlay() {
+                                RoundedRectangle(cornerRadius: 8)
+                                    .stroke(.espresso, lineWidth: 2)
+                            }
+                        
+                    }
+                    .frame(width: .infinity, height: 400)
+                    .padding()
+                
+                Spacer()
             }
         }
     }
