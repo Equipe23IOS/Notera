@@ -10,7 +10,8 @@ import SwiftUI
 struct CreationNotebookView: View{
     @Binding var activateSheet: Bool
     @State var notebookName: String = ""
-    @State var showPopup: Bool = false
+    @State var showPopupEmptyName: Bool = false
+    @State var showPopupEmptySprite: Bool = false
     @State var selectedSprite: String = ""
     @ObservedObject var notebookViewModel: NotebooksViewModel
     
@@ -25,7 +26,7 @@ struct CreationNotebookView: View{
                 }
                 .overlay() {
                     RoundedRectangle(cornerRadius: 15)
-                        .stroke(selectedSprite == i ? Color.canvas : Color.clear, lineWidth: 4)
+                        .stroke(selectedSprite == i ? Color.caramel : Color.clear, lineWidth: 4)
                         .padding(.all, 6)
                 }
         }
@@ -33,7 +34,9 @@ struct CreationNotebookView: View{
     
     var body:  some View {
         ZStack {
-            Color(.linen)
+            Color(.canvas)
+                .ignoresSafeArea()
+            
             VStack {
                 Text("New Notebook")
                     .foregroundColor(.espresso)
