@@ -35,9 +35,55 @@ struct HumorTrackerView: View {
                                 RoundedRectangle(cornerRadius: 8)
                                     .stroke(.espresso, lineWidth: 2)
                             }
-                        
                     }
-                    .frame(width: .infinity, height: 400)
+                    .dayOfWeekHeaders() { month, weekdayIndex in
+                        Text(CalendarResources.weekdaySymbols[weekdayIndex])
+                    }
+                    .monthHeaders() { month in
+                        HStack {
+                            Spacer()
+                            
+                            Button(action: {
+                                
+                            }, label: {
+                                Circle()
+                                    .fill(.caramel)
+                                    .frame(width: 40)
+                                    .overlay() {
+                                        Image(systemName: "chevron.left")
+                                        
+                                            
+                                    }
+                            })
+                            .padding(.horizontal, -16)
+                            .padding(.top, 16)
+                            
+                            RoundedRectangle(cornerRadius: 8)
+                                .fill(.caramel)
+                                .frame(width: 120, height: 40)
+                                .overlay() {
+                                    Text(CalendarResources.monthSymbols[month.month - 1])
+                                }
+                                .padding()
+                                .padding(.top, 16)
+                            
+                            Button(action: {
+                                
+                            }, label: {
+                                Circle()
+                                    .fill(.caramel)
+                                    .frame(width: 40)
+                                    .overlay() {
+                                        Image(systemName: "chevron.right")
+                                    }
+                            })
+                            .padding(.leading, -16)
+                            .padding(.trailing, 16)
+                            .padding(.top, 16)
+                        }
+                    }
+                    .backgroundColor(.linen)
+                    .frame(width: .infinity, height: 480)
                     .padding()
                 
                 Spacer()
