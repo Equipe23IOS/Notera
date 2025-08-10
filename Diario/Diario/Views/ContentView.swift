@@ -59,12 +59,7 @@ struct ContentView: View {
                     if(notebookViewModel.notebooks.isEmpty) {
                         Spacer()
                         
-                        Text("Notera")
-                            .multilineTextAlignment(.center)
-                            .foregroundColor(.caramel)
-                            .font(.custom("Leorio", size: 36))
-                            .fontWeight(.bold)
-                            .padding()
+                        TitleComponent(title: "Notera", color: .caramel, weight: .bold)
                         
                         Text("Get started with a new notebook\n It's quick and easy!")
                             .foregroundColor(.caramel)
@@ -89,10 +84,7 @@ struct ContentView: View {
                         Spacer()
                     } else {
                         HStack {
-                            Text("Notera")
-                                .foregroundColor(.espresso)
-                                .font(.custom("Leorio", size: 30))
-                                .fontWeight(.bold)
+                            TitleComponent(title: "Notera", color: .espresso, weight: .bold)
                             
                             Spacer()
                             
@@ -115,10 +107,8 @@ struct ContentView: View {
                         
                         loadNotebooks()
                         
-                        Text("Recent entries")
-                            .font(.custom("Leorio", size: 20))
-                            .foregroundColor(.espresso)
-                        
+                        TitleComponent(title: "Recent entries", color: .espresso, weight: .bold, size: 20)
+                            
                         if(diaryContentViewModel.recentEntries.isEmpty) {
                             Text("You haven't written anything yet\n Fill it with something great!")
                                 .padding()
