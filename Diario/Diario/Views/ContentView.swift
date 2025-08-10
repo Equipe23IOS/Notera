@@ -61,11 +61,7 @@ struct ContentView: View {
                         
                         TitleComponent(title: "Notera", color: .caramel, weight: .bold)
                         
-                        Text("Get started with a new notebook\n It's quick and easy!")
-                            .foregroundColor(.caramel)
-                            .font(.custom("Leorio", size: 20))
-                            .multilineTextAlignment(.center)
-                            .padding()
+                        TextComponent(text: "Get started with a new notebook\n It's quick and easy!", color: .caramel)
                         
                         Button(action: {
                             activateSheet = true
@@ -110,11 +106,8 @@ struct ContentView: View {
                         TitleComponent(title: "Recent entries", color: .espresso, weight: .bold, size: 20)
                             
                         if(diaryContentViewModel.recentEntries.isEmpty) {
-                            Text("You haven't written anything yet\n Fill it with something great!")
+                            TextComponent(text: "You haven't written anything yet\n Fill it with something great!", color: .espresso)
                                 .padding()
-                                .font(.custom("Leorio", size: 20))
-                                .multilineTextAlignment(.center)
-                                .foregroundColor(.espresso)
                         } else {
                             loadDiaryCards()
                         }
