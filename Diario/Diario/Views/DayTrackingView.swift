@@ -9,8 +9,9 @@ import SwiftUI
 
 struct DayTrackingView: View {
     @Binding var selectedDate: Date?
-    @Binding var memo: String
-    @State var selectedSprite: String
+    @Binding var activateSheet: Bool
+    @State var memo: String = ""
+    @State var selectedSprite: String = ""
     @ObservedObject var humorTrackerViewModel: HumorTrackerViewModel
     
     var body: some View {
@@ -44,10 +45,4 @@ struct DayTrackingView: View {
             }
         }
     }
-}
-
-#Preview {
-    @Previewable @State var a: Date? = Date()
-    @Previewable @State var b: String = ""
-    DayTrackingView(selectedDate: $a, memo: $b, selectedSprite: "", humorTrackerViewModel: HumorTrackerViewModel())
 }

@@ -13,6 +13,8 @@ struct HumorTrackerView: View {
     var startDate: Date
     var todaysDate: Date
     @State var selectedDate: Date?
+    @State var activateSheet: Bool = false
+    @StateObject var humorTrackerViewModel: HumorTrackerViewModel = HumorTrackerViewModel()
     
     init() {
         startDate = calendar.date(from: DateComponents(month: calendar.component(.month, from: Date())))!
@@ -82,11 +84,19 @@ struct HumorTrackerView: View {
                             .padding(.top, 16)
                         }
                     }
+                    .onDaySelection() { day in
+                        selectedDate = calendar.date(from: day.components)
+                        activateSheet.toggle()
+                    }
                     .backgroundColor(.linen)
                     .frame(width: .infinity, height: 480)
                     .padding()
                 
                 Spacer()
+            }
+            
+            .sheet(isPresented: $activateSheet) {
+                DayTrackingView(selectedDate: $selectedDate, activateSheet: $activateSheet, humorTrackerViewModel: humorTrackerViewModel)
             }
         }
     }
