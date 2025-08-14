@@ -63,19 +63,9 @@ struct ContentView: View {
                         
                         TextComponent(text: "Get started with a new notebook\n It's quick and easy!", color: .caramel)
                         
-                        Button(action: {
+                        ButtonComponent(text: "New", color: .toast, size: 24, width: 160, height: 40) {
                             activateSheet = true
-                        }, label: {
-                            Capsule()
-                                .fill(Color.toast)
-                                .frame(width: 160, height: 40)
-                                .overlay() {
-                                    Text("New")
-                                        .foregroundColor(.canvas)
-                                        .fontWeight(.medium)
-                                        .font(.custom("Leorio", size: 25))
-                                }
-                        })
+                        }
                         
                         Spacer()
                     } else {
@@ -84,19 +74,9 @@ struct ContentView: View {
                             
                             Spacer()
                             
-                            Button(action: {
+                            ButtonComponent(text: "New", color: .toast, size: 16, width: 80, height: 32) {
                                 activateSheet = true
-                            }, label: {
-                                Capsule()
-                                    .fill(Color.toast)
-                                    .frame(width: 80, height: 30)
-                                    .overlay() {
-                                        Text("New")
-                                            .foregroundColor(.canvas)
-                                            .fontWeight(.medium)
-                                            .font(.custom("Leorio", size: 15))
-                                    }
-                            })
+                            }
                         }
                         .padding()
                         .background(.linen)
