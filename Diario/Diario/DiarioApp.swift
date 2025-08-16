@@ -11,7 +11,7 @@ import SwiftData
 @main
 struct DiarioApp: App {
     var container: ModelContainer {
-        let schema = Schema([NotebookModel.self])
+        let schema = Schema([NotebookModel.self, DayModel.self])
         let configuration = ModelConfiguration(isStoredInMemoryOnly: false)
         let container = try! ModelContainer(for: schema, configurations: configuration)
         return container

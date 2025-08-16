@@ -17,7 +17,7 @@ class DataSource {
     
     @MainActor
     private init() {
-        self.dataContainer = try! ModelContainer(for: NotebookModel.self)
+        self.dataContainer = try! ModelContainer(for: NotebookModel.self, DayModel.self)
         self.dataContext = dataContainer.mainContext
     }
     
@@ -48,6 +48,7 @@ class DataSource {
         })
         
         notebookFound?.entries = updatedNotebook.entries
+        notebookFound?.sprite = updatedNotebook.sprite
         notebookFound?.date = updatedNotebook.date
         notebookFound?.name = updatedNotebook.name
         
@@ -56,6 +57,36 @@ class DataSource {
     
     func deleteNotebook(notebook: NotebookModel) {
         dataContext.delete(notebook)
+        saveChanges()
+    }
+    
+    func appendDay(day: DayModel) {
+        self.dataContext.insert(day)
+        saveChanges()
+    }
+    
+    func fetchDays() -> [DayModel] {
+        do {
+            return try dataContext.fetch(FetchDescriptor<DayModel>())
+        } catch {
+            fatalError(error.localizedDescription)
+        }
+    }
+    
+    func updateDay(day: DayModel, updatedDay: DayModel) {
+        let dayFound = fetchDays().first(where: { fetchedDay in
+            fetchedDay.id == day.id
+        })
+        
+        dayFound?.day = updatedDay.day
+        dayFound?.emojiSprite = updatedDay.emojiSprite
+        dayFound?.memo = updatedDay.memo
+        
+        saveChanges()
+    }
+    
+    func deleteDay(day: DayModel) {
+        dataContext.delete(day)
         saveChanges()
     }
 }
