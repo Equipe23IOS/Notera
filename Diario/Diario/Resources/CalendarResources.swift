@@ -10,4 +10,5 @@ import SwiftUI
 struct CalendarResources {
     static let weekdaySymbols: [String] = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
     static let monthSymbols: [String] = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+    static let emojis: [String] = ["SaddestEmoji", "SadEmoji", "NeutralEmoji", "HappyEmoji", "HappiestEmoji"]
 }

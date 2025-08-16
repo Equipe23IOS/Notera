@@ -10,9 +10,11 @@ import SwiftUI
 class HumorTrackerViewModel: ObservableObject {
     @Published var trackedDays: [DayModel] = []
     
-    func createDay(_ selectedSprite: String, _ memo: String) {
-        let day = DayModel(emojiSprite: selectedSprite, memo: memo)
+    func createDay(_ day: Date, _ selectedSprite: String, _ memo: String) {
+        let day = DayModel(day: day, emojiSprite: selectedSprite, memo: memo)
         trackedDays.append(day)
+        print(trackedDays)
+        print(day.day)
     }
     
     func deleteDay(_ day: DayModel) {

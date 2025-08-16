@@ -13,6 +13,7 @@ struct DayTrackingView: View {
     @State var memo: String = ""
     @State var selectedSprite: String = ""
     @ObservedObject var humorTrackerViewModel: HumorTrackerViewModel
+    @Environment(\.dismiss) var dismiss
     
     var body: some View {
         ZStack {
@@ -22,26 +23,34 @@ struct DayTrackingView: View {
             VStack {
                 TitleComponent(title: "How are you feeling?", color: .espresso, weight: .bold)
                 
-                //ForEach() {}
-                
-                TextField("Add a memo", text: $memo)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .padding()
-                    .font(.custom("Leorio", size: 20)).padding()
-                
-                Button(action: {
-                    humorTrackerViewModel.createDay(selectedSprite, memo)
-                }, label: {
-                    Capsule()
-                        .fill(Color.toast)
-                        .frame(width: 160, height: 40)
-                        .overlay() {
-                            Text("Save")
-                                .foregroundColor(.canvas)
-                                .fontWeight(.medium)
-                                .font(.custom("Leorio", size: 25))
+                    HStack {
+                        Spacer()
+                        
+                        ForEach(CalendarResources.emojis.indices, id: \.self) { i in
+                            Image(CalendarResources.emojis[i])
+                                .onTapGesture() {
+                                    selectedSprite = CalendarResources.emojis[i]
+                                }
+                                .overlay() {
+                                    RoundedRectangle(cornerRadius: 15)
+                                        .stroke(selectedSprite == CalendarResources.emojis[i] ? Color.caramel: Color.clear, lineWidth: 4)
+                                        .frame(width: 68, height: 68)
+                                }
+                                .padding(.all, 8)
                         }
-                })
+                        
+                        Spacer()
+                    }
+                    .padding()
+               
+                
+                TextFieldComponent(text: "Add a memo", size: 20)
+                    .padding()
+                
+                ButtonComponent(text: "Save", color: .toast, size: 25, width: 160, height: 40) {
+                    humorTrackerViewModel.createDay(selectedDate!, selectedSprite, memo)
+                    dismiss()
+                }
             }
         }
     }
