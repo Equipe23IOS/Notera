@@ -21,6 +21,7 @@ struct HumorTrackerView: View {
     @State var selectedDate: Date?
     @State var visibleDate: Date = Date()
     @State var activateSheet: Bool = false
+    @State var showPopup: Bool = false
     @StateObject var humorTrackerViewModel: HumorTrackerViewModel = HumorTrackerViewModel(trackedDays: [])
     
     func goBackAMonth() {
@@ -118,13 +119,23 @@ struct HumorTrackerView: View {
                         }
                     }
                     .onDaySelection() { day in
-                        selectedDate = calendar.date(from: day.components)
-                        activateSheet.toggle()
+                        if(visibleDateComponents.day! >= day.day) {
+                            selectedDate = calendar.date(from: day.components)
+                            activateSheet.toggle()
+                        } else {
+                            showPopup.toggle()
+                        }
                     }
                     .backgroundColor(.linen)
                     .frame(height: 640)
                     .cornerRadius(20)
                     .padding()
+                
+                    .alert("Error", isPresented: $showPopup) {
+                        Button("OK", role: .cancel) { }
+                    } message: {
+                        Text("This day will come, don't worry :)")
+                    }
                 
                 Spacer()
             }
