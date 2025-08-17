@@ -10,11 +10,18 @@ import HorizonCalendar
 
 struct HumorTrackerView: View {
     let calendar: Calendar = Calendar.current
+    var startDateComponents: DateComponents {
+        return calendar.dateComponents([.year, .month, .day], from: startDate)
+    }
+    var visibleDateComponents: DateComponents {
+        return calendar.dateComponents([.year, .month, .day], from: visibleDate)
+    }
+    
     @AppStorage("startDate") var startDate: Date = Calendar.current.date(from: DateComponents(month: Calendar.current.component(.month, from: Date())))!
     @State var selectedDate: Date?
     @State var visibleDate: Date = Date()
     @State var activateSheet: Bool = false
-    @StateObject var humorTrackerViewModel: HumorTrackerViewModel = HumorTrackerViewModel()
+    @StateObject var humorTrackerViewModel: HumorTrackerViewModel = HumorTrackerViewModel(trackedDays: [])
     
     func goBackAMonth() {
         guard let newMonth = Calendar.current.date(byAdding: .month, value: -1, to: visibleDate) else {
@@ -45,7 +52,13 @@ struct HumorTrackerView: View {
                                 .stroke(.espresso, lineWidth: 2)
                                 .frame(width: 40, height: 40)
                                 .overlay() {
-                                    Image(systemName: calendar.component(.day, from: visibleDate) >= day.day ? "plus" : "")
+                                    if(calendar.date(from: day.components) == humorTrackerViewModel.trackedDays.filter({ $0.day == calendar.date(from: day.components)} ).first?.day) {
+                                        Image(humorTrackerViewModel.trackedDays.filter({ $0.day == calendar.date(from: day.components)} ).first!.emojiSprite)
+                                            .resizable()
+                                            .frame(width: 38, height: 38)
+                                    } else {
+                                        Image(systemName: visibleDateComponents.day! >= day.day ? "plus" : "nothing")
+                                    }
                                 }
                           
                             Text(String(day.day))
@@ -61,8 +74,7 @@ struct HumorTrackerView: View {
                             Spacer()
                             
                             Button(action: {
-                                //Lembrar de criar uma variavel dos componentes de visibleDate para melhorar a leitura do codigo
-                                if(calendar.dateComponents([.month], from: visibleDate).month! != calendar.dateComponents([.month], from: startDate).month!) {
+                                if(visibleDateComponents.month != startDateComponents.month) {
                                     goBackAMonth()
                                 }
                             }, label: {
@@ -71,7 +83,7 @@ struct HumorTrackerView: View {
                                     .frame(width: 40)
                                     .overlay() {
                                         Image(systemName: "chevron.left")
-                                            .foregroundColor(calendar.dateComponents([.month], from: visibleDate) != calendar.dateComponents([.month], from: startDate) ? .toast : .canvas)
+                                            .foregroundColor(visibleDateComponents.month != startDateComponents.month ? .toast : .canvas)
                                             
                                     }
                             })
@@ -88,7 +100,7 @@ struct HumorTrackerView: View {
                                 .padding(.top, 16)
                             
                             Button(action: {
-                                if(calendar.dateComponents([.month], from: visibleDate).month! > calendar.dateComponents([.month], from: startDate).month!) {
+                                if(visibleDateComponents.month! > startDateComponents.month!) {
                                     goForwardOneMonth()
                                 }
                             }, label: {
@@ -97,7 +109,7 @@ struct HumorTrackerView: View {
                                     .frame(width: 40)
                                     .overlay() {
                                         Image(systemName: "chevron.right")
-                                            .foregroundColor(calendar.dateComponents([.month], from: visibleDate) != calendar.dateComponents([.month], from: startDate) ? .toast : .canvas)
+                                            .foregroundColor(visibleDateComponents.month != startDateComponents.month ? .toast : .canvas)
                                     }
                             })
                             .padding(.leading, -16)
