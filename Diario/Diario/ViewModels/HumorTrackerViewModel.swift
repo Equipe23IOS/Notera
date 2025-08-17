@@ -8,16 +8,21 @@
 import SwiftUI
 
 class HumorTrackerViewModel: ObservableObject {
+    let database = DataSource.shared
     @Published var trackedDays: [DayModel] = []
+    
+    init(trackedDays: [DayModel]) {
+        self.trackedDays = database.fetchDays()
+    }
     
     func createDay(_ day: Date, _ selectedSprite: String, _ memo: String) {
         let day = DayModel(day: day, emojiSprite: selectedSprite, memo: memo)
+        database.appendDay(day: day)
         trackedDays.append(day)
-        print(trackedDays)
-        print(day.day)
     }
     
     func deleteDay(_ day: DayModel) {
+        database.deleteDay(day: day)
         trackedDays.removeAll(where: { $0.id == day.id })
     }
     
@@ -26,6 +31,7 @@ class HumorTrackerViewModel: ObservableObject {
             return
         }
         
+        database.updateDay(day: trackedDays[index], updatedDay: day)
         trackedDays[index] = day
     }
 }
