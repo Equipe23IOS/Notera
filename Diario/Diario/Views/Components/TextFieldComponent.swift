@@ -11,7 +11,7 @@ struct  TextFieldComponent: View {
     var text: String
     var size: CGFloat
     var color: Color = .espresso
-    @State var textFieldVariable = ""
+    @Binding var textFieldVariable: String
     
     var body: some View {
         TextField(text, text: $textFieldVariable)

@@ -43,14 +43,19 @@ struct DayTrackingView: View {
                     }
                     .padding()
                
-                
-                TextFieldComponent(text: "Add a memo", size: 20)
+                TextFieldComponent(text: humorTrackerViewModel.getDay(selectedDate!) != nil ? humorTrackerViewModel.getDay(selectedDate!)!.memo : "Add a memo", size: 20, textFieldVariable: $memo)
                     .padding()
                 
                 ButtonComponent(text: "Save", color: .toast, size: 25, width: 160, height: 40, shape: Capsule()) {
-                    humorTrackerViewModel.createDay(selectedDate!, selectedSprite, memo)
-                    dismiss()
+                    if(humorTrackerViewModel.getDay(selectedDate!) != nil) {
+                        humorTrackerViewModel.updateDay(humorTrackerViewModel.getDay(selectedDate!)!, selectedSprite, memo)
+                        dismiss()
+                    } else {
+                        humorTrackerViewModel.createDay(selectedDate!, selectedSprite, memo)
+                        dismiss()
+                    }
                 }
+                
             }
         }
     }
