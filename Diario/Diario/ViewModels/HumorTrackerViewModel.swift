@@ -32,8 +32,8 @@ class HumorTrackerViewModel: ObservableObject {
             return
         }
         
-        trackedDays[index].memo = memo
-        trackedDays[index].emojiSprite = selectedSprite
+        trackedDays[index].memo = memo == "" ? trackedDays[index].memo : memo
+        trackedDays[index].emojiSprite = selectedSprite == "" ? trackedDays[index].emojiSprite : selectedSprite
         trackedDays = trackedDays
         database.updateDay(day: trackedDays[index], updatedDay: day)
     }
