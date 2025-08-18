@@ -63,7 +63,7 @@ struct ContentView: View {
                         
                         TextComponent(text: "Get started with a new notebook\n It's quick and easy!", color: .caramel)
                         
-                        ButtonComponent(text: "New", color: .toast, size: 24, width: 160, height: 40) {
+                        ButtonComponent(text: "New", color: .toast, size: 24, width: 160, height: 40, shape: Capsule()) {
                             activateSheet = true
                         }
                         
@@ -74,7 +74,7 @@ struct ContentView: View {
                             
                             Spacer()
                             
-                            ButtonComponent(text: "New", color: .toast, size: 16, width: 80, height: 32) {
+                            ButtonComponent(text: "New", color: .toast, size: 16, width: 80, height: 32, shape: Capsule()) {
                                 activateSheet = true
                             }
                         }

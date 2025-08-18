@@ -47,7 +47,7 @@ struct DayTrackingView: View {
                 TextFieldComponent(text: "Add a memo", size: 20)
                     .padding()
                 
-                ButtonComponent(text: "Save", color: .toast, size: 25, width: 160, height: 40) {
+                ButtonComponent(text: "Save", color: .toast, size: 25, width: 160, height: 40, shape: Capsule()) {
                     humorTrackerViewModel.createDay(selectedDate!, selectedSprite, memo)
                     dismiss()
                 }
