@@ -62,9 +62,7 @@ struct HumorTrackerView: View {
                                     }
                                 }
                           
-                            Text(String(day.day))
-                                .foregroundColor(.espresso)
-                                .font(.custom("Leorio", size: 20))
+                            TextComponent(text: String(day.day), color: .espresso, size: 20)
                         }
                     }
                     .dayOfWeekHeaders() { month, weekdayIndex in
@@ -74,20 +72,14 @@ struct HumorTrackerView: View {
                         HStack {
                             Spacer()
                             
-                            Button(action: {
+                            ButtonComponent(text: "", color: .clear, shapeColor: .caramel, size: 0, width: 40, height: 40, shape: Circle(), action: {
                                 if(visibleDateComponents.month != startDateComponents.month) {
                                     goBackAMonth()
                                 }
-                            }, label: {
-                                Circle()
-                                    .fill(.caramel)
-                                    .frame(width: 40)
-                                    .overlay() {
-                                        Image(systemName: "chevron.left")
-                                            .foregroundColor(visibleDateComponents.month != startDateComponents.month ? .toast : .canvas)
-                                            
-                                    }
-                            })
+                            }, overlay: { AnyView(
+                                Image(systemName: "chevron.left")
+                                    .foregroundColor(visibleDateComponents.month != startDateComponents.month ? .toast : .canvas)
+                            )})
                             .padding(.horizontal, -16)
                             .padding(.top, 16)
                             
@@ -100,19 +92,14 @@ struct HumorTrackerView: View {
                                 .padding()
                                 .padding(.top, 16)
                             
-                            Button(action: {
+                            ButtonComponent(text: "", color: .clear, shapeColor: .caramel, size: 0, width: 40, height: 40, shape: Circle(), action: {
                                 if(visibleDateComponents.month! > startDateComponents.month!) {
                                     goForwardOneMonth()
                                 }
-                            }, label: {
-                                Circle()
-                                    .fill(.caramel)
-                                    .frame(width: 40)
-                                    .overlay() {
-                                        Image(systemName: "chevron.right")
-                                            .foregroundColor(visibleDateComponents.month != startDateComponents.month ? .toast : .canvas)
-                                    }
-                            })
+                            }, overlay: { AnyView(
+                                Image(systemName: "chevron.right")
+                                    .foregroundColor(visibleDateComponents.month != startDateComponents.month ? .toast : .canvas)
+                            )})
                             .padding(.leading, -16)
                             .padding(.trailing, 16)
                             .padding(.top, 16)
