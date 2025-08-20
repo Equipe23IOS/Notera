@@ -45,4 +45,41 @@ class HumorTrackerViewModel: ObservableObject {
         }
         return componentizedDay
     }
+    
+    func getInfo() -> [(name: String, amount: Int)] {
+       var amountOfVerySad: Int = 0
+       var amountOfSad: Int = 0
+       var amountOfNeutral: Int = 0
+       var amountOfHappy: Int = 0
+       var amountOfVeryHappy: Int = 0
+       
+       for i in trackedDays {
+           switch i.emojiSprite {
+           case "SaddestEmoji":
+               amountOfVerySad += 1
+           case "SadEmoji":
+               amountOfSad += 1
+           case "NeutralEmoji":
+               amountOfNeutral += 1
+           case "HappyEmoji":
+               amountOfHappy += 1
+           case "HappiestEmoji":
+               amountOfVeryHappy += 1
+           default:
+               print("nothing")
+           }
+       }
+       
+       return [
+        ("Very Sad", amountOfVerySad),
+        ("Sad", amountOfSad),
+        ("Neutral", amountOfNeutral),
+        ("Happy", amountOfHappy),
+        ("Very Happy", amountOfVeryHappy)
+       ]
+    }
+    
+    func getAmountOfDays() {
+        
+    }
 }
