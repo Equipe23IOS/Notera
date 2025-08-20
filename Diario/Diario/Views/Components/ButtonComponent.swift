@@ -31,7 +31,7 @@ struct ButtonComponent<form: Shape>: View {
                             overlay()
                         } else {
                             Text(text)
-                                .foregroundColor(.canvas)
+                                .foregroundColor(color)
                                 .fontWeight(.medium)
                                 .font(.custom("Leorio", size: size))
                         }
