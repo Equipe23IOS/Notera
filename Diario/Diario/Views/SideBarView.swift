@@ -16,55 +16,59 @@ struct SideBarView: View {
     @State var selectedTheme: String = "Light"
     
     var body: some View {
-        ZStack {
-            Color.caramel
-                .ignoresSafeArea()
-            
-            VStack(alignment: .leading, spacing: 20) {
-                TitleComponent(title: "Settings", color: .canvas, weight: .bold)
+        NavigationStack {
+            ZStack {
+                Color.caramel
+                    .ignoresSafeArea()
                 
-                HStack {
-                    Image(systemName: "globe")
-                        .font(.system(size: 28))
-                        .foregroundColor(.canvas)
+                VStack(alignment: .leading, spacing: 20) {
+                    TitleComponent(title: "Settings", color: .canvas, weight: .bold)
                     
-                    TextComponent(text: "Language:", color: .canvas, size: 20)
+                    HStack {
+                        Image(systemName: "globe")
+                            .font(.system(size: 28))
+                            .foregroundColor(.canvas)
+                        
+                        TextComponent(text: "Language:", color: .canvas, size: 20)
+                        
+                        Picker(selectedLanguage, selection: $selectedLanguage) {
+                            ForEach(languages, id: \.self) { i in
+                                Text(i)
+                            }
+                        }
+                        .tint(.canvas)
+                        
+                    }
                     
-                    Picker(selectedLanguage, selection: $selectedLanguage) {
-                        ForEach(languages, id: \.self) { i in
-                            Text(i)
+                    HStack {
+                        Image(systemName: selectedTheme == "Light" ? "sun.max.fill" : "moon.fill")
+                            .font(.system(size: 28))
+                            .foregroundColor(.canvas)
+                        
+                        TextComponent(text: "Change theme:", color: .canvas, size: 20)
+                        
+                        Picker(selectedTheme, selection: $selectedTheme) {
+                            ForEach(appTheme, id: \.self) { i in
+                                Text(i)
+                            }
+                        }
+                        .tint(.canvas)
+                    }
+                    
+                    HStack {
+                        Image(systemName: "quote.bubble.fill")
+                            .font(.system(size: 28))
+                            .foregroundColor(.canvas)
+                        
+                        NavigationLink(destination: CreditsView()) {
+                            TextComponent(text: "Credits", color: .canvas, size: 20)
                         }
                     }
-                    .tint(.canvas)
                     
+                    Spacer()
                 }
-                
-                HStack {
-                    Image(systemName: selectedTheme == "Light" ? "sun.max.fill" : "moon.fill")
-                        .font(.system(size: 28))
-                        .foregroundColor(.canvas)
-                    
-                    TextComponent(text: "Change theme:", color: .canvas, size: 20)
-                    
-                    Picker(selectedTheme, selection: $selectedTheme) {
-                        ForEach(appTheme, id: \.self) { i in
-                            Text(i)
-                        }
-                    }
-                    .tint(.canvas)
-                }
-                
-                HStack {
-                    Image(systemName: "quote.bubble.fill")
-                        .font(.system(size: 28))
-                        .foregroundColor(.canvas)
-                    
-                    TextComponent(text: "Credits", color: .canvas, size: 20)
-                }
-                
-                Spacer()
+                .padding()
             }
-            .padding()
         }
     }
 }
