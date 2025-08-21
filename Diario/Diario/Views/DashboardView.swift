@@ -25,9 +25,11 @@ struct DashboardView: View {
                 Chart(data, id: \.name) { name, amount in
                     SectorMark(
                         angle: .value("Amount", amount),
-                        innerRadius: .ratio(0.5)
+                        innerRadius: .ratio(0.5),
+                        angularInset: 2
                     )
                     .foregroundStyle(by: .value("Categoria", name))
+                    .cornerRadius(5)
                 }
                 .frame(width: 300, height: 300)
                 .chartForegroundStyleScale([
@@ -41,8 +43,12 @@ struct DashboardView: View {
                 
                 HStack {
                     ForEach(CalendarResources.emojis.indices, id: \.self) { i in
-                        Image(CalendarResources.emojis[i])
-                            .padding(.all, 4)
+                        VStack {
+                            Image(CalendarResources.emojis[i])
+                                .padding(.all, 4)
+                            
+                            TextComponent(text: String(data[i].amount), color: .espresso, size: 24)
+                        }
                     }
                 }
             }
