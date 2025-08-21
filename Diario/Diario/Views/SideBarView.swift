@@ -8,9 +8,12 @@
 import SwiftUI
 
 struct SideBarView: View {
+    var languages: [String] = ["English", "Portugues", "Espanhol", "日本"]
+    var appTheme: [String] = ["Light", "Dark"]
     @Binding var sidebarOpened: Bool
     @Binding var darkMode: Bool
-    @State var handlesLanguage: () -> Void
+    @State var selectedLanguage: String = "English"
+    @State var selectedTheme: String = "Light"
     
     var body: some View {
         ZStack {
@@ -21,35 +24,52 @@ struct SideBarView: View {
                 TitleComponent(title: "Settings", color: .canvas, weight: .bold)
                 
                 HStack {
-                    ButtonComponent(text: "Language", color: .espresso, shapeColor: .canvas, size: 20, width: 160, height: 40, shape: Capsule()) {
-                        sidebarOpened.toggle()
-                    }
-                    
                     Image(systemName: "globe")
-                        .font(.system(size: 32))
+                        .font(.system(size: 28))
                         .foregroundColor(.canvas)
+                    
+                    TextComponent(text: "Language:", color: .canvas, size: 20)
+                    
+                    Picker(selectedLanguage, selection: $selectedLanguage) {
+                        ForEach(languages, id: \.self) { i in
+                            Text(i)
+                        }
+                    }
+                    .tint(.canvas)
+                    
                 }
                 
-                Toggle(isOn: $darkMode, label: {
-                    TextComponent(text: "Change theme", color: .canvas, size: 20)
-                })
-                .frame(width: 212)
-                
-                  
                 HStack {
-                    ButtonComponent(text: "credits", color: .espresso, shapeColor: .canvas, size: 20, width: 160, height: 40, shape: Capsule()) {
-                        sidebarOpened.toggle()
-                    }
-                    
-                    Image(systemName: "quote.bubble.fill")
-                        .font(.system(size: 32))
+                    Image(systemName: selectedTheme == "Light" ? "sun.max.fill" : "moon.fill")
+                        .font(.system(size: 28))
                         .foregroundColor(.canvas)
+                    
+                    TextComponent(text: "Change theme:", color: .canvas, size: 20)
+                    
+                    Picker(selectedTheme, selection: $selectedTheme) {
+                        ForEach(appTheme, id: \.self) { i in
+                            Text(i)
+                        }
+                    }
+                    .tint(.canvas)
+                }
+                
+                HStack {
+                    Image(systemName: "quote.bubble.fill")
+                        .font(.system(size: 28))
+                        .foregroundColor(.canvas)
+                    
+                    TextComponent(text: "Credits", color: .canvas, size: 20)
                 }
                 
                 Spacer()
             }
             .padding()
         }
-        .opacity(sidebarOpened ? 1 : 0)
     }
+}
+
+#Preview {
+    @Previewable @State var a = true
+    SideBarView(sidebarOpened: $a, darkMode: $a, selectedLanguage: "English")
 }

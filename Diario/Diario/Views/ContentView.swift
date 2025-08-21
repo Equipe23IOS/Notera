@@ -11,6 +11,8 @@ struct ContentView: View {
     @StateObject private var notebookViewModel: NotebooksViewModel
     @StateObject private var diaryContentViewModel: DiaryContentViewModel
     @State var activateSheet: Bool = false
+    @State var sideBarIsOpened: Bool = false
+    @State var isDarkMode: Bool = false
     
     init() {
         let notebooks = NotebooksViewModel()
@@ -71,6 +73,9 @@ struct ContentView: View {
                     } else {
                         HStack {
                             TitleComponent(title: "Notera", color: .espresso, weight: .bold)
+                                .onTapGesture {
+                                    sideBarIsOpened.toggle()
+                                }
                             
                             Spacer()
                             
