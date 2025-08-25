@@ -21,7 +21,7 @@ struct DayTrackingView: View {
                 .ignoresSafeArea()
             
             VStack {
-                TitleComponent(title: "How are you feeling?", color: .espresso, weight: .bold)
+                TitleComponent(title: "How are you feeling?", weight: .bold)
                 
                     HStack {
                         Spacer()
@@ -46,7 +46,7 @@ struct DayTrackingView: View {
                 TextFieldComponent(text: humorTrackerViewModel.getDay(selectedDate!) != nil ? humorTrackerViewModel.getDay(selectedDate!)!.memo : "Add a memo", size: 20, textFieldVariable: $memo)
                     .padding()
                 
-                ButtonComponent(text: "Save", color: .toast, size: 25, width: 160, height: 40, shape: Capsule()) {
+                ButtonComponent(text: "Save", size: 25, width: 160, height: 40, shape: Capsule()) {
                     if(humorTrackerViewModel.getDay(selectedDate!) != nil) {
                         humorTrackerViewModel.updateDay(humorTrackerViewModel.getDay(selectedDate!)!, selectedSprite, memo)
                         dismiss()

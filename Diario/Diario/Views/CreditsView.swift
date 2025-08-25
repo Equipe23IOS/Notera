@@ -14,37 +14,37 @@ struct CreditsView: View {
     var body: some View {
         NavigationStack {
             VStack(spacing: 12) {
-                TitleComponent(title: "Credits", color: .espresso, weight: .bold, size: 36)
+                TitleComponent(title: "Credits", weight: .bold, size: 36)
                     .padding(.bottom, 20)
                 
-                TitleComponent(title: "A product of:", color: .espresso, weight: .bold, size: 36)
-                TextComponent(text: "Notera", color: .espresso, size: 28)
+                TitleComponent(title: "A product of:", weight: .bold, size: 36)
+                TextComponent(text: "Notera", size: 28)
                     .padding(.bottom, 20)
                 
-                TitleComponent(title: "Developed by:", color: .espresso, weight: .bold, size: 36)
-                TextComponent(text: "Bell Marques", color: .espresso, size: 28)
+                TitleComponent(title: "Developed by:", weight: .bold, size: 36)
+                TextComponent(text: "Bell Marques", size: 28)
                     .padding(.bottom, 20)
                 
-                TitleComponent(title: "UI/UX design:", color: .espresso, weight: .bold, size: 36)
-                TextComponent(text: "Atila Benoit", color: .espresso, size: 28)
+                TitleComponent(title: "UI/UX design:", weight: .bold, size: 36)
+                TextComponent(text: "Atila Benoit", size: 28)
                     .padding(.bottom, 20)
                 
-                TitleComponent(title: "Support:", color: .espresso, weight: .bold, size: 36)
-                TextComponent(text: "Guilherme Alfredo", color: .espresso, size: 28)
+                TitleComponent(title: "Support:", weight: .bold, size: 36)
+                TextComponent(text: "Guilherme Alfredo", size: 28)
                     .padding(.bottom, 20)
                 
-                TitleComponent(title: "Art:", color: .espresso, weight: .bold, size: 36)
-                TextComponent(text: "Bell Marques", color: .espresso, size: 28)
+                TitleComponent(title: "Art:", weight: .bold, size: 36)
+                TextComponent(text: "Bell Marques", size: 28)
                     .padding(.bottom, 20)
                 
-                TitleComponent(title: "Special thanks to", color: .espresso, weight: .bold, size: 36)
-                TextComponent(text: "My dearest friends", color: .espresso, size: 28)
-                TextComponent(text: "Gleide Dias", color: .espresso, size: 28)
-                TextComponent(text: "Lavyne Dias", color: .espresso, size: 28)
-                TextComponent(text: "Edimario Mendes", color: .espresso, size: 28)
+                TitleComponent(title: "Special thanks to", weight: .bold, size: 36)
+                TextComponent(text: "My dearest friends", size: 28)
+                TextComponent(text: "Gleide Dias", size: 28)
+                TextComponent(text: "Lavyne Dias", size: 28)
+                TextComponent(text: "Edimario Mendes", size: 28)
                     .padding(.bottom, 20)
                 
-                TextComponent(text: "© 2025 Notera. All Rights Reserved.", color: .espresso, size: 20)
+                TextComponent(text: "© 2025 Notera. All Rights Reserved.", size: 20)
                     .multilineTextAlignment(.center)
             }
             .frame(maxWidth: .infinity, maxHeight: 200)

@@ -61,25 +61,25 @@ struct ContentView: View {
                     if(notebookViewModel.notebooks.isEmpty) {
                         Spacer()
                         
-                        TitleComponent(title: "Notera", color: .caramel, weight: .bold)
+                        TitleComponent(title: "Notera", weight: .bold)
                         
-                        TextComponent(text: "Get started with a new notebook\n It's quick and easy!", color: .caramel)
+                        TextComponent(text: "Get started with a new notebook\n It's quick and easy!")
                         
-                        ButtonComponent(text: "New", color: .toast, size: 24, width: 160, height: 40, shape: Capsule()) {
+                        ButtonComponent(text: "New", size: 24, width: 160, height: 40, shape: Capsule()) {
                             activateSheet = true
                         }
                         
                         Spacer()
                     } else {
                         HStack {
-                            TitleComponent(title: "Notera", color: .espresso, weight: .bold)
+                            TitleComponent(title: "Notera",  weight: .bold)
                                 .onTapGesture {
                                     sideBarIsOpened.toggle()
                                 }
                             
                             Spacer()
                             
-                            ButtonComponent(text: "New", color: .toast, size: 16, width: 80, height: 32, shape: Capsule()) {
+                            ButtonComponent(text: "New", size: 16, width: 80, height: 32, shape: Capsule()) {
                                 activateSheet = true
                             }
                         }
@@ -88,10 +88,10 @@ struct ContentView: View {
                         
                         loadNotebooks()
                         
-                        TitleComponent(title: "Recent entries", color: .espresso, weight: .bold, size: 20)
+                        TitleComponent(title: "Recent entries", weight: .bold, size: 20)
                             
                         if(diaryContentViewModel.recentEntries.isEmpty) {
-                            TextComponent(text: "You haven't written anything yet\n Fill it with something great!", color: .espresso)
+                            TextComponent(text: "You haven't written anything yet\n Fill it with something great!")
                                 .padding()
                         } else {
                             loadDiaryCards()

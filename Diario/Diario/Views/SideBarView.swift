@@ -22,14 +22,14 @@ struct SideBarView: View {
                     .ignoresSafeArea()
                 
                 VStack(alignment: .leading, spacing: 20) {
-                    TitleComponent(title: "Settings", color: .canvas, weight: .bold)
+                    TitleComponent(title: "Settings", weight: .bold)
                     
                     HStack {
                         Image(systemName: "globe")
                             .font(.system(size: 28))
                             .foregroundColor(.canvas)
                         
-                        TextComponent(text: "Language:", color: .canvas, size: 20)
+                        TextComponent(text: "Language:", size: 20)
                         
                         Picker(selectedLanguage, selection: $selectedLanguage) {
                             ForEach(languages, id: \.self) { i in
@@ -45,7 +45,7 @@ struct SideBarView: View {
                             .font(.system(size: 28))
                             .foregroundColor(.canvas)
                         
-                        TextComponent(text: "Change theme:", color: .canvas, size: 20)
+                        TextComponent(text: "Change theme:", size: 20)
                         
                         Picker(selectedTheme, selection: $selectedTheme) {
                             ForEach(appTheme, id: \.self) { i in
@@ -61,7 +61,7 @@ struct SideBarView: View {
                             .foregroundColor(.canvas)
                         
                         NavigationLink(destination: CreditsView()) {
-                            TextComponent(text: "Credits", color: .canvas, size: 20)
+                            TextComponent(text: "Credits", size: 20)
                         }
                     }
                     

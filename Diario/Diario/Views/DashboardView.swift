@@ -47,7 +47,7 @@ struct DashboardView: View {
                             Image(CalendarResources.emojis[i])
                                 .padding(.all, 4)
                             
-                            TextComponent(text: String(data[i].amount), color: .espresso, size: 24)
+                            TextComponent(text: String(data[i].amount), size: 24)
                         }
                     }
                 }

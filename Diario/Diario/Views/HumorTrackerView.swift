@@ -63,17 +63,17 @@ struct HumorTrackerView: View {
                                         }
                                     }
                               
-                                TextComponent(text: String(day.day), color: .espresso, size: 20)
+                                TextComponent(text: String(day.day), size: 20)
                             }
                         }
                         .dayOfWeekHeaders() { month, weekdayIndex in
-                            TextComponent(text: CalendarResources.weekdaySymbols[weekdayIndex], color: .espresso, size: 20)
+                            TextComponent(text: CalendarResources.weekdaySymbols[weekdayIndex], size: 20)
                         }
                         .monthHeaders() { month in
                             HStack {
                                 Spacer()
                                 
-                                ButtonComponent(text: "", color: .clear, shapeColor: .caramel, size: 0, width: 40, height: 40, shape: Circle(), action: {
+                                ButtonComponent(text: "", size: 0, width: 40, height: 40, shape: Circle(), action: {
                                     if(visibleDateComponents.month != startDateComponents.month) {
                                         goBackAMonth()
                                     }
@@ -88,12 +88,12 @@ struct HumorTrackerView: View {
                                     .fill(.caramel)
                                     .frame(width: 120, height: 40)
                                     .overlay() {
-                                        TextComponent(text: CalendarResources.monthSymbols[month.month - 1], color: .espresso, size: 20)
+                                        TextComponent(text: CalendarResources.monthSymbols[month.month - 1], size: 20)
                                     }
                                     .padding()
                                     .padding(.top, 16)
                                 
-                                ButtonComponent(text: "", color: .clear, shapeColor: .caramel, size: 0, width: 40, height: 40, shape: Circle(), action: {
+                                ButtonComponent(text: "", size: 0, width: 40, height: 40, shape: Circle(), action: {
                                     if(visibleDateComponents.month! > startDateComponents.month!) {
                                         goForwardOneMonth()
                                     }
@@ -125,7 +125,7 @@ struct HumorTrackerView: View {
                             Text("This day will come, don't worry :)")
                         }
                     
-                    TitleComponent(title: "Dashboard", color: .espresso, weight: .bold)
+                    TitleComponent(title: "Dashboard", weight: .bold)
                     
                     DashboardView(humorTrackerViewModel: humorTrackerViewModel)
                     
