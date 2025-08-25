@@ -56,7 +56,9 @@ struct ContentView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                Color(.canvas).edgesIgnoringSafeArea(.all)
+                Color("BackgroundColor")
+                    .edgesIgnoringSafeArea(.all)
+                
                 VStack {
                     if(notebookViewModel.notebooks.isEmpty) {
                         Spacer()
@@ -84,7 +86,7 @@ struct ContentView: View {
                             }
                         }
                         .padding()
-                        .background(.linen)
+                        .background(Color("ToolbarColor"))
                         
                         loadNotebooks()
                         

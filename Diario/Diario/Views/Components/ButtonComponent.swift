@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ButtonComponent<form: Shape>: View {
     var text: String
-    var color: Color = Color("TextColor")
+    var color: Color = Color("ButtonTextColor")
     var shapeColor: Color = Color("ButtonColor")
     var size: CGFloat
     var width: CGFloat
