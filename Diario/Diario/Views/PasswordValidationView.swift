@@ -38,38 +38,23 @@ struct PasswordValidationView: View {
                 Text("\(countdown())")
                     .hidden()
                 
-                Text("Try again in 30 seconds")
-                    .font(.custom("Leorio", size: 24))
-                    .fontWeight(.medium)
-                    .multilineTextAlignment(.center)
-                    .padding()
-                    .foregroundColor(.caramel)
+                TextComponent(text: "Try again in 30 seconds")
                 
             } else {
                 VStack {
                     if(hasJustCreatedPassword) {
-                        Text("Insert the password you just created")
-                            .font(.custom("Leorio", size: 24))
-                            .fontWeight(.medium)
-                            .multilineTextAlignment(.center)
-                            .padding()
-                            .foregroundColor(.caramel)
+                        TextComponent(text: "Insert the password you just created")
+                        
                     } else {
-                        Text("Welcome back!")
-                            .font(.custom("Leorio", size: 24))
-                            .fontWeight(.medium)
-                            .multilineTextAlignment(.center)
-                            .padding()
-                            .foregroundColor(.caramel)
+                        TitleComponent(title: "Welcome back!", weight: .bold)
                     }
                     
                     ZStack {
                         Group {
                             if(isSecure) {
-                                TextField("Enter a password", text: $password)
-                                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                                TextFieldComponent(text: "Enter a password", size: 16, textFieldVariable: $password)
                                     .padding()
-                                    .font(.custom("Leorio", size: 16))
+                               
                             } else {
                                 SecureField("Enter a password", text: $password)
                                     .textFieldStyle(RoundedBorderTextFieldStyle())
@@ -91,26 +76,16 @@ struct PasswordValidationView: View {
                         .padding()
                         .padding(.trailing, 10)
                     }
-                    Button(action: {
+                    
+                    ButtonComponent(text: "Log in", size: 20, width: 160, height: 40, shape: Capsule(), action: {
                         if(passwordViewModel.validatePasswrd(password)) {
                             goToNotera.toggle()
                         } else {
                             attempts += 1
                             showPopup.toggle()
                         }
-                    }, label: {
-                        Capsule()
-                            .fill(Color.toast)
-                            .frame(width: 160, height: 40)
-                            .overlay() {
-                                Text("Log in")
-                                    .font(.custom("Leorio", size: 20))
-                                    .fontWeight(.medium)
-                                    .multilineTextAlignment(.center)
-                                    .padding()
-                                    .foregroundColor(.canvas)
-                            }
                     })
+                    
                     .alert("Error", isPresented: $showPopup) {
                         Button("OK", role: .cancel) { }
                     } message: {
@@ -120,4 +95,9 @@ struct PasswordValidationView: View {
             }
         }
     }
+}
+
+#Preview {
+    @Previewable @State var a = false
+    PasswordValidationView(attempts: 1, password: "", isSecure: false, showPopup: false, hasJustCreatedPassword: $a, goToNotera: $a, passwordViewModel: PasswordViewModel())
 }
