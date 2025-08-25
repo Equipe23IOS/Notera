@@ -9,7 +9,7 @@ import SwiftUI
 
 struct TextComponent: View {
     var text: String
-    var color: Color
+    var color: Color = Color("textColor")
     var size: CGFloat = 16
     
     var body: some View {
