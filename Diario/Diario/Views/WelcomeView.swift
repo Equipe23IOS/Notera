@@ -19,36 +19,18 @@ struct WelcomeView: View {
                 TabView {
                     ForEach(WelcomeData.pages) { page in
                         VStack {
-                            Text(page.label)
-                                .font(.custom("Leorio", size: 36))
-                                .fontWeight(.bold)
-                                .multilineTextAlignment(.center)
-                                .foregroundColor(.caramel)
-
-                            Text(page.text)
-                                .font(.custom("Leorio", size: 20))
-                                .fontWeight(.medium)
-                                .multilineTextAlignment(.center)
-                                .padding()
-                                .foregroundColor(.caramel)
+                            TitleComponent(title: page.label, weight: .bold)
+                            
+                            TextComponent(text: page.text)
                         }
                     }
                 }
 
-                Button {
+                ButtonComponent(text: "Get Started", size: 24, width: 160, height: 40, shape: Capsule(), action: {
                     hasSeenWelcome = true
-                } label: {
-                    Capsule()
-                        .fill(Color.toast)
-                        .frame(width: 160, height: 40)
-                        .overlay() {
-                            Text("Get Started")
-                                .padding()
-                                .font(.title3)
-                                .fontWeight(.medium)
-                                .foregroundColor(.linen)
-                        }
-                }
+                })
+                
+                
             }
             .tabViewStyle(.page)
             .onAppear {
