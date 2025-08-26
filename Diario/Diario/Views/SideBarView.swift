@@ -9,16 +9,17 @@ import SwiftUI
 
 struct SideBarView: View {
     var languages: [String] = ["English", "Portugues", "Espanhol", "日本"]
-    var appTheme: [String] = ["Light", "Dark"]
+    var appTheme: [String] = ["System", "Light", "Dark"]
     @Binding var sidebarOpened: Bool
     @Binding var darkMode: Bool
     @State var selectedLanguage: String = "English"
     @State var selectedTheme: String = "Light"
+    @Environment(\.appsTheme) var appsTheme
     
     var body: some View {
         NavigationStack {
             ZStack {
-                Color.caramel
+                Color("BackgroundColor")
                     .ignoresSafeArea()
                 
                 VStack(alignment: .leading, spacing: 20) {
@@ -37,7 +38,6 @@ struct SideBarView: View {
                             }
                         }
                         .tint(.canvas)
-                        
                     }
                     
                     HStack {
@@ -53,6 +53,18 @@ struct SideBarView: View {
                             }
                         }
                         .tint(.canvas)
+                        .onChange(of: selectedTheme) {
+                            switch selectedTheme {
+                            case "System":
+                                appsTheme?.wrappedValue = nil
+                            case "Dark":
+                                appsTheme?.wrappedValue = .dark
+                            case "Light":
+                                appsTheme?.wrappedValue = .light
+                            default:
+                                appsTheme?.wrappedValue = nil
+                            }
+                        }
                     }
                     
                     HStack {
@@ -71,9 +83,4 @@ struct SideBarView: View {
             }
         }
     }
-}
-
-#Preview {
-    @Previewable @State var a = true
-    SideBarView(sidebarOpened: $a, darkMode: $a, selectedLanguage: "English")
 }
