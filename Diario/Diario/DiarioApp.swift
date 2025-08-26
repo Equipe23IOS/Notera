@@ -17,9 +17,13 @@ struct DiarioApp: App {
         return container
     }
     
+    @State var appsTheme: ColorScheme? = nil
+    
     var body: some Scene {
         WindowGroup {
             OnBoardingView()
+                .preferredColorScheme(appsTheme)
+                .environment(\.appsTheme, $appsTheme)
         }
         .modelContainer(container)
     }
