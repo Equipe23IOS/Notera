@@ -19,6 +19,19 @@ struct DiarioApp: App {
     
     @State var appsTheme: ColorScheme? = nil
     
+    init() {
+        let storedTheme = UserDefaults.standard.string(forKey: "selectedTheme") ?? "System"
+        
+        switch storedTheme {
+        case "Dark":
+            _appsTheme = State(initialValue: .dark)
+        case "Light":
+            _appsTheme = State(initialValue: .light)
+        default:
+            _appsTheme = State(initialValue: nil)
+        }
+    }
+    
     var body: some Scene {
         WindowGroup {
             OnBoardingView()

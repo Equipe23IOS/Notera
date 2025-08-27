@@ -11,10 +11,23 @@ struct SideBarView: View {
     var languages: [String] = ["English", "Portugues", "Espanhol", "日本"]
     var appTheme: [String] = ["System", "Light", "Dark"]
     @Binding var sidebarOpened: Bool
-    @Binding var darkMode: Bool
     @State var selectedLanguage: String = "English"
-    @State var selectedTheme: String = "Light"
+    @AppStorage("selectedTheme") var selectedTheme: String = "System"
+    @StateObject var settingsViewModel: SettingsViewModel = SettingsViewModel()
     @Environment(\.appsTheme) var appsTheme
+    
+    func evaluateAppsTheme() {
+        switch selectedTheme {
+        case "System":
+            appsTheme?.wrappedValue = nil
+        case "Dark":
+            appsTheme?.wrappedValue = .dark
+        case "Light":
+            appsTheme?.wrappedValue = .light
+        default:
+            appsTheme?.wrappedValue = nil
+        }
+    }
     
     var body: some View {
         NavigationStack {
@@ -54,16 +67,7 @@ struct SideBarView: View {
                         }
                         .tint(.canvas)
                         .onChange(of: selectedTheme) {
-                            switch selectedTheme {
-                            case "System":
-                                appsTheme?.wrappedValue = nil
-                            case "Dark":
-                                appsTheme?.wrappedValue = .dark
-                            case "Light":
-                                appsTheme?.wrappedValue = .light
-                            default:
-                                appsTheme?.wrappedValue = nil
-                            }
+                            evaluateAppsTheme()
                         }
                     }
                     
