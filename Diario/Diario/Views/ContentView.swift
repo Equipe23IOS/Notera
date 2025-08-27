@@ -12,7 +12,8 @@ struct ContentView: View {
     @StateObject private var diaryContentViewModel: DiaryContentViewModel
     @State var activateSheet: Bool = false
     @State var sideBarIsOpened: Bool = false
-    @State var isDarkMode: Bool = false
+    @State var notebookToDelete: NotebookModel? = nil
+    @Environment(\.dismiss) var dismiss
     
     init() {
         let notebooks = NotebooksViewModel()
@@ -37,20 +38,36 @@ struct ContentView: View {
                     NavigationLink(destination: NotebookPageView(notebookModel: i, diaryContentViewModel: diaryContentViewModel, notebookViewModel: notebookViewModel, notebookID: i.id),
                                    label: {
                         Image(i.sprite)
-                            .overlay() {
-                                Button(action: {
-                                    diaryContentViewModel.evaluateDeletedNotebook(i.id)
-                                    notebookViewModel.deleteNotebook(i.id)
-                                }, label: {
-                                    Image(systemName: "trash")
-                                        .frame(width: 25, height: 25, alignment: .topTrailing)
-                                })
+                            .onLongPressGesture {
+                                notebookToDelete = i
                             }
                     })
                 }
             }
             .padding()
         }
+        .alert("Alert", isPresented: Binding(
+                    get: { notebookToDelete != nil },
+                    set: { if !$0 { notebookToDelete = nil } }
+                )) {
+                Button("Delete") {
+                    if let toDelete = notebookToDelete {
+                        print(toDelete.name)
+                        diaryContentViewModel.evaluateDeletedNotebook(toDelete.id)
+                        notebookViewModel.deleteNotebook(toDelete.id)
+                        dismiss()
+                    }
+                }
+                Button("Go back", role: .cancel) {
+                    notebookToDelete = nil
+                }
+            } message: {
+                if let toDelete = notebookToDelete {
+                    Text("Are you sure you want to delete \(toDelete.name)?")
+                } else {
+                    Text("Error: no notebook selected")
+                }
+            }
     }
     
     var body: some View {
