@@ -11,6 +11,10 @@ struct DiaryCard: View {
     var title: String
     var notebookID: UUID?
     var pageID: UUID
+    var bColor: Color = Color("BackgroundColor")
+    var txtColor: Color = Color("TextColor")
+    var shapeColor: Color = Color("ButtonColor")
+    var sdwColor: Color = Color("ShadingColor")
     @ObservedObject var diaryContentViewModel: DiaryContentViewModel
     
     var body: some View {
@@ -59,17 +63,17 @@ struct DiaryCard: View {
         }, label: {
             HStack {
                 RoundedRectangle(cornerRadius: 15)
-                    .fill(Color.canvas)
+                    .fill(Color(bColor))
                     .frame(maxWidth: .infinity, minHeight: 48, maxHeight: 48)
-                    .shadow(color: .caramel, radius: 5, y: 8)
+                    .shadow(color: sdwColor, radius: 5, y: 8)
                     .overlay () {
                         RoundedRectangle(cornerRadius: 15)
-                            .stroke(Color.toast, lineWidth: 2)
+                            .stroke(Color(shapeColor), lineWidth: 2)
                     }
                     .overlay() {
                         HStack {
                             Text(title)
-                                .foregroundColor(.espresso)
+                                .foregroundColor(txtColor)
                                 .font(.custom("Leorio", size: 16))
                                 .fontWeight(.bold)
                                 .multilineTextAlignment(.center)
@@ -81,7 +85,7 @@ struct DiaryCard: View {
                                 diaryContentViewModel.deleteEntryFromRecentEntries(pageID)
                             }, label: {
                                 Image(systemName: "xmark")
-                                    .foregroundColor(.toast)
+                                    .foregroundColor(shapeColor)
                             })
                         }
                         .padding()

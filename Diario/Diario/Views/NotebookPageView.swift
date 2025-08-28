@@ -13,10 +13,15 @@ struct NotebookPageView: View {
     @ObservedObject var notebookViewModel: NotebooksViewModel
     @Environment(\.dismiss) var dismiss
     var notebookID: UUID
+    var bColor: Color = Color("BackgroundColor")
+    var txtColor: Color = Color("TextColor")
+    var shapeColor: Color = Color("ButtonColor")
+    var bTxtColor: Color = Color("ButtonTextColor")
+    var tColor: Color = Color("ToolbarColor")
     
     var body: some View {
         ZStack {
-            Color.canvas
+            Color(bColor)
                 .ignoresSafeArea()
     
             NavigationStack {
@@ -40,10 +45,10 @@ struct NotebookPageView: View {
                         }, label: {
                             HStack {
                                 Image(systemName: "chevron.left")
-                                    .foregroundColor(.toast)
+                                    .foregroundColor(shapeColor)
                                 
                                 Text("Back")
-                                    .foregroundColor(.toast)
+                                    .foregroundColor(shapeColor)
                                     .font(.custom("Leorio", size: 20))
                             }
                         })
@@ -51,7 +56,7 @@ struct NotebookPageView: View {
                     
                     ToolbarItem(placement: .principal) {
                         Text(notebookModel.name)
-                            .foregroundColor(.espresso)
+                            .foregroundColor(txtColor)
                             .font(.custom("Leorio", size: 28))
                             .fontWeight(.bold)
                     }
@@ -61,13 +66,13 @@ struct NotebookPageView: View {
                             Diary(diaryContentViewModel: diaryContentViewModel, notebookID: notebookID)
                         }, label: {
                             Text("Write")
-                                .foregroundColor(.toast)
+                                .foregroundColor(shapeColor)
                                 .font(.custom("Leorio", size: 20))
                         })
                     }
                 }
                 .navigationBarBackButtonHidden(true)
-                .toolbarBackground(.linen, for: .navigationBar)
+                .toolbarBackground(tColor, for: .navigationBar)
                 .toolbarBackground(.visible, for: .navigationBar)
             }
         }

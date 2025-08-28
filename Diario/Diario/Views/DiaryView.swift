@@ -16,6 +16,12 @@ struct Diary: View {
     @State var isEditing: Bool = false
     @ObservedObject var diaryContentViewModel: DiaryContentViewModel
     @Environment(\.dismiss) var dismiss
+    var bColor: Color = Color("BackgroundColor")
+    var txtColor: Color = Color("TextColor")
+    var shapeColor: Color = Color("ButtonColor")
+    var bTxtColor: Color = Color("ButtonTextColor")
+    var tColor: Color = Color("ToolbarColor")
+    var sdwColor: Color = Color("ShadingColor")
     var pageID: UUID?
     var notebookID: UUID?
     
@@ -23,7 +29,7 @@ struct Diary: View {
         NavigationStack {
             VStack {
                 TextField("Title", text: $diaryTitle)
-                    .foregroundColor(.espresso)
+                    .foregroundColor(txtColor)
                     .font(.custom("Leorio", size: 24))
                     .fontWeight(.bold)
                 
@@ -33,10 +39,10 @@ struct Diary: View {
                     .background(Color.gray)
                 
                 TextEditor(text: $diaryEntry)
-                    .foregroundColor(.espresso)
+                    .foregroundColor(txtColor)
                     .font(.custom("Leorio", size: 20))
                     .scrollContentBackground(.hidden)
-                    .background(.canvas)
+                    .background(bColor)
                     .frame(maxHeight: .infinity)
                     .overlay(alignment: .topLeading) {
                         if diaryEntry.isEmpty && !isEditing {
@@ -59,17 +65,17 @@ struct Diary: View {
                 Spacer()
             }
             .padding()
-            .background(.canvas)
+            .background(bColor)
             .cornerRadius(30)
-            .shadow(color: .caramel, radius: 12, y: 4)
+            .shadow(color: sdwColor, radius: 12, y: 4)
         }
         .padding()
-        .background(.canvas)
+        .background(bColor)
         .navigationTitle(diaryTitle)
         .navigationBarTitleDisplayMode(.inline)
         .frame(maxWidth: .infinity, minHeight: 200)
         .navigationBarBackButtonHidden(true)
-        .toolbarBackground(.linen, for: .navigationBar)
+        .toolbarBackground(tColor, for: .navigationBar)
         .toolbarBackground(.visible, for: .navigationBar)
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
@@ -78,10 +84,10 @@ struct Diary: View {
                 }, label: {
                     HStack {
                         Image(systemName: "chevron.left")
-                            .foregroundColor(.toast)
+                            .foregroundColor(shapeColor)
                         
                         Text("Back")
-                            .foregroundColor(.toast)
+                            .foregroundColor(shapeColor)
                             .font(.custom("Leorio", size: 20))
                     }
                 })
@@ -90,7 +96,7 @@ struct Diary: View {
             
             ToolbarItem(placement: .principal) {
                 Text(diaryTitle)
-                    .foregroundColor(.espresso)
+                    .foregroundColor(txtColor)
                     .font(.custom("Leorio", size: 28))
                     .fontWeight(.bold)
             }
@@ -119,11 +125,11 @@ struct Diary: View {
                     }
                 }, label: {
                     Capsule()
-                        .fill(Color.toast)
+                        .fill(Color(shapeColor))
                         .frame(width: 80, height: 30)
                         .overlay() {
                             Text("Save")
-                                .foregroundColor(.linen)
+                                .foregroundColor(bTxtColor)
                                 .fontWeight(.medium)
                         }
                 })

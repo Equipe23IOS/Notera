@@ -14,6 +14,11 @@ struct CreationNotebookView: View{
     @State var showPopupEmptySprite: Bool = false
     @State var selectedSprite: String = ""
     @ObservedObject var notebookViewModel: NotebooksViewModel
+    var bColor: Color = Color("BackgroundColor")
+    var txtColor: Color = Color("TextColor")
+    var shapeColor: Color = Color("ButtonColor")
+    var bTxtColor: Color = Color("ButtonTextColor")
+    var sdwColor: Color = Color("ShadingColor")
     
     
     func loadSprites() -> some View {
@@ -26,7 +31,7 @@ struct CreationNotebookView: View{
                 }
                 .overlay() {
                     RoundedRectangle(cornerRadius: 15)
-                        .stroke(selectedSprite == i ? Color.caramel : Color.clear, lineWidth: 4)
+                        .stroke(selectedSprite == i ? Color(shapeColor) : Color.clear, lineWidth: 4)
                         .padding(.all, 6)
                 }
         }
@@ -34,12 +39,12 @@ struct CreationNotebookView: View{
     
     var body:  some View {
         ZStack {
-            Color(.canvas)
+            Color(bColor)
                 .ignoresSafeArea()
             
             VStack {
                 Text("New Notebook")
-                    .foregroundColor(.espresso)
+                    .foregroundColor(txtColor)
                     .font(.custom("Leorio", size: 36))
                     .fontWeight(.bold)
                     .padding()
@@ -50,7 +55,7 @@ struct CreationNotebookView: View{
                     .font(.custom("Leorio", size: 20))
                 
                 Text("Which notebook do you want?")
-                    .foregroundColor(.espresso)
+                    .foregroundColor(txtColor)
                     .font(.custom("Leorio", size: 24))
                     .fontWeight(.bold)
                     .padding()
@@ -72,14 +77,14 @@ struct CreationNotebookView: View{
                     }
                 }, label: {
                     Capsule()
-                        .fill(Color.toast)
+                        .fill(Color(shapeColor))
                         .frame(width: 160, height: 40)
                         .overlay() {
                             Text("Create Notebook")
                                 .padding()
                                 .font(.custom("Leorio", size: 16))
                                 .fontWeight(.medium)
-                                .foregroundColor(.linen)
+                                .foregroundColor(bTxtColor)
                         }
                 })
                 .alert("Error", isPresented: $showPopupEmptyName) {
