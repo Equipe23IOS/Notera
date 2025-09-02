@@ -11,8 +11,8 @@ struct SideBarMenuView: View {
     @Binding var sidebarIsOpened: Bool
     
     var body: some View {
-        if(sidebarIsOpened) {
-            NavigationStack {
+        NavigationStack {
+            if(sidebarIsOpened) {
                 ZStack {
                     Rectangle()
                         .opacity(0.4)
@@ -32,5 +32,6 @@ struct SideBarMenuView: View {
                 }
             }
         }
+        .animation(.linear, value: sidebarIsOpened)
     }
 }
