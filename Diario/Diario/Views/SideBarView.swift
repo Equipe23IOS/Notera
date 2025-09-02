@@ -12,7 +12,6 @@ struct SideBarView: View {
     var appTheme: [String] = ["System", "Light", "Dark"]
     @State var selectedLanguage: String = "English"
     @AppStorage("selectedTheme") var selectedTheme: String = "System"
-    @StateObject var settingsViewModel: SettingsViewModel = SettingsViewModel()
     @Environment(\.appsTheme) var appsTheme
     
     func evaluateAppsTheme() {
