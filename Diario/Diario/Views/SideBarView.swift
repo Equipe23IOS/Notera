@@ -10,7 +10,6 @@ import SwiftUI
 struct SideBarView: View {
     var languages: [String] = ["English", "Portugues", "Espanhol", "日本"]
     var appTheme: [String] = ["System", "Light", "Dark"]
-    @Binding var sidebarOpened: Bool
     @State var selectedLanguage: String = "English"
     @AppStorage("selectedTheme") var selectedTheme: String = "System"
     @StateObject var settingsViewModel: SettingsViewModel = SettingsViewModel()

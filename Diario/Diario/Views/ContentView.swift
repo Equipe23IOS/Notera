@@ -119,6 +119,9 @@ struct ContentView: View {
                         Spacer()
                     }
                 }
+                
+                SideBarMenuView(sidebarIsOpened: $sideBarIsOpened)
+
             }
             
             .sheet(isPresented: $activateSheet) {
