@@ -10,7 +10,7 @@ import SwiftUI
 struct  TextFieldComponent: View {
     var text: String
     var size: CGFloat
-    var color: Color = Color("TextColor")
+    var color: Color = Colors.textColor
     @Binding var textFieldVariable: String
     
     var body: some View {

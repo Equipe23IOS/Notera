@@ -9,7 +9,7 @@ import SwiftUI
 
 struct TitleComponent: View {
     var title: String
-    var color: Color = Color("TextColor")
+    var color: Color = Colors.textColor
     var weight: Font.Weight
     var size: CGFloat = 36
     
