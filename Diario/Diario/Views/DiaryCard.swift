@@ -8,14 +8,10 @@
 import SwiftUI
 
 struct DiaryCard: View {
+    @ObservedObject var diaryContentViewModel: DiaryContentViewModel
     var title: String
     var notebookID: UUID?
     var pageID: UUID
-    var bColor: Color = Color("BackgroundColor")
-    var txtColor: Color = Color("TextColor")
-    var shapeColor: Color = Color("ButtonColor")
-    var sdwColor: Color = Color("ShadingColor")
-    @ObservedObject var diaryContentViewModel: DiaryContentViewModel
     
     var body: some View {
         NavigationLink(destination: {
@@ -63,20 +59,16 @@ struct DiaryCard: View {
         }, label: {
             HStack {
                 RoundedRectangle(cornerRadius: 15)
-                    .fill(Color(bColor))
+                    .fill(Colors.backgroundColor)
                     .frame(maxWidth: .infinity, minHeight: 48, maxHeight: 48)
-                    .shadow(color: sdwColor, radius: 5, y: 8)
+                    .shadow(color: Colors.shadingColor, radius: 5, y: 6)
                     .overlay () {
                         RoundedRectangle(cornerRadius: 15)
-                            .stroke(Color(shapeColor), lineWidth: 2)
+                            .stroke(Colors.buttonColor, lineWidth: 2)
                     }
                     .overlay() {
                         HStack {
-                            Text(title)
-                                .foregroundColor(txtColor)
-                                .font(.custom("Leorio", size: 16))
-                                .fontWeight(.bold)
-                                .multilineTextAlignment(.center)
+                            TextComponent(text: title)
                             
                             Spacer()
                             
@@ -85,7 +77,7 @@ struct DiaryCard: View {
                                 diaryContentViewModel.deleteEntryFromRecentEntries(pageID)
                             }, label: {
                                 Image(systemName: "xmark")
-                                    .foregroundColor(shapeColor)
+                                    .foregroundColor(Colors.buttonColor)
                             })
                         }
                         .padding()

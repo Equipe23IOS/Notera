@@ -25,7 +25,7 @@ struct ContentView: View {
         ScrollView {
             VStack {
                 ForEach(diaryContentViewModel.recentEntries.indices, id: \.self) { i in
-                    return DiaryCard(title: diaryContentViewModel.recentEntries[i].title, pageID: diaryContentViewModel.recentEntries[i].id, diaryContentViewModel: diaryContentViewModel)
+                    return DiaryCard(diaryContentViewModel: diaryContentViewModel, title: diaryContentViewModel.recentEntries[i].title, pageID: diaryContentViewModel.recentEntries[i].id)
                 }
             }
         }

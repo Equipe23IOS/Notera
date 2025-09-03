@@ -29,7 +29,7 @@ struct NotebookPageView: View {
                     ScrollView {
                         VStack {
                             ForEach(notebookModel.entries) { i in
-                                DiaryCard(title: i.title, notebookID: i.id, pageID: i.id , diaryContentViewModel: diaryContentViewModel)
+                                DiaryCard(diaryContentViewModel: diaryContentViewModel, title: i.title, notebookID: i.id, pageID: i.id)
                             }
                         }
                     }
