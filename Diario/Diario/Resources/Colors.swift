@@ -14,4 +14,6 @@ struct Colors {
     static let buttonTextColor: Color = Color("ButtonTextColor")
     static let textColor: Color = Color("TextColor")
     static let shadingColor: Color = Color("ShadingColor")
+    static let calendarBackground: Color = Color("CalendarBackground")
+    static let calendarButtons: Color = Color("CalendarButtons")
 }

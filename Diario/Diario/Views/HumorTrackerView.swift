@@ -9,6 +9,13 @@ import SwiftUI
 import HorizonCalendar
 
 struct HumorTrackerView: View {
+    @AppStorage("startDate") var startDate: Date = Calendar.current.date(from: DateComponents(month: Calendar.current.component(.month, from: Date())))!
+    @StateObject var humorTrackerViewModel: HumorTrackerViewModel = HumorTrackerViewModel(trackedDays: [])
+    @State var selectedDate: Date?
+    @State var visibleDate: Date = Date()
+    @State var activateSheet: Bool = false
+    @State var showPopup: Bool = false
+    
     let calendar: Calendar = Calendar.current
     var startDateComponents: DateComponents {
         return calendar.dateComponents([.year, .month, .day], from: startDate)
@@ -16,13 +23,6 @@ struct HumorTrackerView: View {
     var visibleDateComponents: DateComponents {
         return calendar.dateComponents([.year, .month, .day], from: visibleDate)
     }
-    
-    @AppStorage("startDate") var startDate: Date = Calendar.current.date(from: DateComponents(month: Calendar.current.component(.month, from: Date())))!
-    @State var selectedDate: Date?
-    @State var visibleDate: Date = Date()
-    @State var activateSheet: Bool = false
-    @State var showPopup: Bool = false
-    @StateObject var humorTrackerViewModel: HumorTrackerViewModel = HumorTrackerViewModel(trackedDays: [])
     
     func goBackAMonth() {
         guard let newMonth = Calendar.current.date(byAdding: .month, value: -1, to: visibleDate) else {
@@ -41,17 +41,19 @@ struct HumorTrackerView: View {
     
     var body: some View {
         ZStack {
-            Color.canvas
+            Colors.backgroundColor
                 .ignoresSafeArea()
             
             VStack {
                 ScrollView {
+                    TitleComponent(title: "Calendar", weight: .bold)
+                    
                     CalendarViewRepresentable(calendar: calendar, visibleDateRange: visibleDate...visibleDate, monthsLayout: .vertical(options: VerticalMonthsLayoutOptions()), dataDependency: nil)
                         .verticalDayMargin(16)
                         .days() { day in
                             VStack {
                                 RoundedRectangle(cornerRadius: 8)
-                                    .stroke(.espresso, lineWidth: 2)
+                                    .stroke(Colors.textColor, lineWidth: 2)
                                     .frame(width: 40, height: 40)
                                     .overlay() {
                                         if(calendar.date(from: day.components) == humorTrackerViewModel.trackedDays.filter({ $0.day == calendar.date(from: day.components)} ).first?.day) {
@@ -73,7 +75,7 @@ struct HumorTrackerView: View {
                             HStack {
                                 Spacer()
                                 
-                                ButtonComponent(text: "", size: 0, width: 40, height: 40, shape: Circle(), action: {
+                                ButtonComponent(text: "", shapeColor: Colors.calendarButtons, size: 0, width: 40, height: 40, shape: Circle(), action: {
                                     if(visibleDateComponents.month != startDateComponents.month) {
                                         goBackAMonth()
                                     }
@@ -85,7 +87,7 @@ struct HumorTrackerView: View {
                                 .padding(.top, 16)
                                 
                                 RoundedRectangle(cornerRadius: 8)
-                                    .fill(.caramel)
+                                    .fill(Colors.calendarButtons)
                                     .frame(width: 120, height: 40)
                                     .overlay() {
                                         TextComponent(text: CalendarResources.monthSymbols[month.month - 1], size: 20)
@@ -93,7 +95,7 @@ struct HumorTrackerView: View {
                                     .padding()
                                     .padding(.top, 16)
                                 
-                                ButtonComponent(text: "", size: 0, width: 40, height: 40, shape: Circle(), action: {
+                                ButtonComponent(text: "", shapeColor: Colors.calendarButtons, size: 0, width: 40, height: 40, shape: Circle(), action: {
                                     if(visibleDateComponents.month! > startDateComponents.month!) {
                                         goForwardOneMonth()
                                     }
@@ -114,7 +116,7 @@ struct HumorTrackerView: View {
                                 showPopup.toggle()
                             }
                         }
-                        .backgroundColor(.linen)
+                        .backgroundColor(UIColor(Colors.calendarBackground))
                         .frame(height: 640)
                         .cornerRadius(20)
                         .padding()
