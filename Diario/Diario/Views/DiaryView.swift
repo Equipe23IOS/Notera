@@ -8,30 +8,21 @@
 import SwiftUI
 
 struct Diary: View {
+    @ObservedObject var diaryContentViewModel: DiaryContentViewModel
+    @Environment(\.dismiss) var dismiss
     @State var diaryTitle: String = ""
     @State var diaryEntry: String = ""
     @State var alreadyExists: Bool = false
     @State private var emptyNotebookPopup: Bool = false
     @State private var emptyEntryPopup: Bool = false
     @State var isEditing: Bool = false
-    @ObservedObject var diaryContentViewModel: DiaryContentViewModel
-    @Environment(\.dismiss) var dismiss
-    var bColor: Color = Color("BackgroundColor")
-    var txtColor: Color = Color("TextColor")
-    var shapeColor: Color = Color("ButtonColor")
-    var bTxtColor: Color = Color("ButtonTextColor")
-    var tColor: Color = Color("ToolbarColor")
-    var sdwColor: Color = Color("ShadingColor")
     var pageID: UUID?
     var notebookID: UUID?
     
     var body: some View {
         NavigationStack {
             VStack {
-                TextField("Title", text: $diaryTitle)
-                    .foregroundColor(txtColor)
-                    .font(.custom("Leorio", size: 24))
-                    .fontWeight(.bold)
+                TextFieldComponent(text: "Title", size: 24, textFieldVariable: $diaryTitle)
                 
                 Divider()
                     .frame(height: 1)
@@ -39,10 +30,10 @@ struct Diary: View {
                     .background(Color.gray)
                 
                 TextEditor(text: $diaryEntry)
-                    .foregroundColor(txtColor)
+                    .foregroundColor(Colors.textColor)
                     .font(.custom("Leorio", size: 20))
                     .scrollContentBackground(.hidden)
-                    .background(bColor)
+                    .background(Colors.backgroundColor)
                     .frame(maxHeight: .infinity)
                     .overlay(alignment: .topLeading) {
                         if diaryEntry.isEmpty && !isEditing {
@@ -65,17 +56,17 @@ struct Diary: View {
                 Spacer()
             }
             .padding()
-            .background(bColor)
+            .background(Colors.backgroundColor)
             .cornerRadius(30)
-            .shadow(color: sdwColor, radius: 12, y: 4)
+            .shadow(color: Colors.shadingColor, radius: 12, y: 4)
         }
         .padding()
-        .background(bColor)
+        .background(Colors.backgroundColor)
         .navigationTitle(diaryTitle)
         .navigationBarTitleDisplayMode(.inline)
         .frame(maxWidth: .infinity, minHeight: 200)
         .navigationBarBackButtonHidden(true)
-        .toolbarBackground(tColor, for: .navigationBar)
+        .toolbarBackground(Colors.toolbarColor, for: .navigationBar)
         .toolbarBackground(.visible, for: .navigationBar)
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
@@ -84,10 +75,10 @@ struct Diary: View {
                 }, label: {
                     HStack {
                         Image(systemName: "chevron.left")
-                            .foregroundColor(shapeColor)
+                            .foregroundColor(Colors.buttonColor)
                         
                         Text("Back")
-                            .foregroundColor(shapeColor)
+                            .foregroundColor(Colors.buttonColor)
                             .font(.custom("Leorio", size: 20))
                     }
                 })
@@ -95,14 +86,11 @@ struct Diary: View {
             
             
             ToolbarItem(placement: .principal) {
-                Text(diaryTitle)
-                    .foregroundColor(txtColor)
-                    .font(.custom("Leorio", size: 28))
-                    .fontWeight(.bold)
+                TitleComponent(title: diaryTitle, weight: .bold, size: 28)
             }
             
             ToolbarItem(placement: .navigationBarTrailing) {
-                Button(action: {
+                ButtonComponent(text: "Save", size: 20, width: 80, height: 32, shape: Capsule(), action: {
                     if(alreadyExists) {
                         if(notebookID == nil) {
                             diaryContentViewModel.updateNotebook(diaryTitle, diaryEntry, pageID!, nil)
@@ -123,17 +111,7 @@ struct Diary: View {
                             dismiss()
                         }
                     }
-                }, label: {
-                    Capsule()
-                        .fill(Color(shapeColor))
-                        .frame(width: 80, height: 30)
-                        .overlay() {
-                            Text("Save")
-                                .foregroundColor(bTxtColor)
-                                .fontWeight(.medium)
-                        }
                 })
-                
                 .alert("Error", isPresented: $emptyNotebookPopup) {
                     Button("OK", role: .cancel) { }
                 } message: {
