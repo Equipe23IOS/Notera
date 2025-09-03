@@ -8,18 +8,12 @@
 import SwiftUI
 
 struct CreationNotebookView: View{
+    @ObservedObject var notebookViewModel: NotebooksViewModel
     @Binding var activateSheet: Bool
     @State var notebookName: String = ""
     @State var showPopupEmptyName: Bool = false
     @State var showPopupEmptySprite: Bool = false
     @State var selectedSprite: String = ""
-    @ObservedObject var notebookViewModel: NotebooksViewModel
-    var bColor: Color = Color("BackgroundColor")
-    var txtColor: Color = Color("TextColor")
-    var shapeColor: Color = Color("ButtonColor")
-    var bTxtColor: Color = Color("ButtonTextColor")
-    var sdwColor: Color = Color("ShadingColor")
-    
     
     func loadSprites() -> some View {
         ForEach(NotebookSprites.notebookSprites, id: \.self) { i in
@@ -31,7 +25,7 @@ struct CreationNotebookView: View{
                 }
                 .overlay() {
                     RoundedRectangle(cornerRadius: 15)
-                        .stroke(selectedSprite == i ? Color(shapeColor) : Color.clear, lineWidth: 4)
+                        .stroke(selectedSprite == i ? Colors.buttonColor : Color.clear, lineWidth: 4)
                         .padding(.all, 6)
                 }
         }
@@ -39,25 +33,17 @@ struct CreationNotebookView: View{
     
     var body:  some View {
         ZStack {
-            Color(bColor)
+            Color(Colors.backgroundColor)
                 .ignoresSafeArea()
             
             VStack {
-                Text("New Notebook")
-                    .foregroundColor(txtColor)
-                    .font(.custom("Leorio", size: 36))
-                    .fontWeight(.bold)
+                TitleComponent(title: "New Notebook", weight: .bold)
                     .padding()
                 
-                TextField("Notebook Name", text: $notebookName)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                TextFieldComponent(text: "Notebook name", size: 20, textFieldVariable: $notebookName)
                     .padding()
-                    .font(.custom("Leorio", size: 20))
                 
-                Text("Which notebook do you want?")
-                    .foregroundColor(txtColor)
-                    .font(.custom("Leorio", size: 24))
-                    .fontWeight(.bold)
+                TextComponent(text: "Which notebook do you want?", size: 20)
                     .padding()
                 
                 ScrollView(.horizontal) {
@@ -66,7 +52,7 @@ struct CreationNotebookView: View{
                     }
                 }
                 
-                Button(action: {
+                ButtonComponent(text: "Create Notebook", size: 16, width: 160, height: 40, shape: Capsule(), action: {
                     if(notebookName == "") {
                         showPopupEmptyName.toggle()
                     } else if(selectedSprite == "") {
@@ -75,17 +61,6 @@ struct CreationNotebookView: View{
                         activateSheet.toggle()
                         notebookViewModel.createNotebook(notebookName, selectedSprite)
                     }
-                }, label: {
-                    Capsule()
-                        .fill(Color(shapeColor))
-                        .frame(width: 160, height: 40)
-                        .overlay() {
-                            Text("Create Notebook")
-                                .padding()
-                                .font(.custom("Leorio", size: 16))
-                                .fontWeight(.medium)
-                                .foregroundColor(bTxtColor)
-                        }
                 })
                 .alert("Error", isPresented: $showPopupEmptyName) {
                     Button("OK", role: .cancel) { }

@@ -73,8 +73,8 @@ struct ContentView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                Color("BackgroundColor")
-                    .edgesIgnoringSafeArea(.all)
+                Colors.backgroundColor
+                    .ignoresSafeArea()
                 
                 VStack {
                     if(notebookViewModel.notebooks.isEmpty) {
@@ -103,7 +103,7 @@ struct ContentView: View {
                             }
                         }
                         .padding()
-                        .background(Color("ToolbarColor"))
+                        .background(Colors.toolbarColor)
                         
                         loadNotebooks()
                         
@@ -125,7 +125,7 @@ struct ContentView: View {
             }
             
             .sheet(isPresented: $activateSheet) {
-                CreationNotebookView(activateSheet: $activateSheet, notebookViewModel: notebookViewModel)
+                CreationNotebookView(notebookViewModel: notebookViewModel, activateSheet: $activateSheet)
             }
         }
     }
