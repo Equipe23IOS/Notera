@@ -18,7 +18,7 @@ struct DashboardView: View {
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 10)
-                .fill(.linen)
+                .fill(Colors.calendarBackground)
                 .frame(width: 400, height: 440)
             
             VStack {

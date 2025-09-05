@@ -33,10 +33,10 @@ struct DiaryCard: View {
             // Faz uma checagem se entrou pelo notebook, se sim roda o codigo
             if let entriesNotebookPage = entriesNotebookPage {
                 Diary(
+                    diaryContentViewModel: diaryContentViewModel,
                     diaryTitle: entriesNotebookPage.title,
                     diaryEntry: entriesNotebookPage.entry,
                     alreadyExists: true,
-                    diaryContentViewModel: diaryContentViewModel,
                     pageID: pageID,
                     notebookID: notebookID
                 )
@@ -44,10 +44,10 @@ struct DiaryCard: View {
                 // Se entrou pela tela inical, verifica se a entrada existe
                 if(recentEntriesPage != nil) {
                     Diary(
+                        diaryContentViewModel: diaryContentViewModel,
                         diaryTitle: recentEntriesPage!.title,
                         diaryEntry: recentEntriesPage!.entry,
                         alreadyExists: true,
-                        diaryContentViewModel: diaryContentViewModel,
                         pageID: pageID,
                         notebookID: notebookID
                     )
