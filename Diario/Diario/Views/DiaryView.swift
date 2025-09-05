@@ -22,7 +22,7 @@ struct Diary: View {
     var body: some View {
         NavigationStack {
             VStack {
-                TextFieldComponent(text: "Title", size: 24, textFieldVariable: $diaryTitle)
+                TextFieldComponent(text: "Title", size: 24, hideStroke: true, textFieldVariable: $diaryTitle)
                 
                 Divider()
                     .frame(height: 1)
