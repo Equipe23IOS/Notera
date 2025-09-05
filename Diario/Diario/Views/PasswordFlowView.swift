@@ -20,7 +20,7 @@ struct PasswordFlowView: View {
             } else if(goToValidation) {
                 PasswordValidationView(hasJustCreatedPassword: $hasJustCreatedPassword, goToNotera: $goToNotera, passwordViewModel: passwordViewModel)
             } else {
-                PasswordCreationView(hasJustCreatedPassword: $hasJustCreatedPassword, passwordViewModel: passwordViewModel)
+                PasswordCreationView(passwordViewModel: passwordViewModel, hasJustCreatedPassword: $hasJustCreatedPassword)
             }
         }
     }

@@ -8,38 +8,26 @@
 import SwiftUI
 
 struct PasswordCreationView: View {
+    @AppStorage("goToValidation") var goToValidation: Bool = false
+    @ObservedObject var passwordViewModel: PasswordViewModel
+    @Binding var hasJustCreatedPassword: Bool
     @State var password: String = ""
     @State var isSecure: Bool = false
-    @AppStorage("goToValidation") var goToValidation: Bool = false
-    @Binding var hasJustCreatedPassword: Bool
-    @ObservedObject var passwordViewModel: PasswordViewModel
     
     var body: some View {
         ZStack {
-            Color.canvas
+            Colors.backgroundColor
                 .ignoresSafeArea()
             
             VStack(spacing: 20) {
-                Text("Password")
-                    .foregroundColor(.espresso)
-                    .font(.custom("Leorio", size: 36))
-                    .fontWeight(.bold)
-                    .padding()
+                TitleComponent(title: "Password", weight: .bold)
                 
-                Text("To protect your notebooks, set a password!")
-                    .foregroundColor(.espresso)
-                    .font(.custom("Leorio", size: 24))
-                    .fontWeight(.bold)
-                    .multilineTextAlignment(.center)
-                    .padding()
+                TextComponent(text: "To protect your notebooks, set a password!", size: 24)
                 
                 ZStack {
                     Group {
                         if(isSecure) {
-                            TextField("Enter a password", text: $password)
-                                .textFieldStyle(RoundedBorderTextFieldStyle())
-                                .padding()
-                                .font(.custom("Leorio", size: 20))
+                            TextFieldComponent(text: "Enter a password", size: 20, textFieldVariable: $password)
                         } else {
                             SecureField("Enter a password", text: $password)
                                 .textFieldStyle(RoundedBorderTextFieldStyle())
@@ -62,21 +50,10 @@ struct PasswordCreationView: View {
                     .padding(.trailing, 10)
                 }
                 
-                Button(action: {
+                ButtonComponent(text: "Create password", size: 20, width: 160, height: 40, shape: Capsule(), action: {
                     passwordViewModel.createPassword(password)
                     goToValidation.toggle()
                     hasJustCreatedPassword.toggle()
-                }, label: {
-                    Capsule()
-                        .fill(Color.toast)
-                        .frame(width: 200, height: 40)
-                        .overlay() {
-                            Text("Create password")
-                                .padding()
-                                .font(.custom("Leorio", size: 20))
-                                .fontWeight(.medium)
-                                .foregroundColor(.linen)
-                        }
                 })
                 .padding()
             }
