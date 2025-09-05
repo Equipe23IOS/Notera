@@ -12,7 +12,7 @@ struct WelcomeView: View {
     
     var body: some View {
         ZStack {
-            Color.canvas
+            Colors.backgroundColor
                 .ignoresSafeArea()
             
             VStack {
