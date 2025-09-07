@@ -8,11 +8,11 @@
 import SwiftUI
 
 struct SideBarView: View {
-    var languages: [String] = ["English", "Portugues", "Espanhol", "日本"]
-    var appTheme: [String] = ["System", "Light", "Dark"]
-    @State var selectedLanguage: String = "English"
     @AppStorage("selectedTheme") var selectedTheme: String = "System"
     @Environment(\.appsTheme) var appsTheme
+    @State var selectedLanguage: String = "English"
+    var languages: [String] = ["English", "Portugues", "Espanhol", "日本"]
+    var appTheme: [String] = ["System", "Light", "Dark"]
     
     func evaluateAppsTheme() {
         switch selectedTheme {
@@ -30,7 +30,7 @@ struct SideBarView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                Color("BackgroundColor")
+                Colors.backgroundColor
                     .ignoresSafeArea()
                 
                 VStack(alignment: .leading, spacing: 20) {
@@ -39,7 +39,7 @@ struct SideBarView: View {
                     HStack {
                         Image(systemName: "globe")
                             .font(.system(size: 28))
-                            .foregroundColor(.canvas)
+                            .foregroundColor(Colors.textColor)
                         
                         TextComponent(text: "Language:", size: 20)
                         
@@ -48,13 +48,13 @@ struct SideBarView: View {
                                 Text(i)
                             }
                         }
-                        .tint(.canvas)
+                        .tint(Colors.textColor)
                     }
                     
                     HStack {
                         Image(systemName: selectedTheme == "Light" ? "sun.max.fill" : "moon.fill")
                             .font(.system(size: 28))
-                            .foregroundColor(.canvas)
+                            .foregroundColor(Colors.textColor)
                         
                         TextComponent(text: "Change theme:", size: 20)
                         
@@ -63,7 +63,7 @@ struct SideBarView: View {
                                 Text(i)
                             }
                         }
-                        .tint(.canvas)
+                        .tint(Colors.textColor)
                         .onChange(of: selectedTheme) {
                             evaluateAppsTheme()
                         }
@@ -72,7 +72,7 @@ struct SideBarView: View {
                     HStack {
                         Image(systemName: "quote.bubble.fill")
                             .font(.system(size: 28))
-                            .foregroundColor(.canvas)
+                            .foregroundColor(Colors.textColor)
                         
                         NavigationLink(destination: CreditsView()) {
                             TextComponent(text: "Credits", size: 20)
