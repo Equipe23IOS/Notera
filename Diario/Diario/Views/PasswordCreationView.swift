@@ -30,9 +30,15 @@ struct PasswordCreationView: View {
                             TextFieldComponent(text: "Enter a password", size: 20, textFieldVariable: $password)
                         } else {
                             SecureField("Enter a password", text: $password)
-                                .textFieldStyle(RoundedBorderTextFieldStyle())
-                                .padding()
-                                .font(.custom("Leorio", size: 20))
+                                .textFieldStyle(.plain)
+                                .padding(8)
+                                .font(.custom("Leorio", size: 16))
+                                .foregroundColor(Colors.textColor)
+                                .background(
+                                    RoundedRectangle(cornerRadius: 8)
+                                        .fill(Colors.backgroundColor.opacity(0.2))
+                                        .stroke(Colors.textColor, lineWidth: 2)
+                                )
                         }
                     }
                     
@@ -43,7 +49,7 @@ struct PasswordCreationView: View {
                             isSecure.toggle()
                         }, label: {
                             Image(systemName: isSecure ? "eye" : "eye.slash")
-                                .foregroundColor(.toast)
+                                .foregroundColor(Colors.buttonColor)
                         })
                     }
                     .padding()
