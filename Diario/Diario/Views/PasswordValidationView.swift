@@ -8,17 +8,17 @@
 import SwiftUI
 
 struct PasswordValidationView: View {
+    @ObservedObject var passwordViewModel: PasswordViewModel
+    @Binding var hasJustCreatedPassword: Bool
+    @Binding var goToNotera: Bool
     @State var attempts: Int = 1
     @State var password: String = ""
     @State var isSecure: Bool = false
     @State var showPopup: Bool = false
-    @Binding var hasJustCreatedPassword: Bool
-    @Binding var goToNotera: Bool
-    @ObservedObject var passwordViewModel: PasswordViewModel
     
     func countdown() {
         var remainingTime = 10
-        let timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { t in
+        _ = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { t in
             if(remainingTime == 0) {
                 t.invalidate()
                 attempts += 1
@@ -29,7 +29,7 @@ struct PasswordValidationView: View {
     
     var body: some View {
         ZStack {
-            Color.canvas
+            Colors.backgroundColor
                 .ignoresSafeArea()
             
             if(attempts % 5 == 0) {
@@ -57,9 +57,15 @@ struct PasswordValidationView: View {
                                
                             } else {
                                 SecureField("Enter a password", text: $password)
-                                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                                    .padding()
+                                    .textFieldStyle(.plain)
+                                    .padding(8)
                                     .font(.custom("Leorio", size: 16))
+                                    .foregroundColor(Colors.textColor)
+                                    .background(
+                                        RoundedRectangle(cornerRadius: 8)
+                                            .fill(Colors.backgroundColor.opacity(0.2))
+                                            .stroke(Colors.textColor, lineWidth: 2)
+                                    )
                             }
                         }
                         
@@ -70,7 +76,7 @@ struct PasswordValidationView: View {
                                 isSecure.toggle()
                             }, label: {
                                 Image(systemName: isSecure ? "eye" : "eye.slash")
-                                    .foregroundColor(.toast)
+                                    .foregroundColor(Colors.buttonColor)
                             })
                         }
                         .padding()
@@ -95,9 +101,4 @@ struct PasswordValidationView: View {
             }
         }
     }
-}
-
-#Preview {
-    @Previewable @State var a = false
-    PasswordValidationView(attempts: 1, password: "", isSecure: false, showPopup: false, hasJustCreatedPassword: $a, goToNotera: $a, passwordViewModel: PasswordViewModel())
 }

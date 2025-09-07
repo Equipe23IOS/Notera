@@ -18,7 +18,7 @@ struct PasswordFlowView: View {
             if(goToNotera) {
                 ContentView()
             } else if(goToValidation) {
-                PasswordValidationView(hasJustCreatedPassword: $hasJustCreatedPassword, goToNotera: $goToNotera, passwordViewModel: passwordViewModel)
+                PasswordValidationView(passwordViewModel: passwordViewModel, hasJustCreatedPassword: $hasJustCreatedPassword, goToNotera: $goToNotera)
             } else {
                 PasswordCreationView(passwordViewModel: passwordViewModel, hasJustCreatedPassword: $hasJustCreatedPassword)
             }
