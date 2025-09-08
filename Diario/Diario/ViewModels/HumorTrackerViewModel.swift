@@ -97,4 +97,18 @@ class HumorTrackerViewModel: ObservableObject {
         ("Very Happy", amountOfVeryHappy)
        ]
     }
+    
+    func checksForTrackedDays(data: [(name: String, amount: Int)]) -> Bool {
+        var amountOfDays = 0
+        
+        for i in data {
+            if(i.amount != 0) {
+                amountOfDays += 1
+                print(i.name)
+                print(i.amount)
+            }
+        }
+        
+        return amountOfDays == 0 ? true : false
+    }
 }
