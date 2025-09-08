@@ -71,62 +71,72 @@ struct ContentView: View {
     }
     
     var body: some View {
-        NavigationStack {
-            ZStack {
-                Colors.backgroundColor
-                    .ignoresSafeArea()
-                
-                VStack {
-                    if(notebookViewModel.notebooks.isEmpty) {
-                        Spacer()
-                        
-                        TitleComponent(title: "Notera", weight: .bold)
-                        
-                        TextComponent(text: "Get started with a new notebook\n It's quick and easy!")
-                        
-                        ButtonComponent(text: "New", size: 24, width: 160, height: 40, shape: Capsule()) {
-                            activateSheet = true
-                        }
-                        
-                        Spacer()
-                    } else {
-                        HStack {
-                            TitleComponent(title: "Notera",  weight: .bold)
-                                .onTapGesture {
-                                    sideBarIsOpened.toggle()
-                                }
-                            
+        TabView {
+            NavigationStack {
+                ZStack {
+                    Colors.backgroundColor
+                        .ignoresSafeArea()
+                    
+                    VStack {
+                        if(notebookViewModel.notebooks.isEmpty) {
                             Spacer()
                             
-                            ButtonComponent(text: "New", size: 16, width: 80, height: 32, shape: Capsule()) {
+                            TitleComponent(title: "Notera", weight: .bold)
+                            
+                            TextComponent(text: "Get started with a new notebook\n It's quick and easy!")
+                            
+                            ButtonComponent(text: "New", size: 24, width: 160, height: 40, shape: Capsule()) {
                                 activateSheet = true
                             }
-                        }
-                        .padding()
-                        .background(Colors.toolbarColor)
-                        
-                        loadNotebooks()
-                        
-                        TitleComponent(title: "Recent entries", weight: .bold, size: 20)
                             
-                        if(diaryContentViewModel.recentEntries.isEmpty) {
-                            TextComponent(text: "You haven't written anything yet\n Fill it with something great!")
-                                .padding()
+                            Spacer()
                         } else {
-                            loadDiaryCards()
+                            HStack {
+                                TitleComponent(title: "Notera",  weight: .bold)
+                                    .onTapGesture {
+                                        sideBarIsOpened.toggle()
+                                    }
+                                
+                                Spacer()
+                                
+                                ButtonComponent(text: "New", size: 16, width: 80, height: 32, shape: Capsule()) {
+                                    activateSheet = true
+                                }
+                            }
+                            .padding()
+                            .background(Colors.toolbarColor)
+                            
+                            loadNotebooks()
+                            
+                            TitleComponent(title: "Recent entries", weight: .bold, size: 20)
+                                
+                            if(diaryContentViewModel.recentEntries.isEmpty) {
+                                TextComponent(text: "You haven't written anything yet\n Fill it with something great!")
+                                    .padding()
+                            } else {
+                                loadDiaryCards()
+                            }
+                            
+                            Spacer()
                         }
-                        
-                        Spacer()
                     }
+                    
+                    SideBarMenuView(sidebarIsOpened: $sideBarIsOpened)
+
                 }
                 
-                SideBarMenuView(sidebarIsOpened: $sideBarIsOpened)
-
+                .sheet(isPresented: $activateSheet) {
+                    CreationNotebookView(notebookViewModel: notebookViewModel, activateSheet: $activateSheet)
+                }
+            }
+            .tabItem() {
+                Text("Notebooks")
             }
             
-            .sheet(isPresented: $activateSheet) {
-                CreationNotebookView(notebookViewModel: notebookViewModel, activateSheet: $activateSheet)
-            }
+            HumorTrackerView()
+                .tabItem() {
+                    Text("Humor Tracker")
+                }
         }
     }
 }
