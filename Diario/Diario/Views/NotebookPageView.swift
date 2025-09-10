@@ -38,6 +38,7 @@ struct NotebookPageView: View {
                 }
                 .padding()
                 .navigationBarTitleDisplayMode(.inline)
+                .toolbar(.hidden, for: .tabBar)
                 .toolbar {
                     ToolbarItem(placement: .navigationBarLeading) {
                         Button(action: {
