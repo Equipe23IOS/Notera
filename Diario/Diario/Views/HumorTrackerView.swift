@@ -45,6 +45,14 @@ struct HumorTrackerView: View {
                 .ignoresSafeArea()
             
             VStack {
+                HStack {
+                    TitleComponent(title: "Humor Tracker",  weight: .bold)
+                    
+                    Spacer()
+                }
+                .padding()
+                .background(Colors.toolbarColor)
+                
                 ScrollView {
                     TitleComponent(title: "Calendar", weight: .bold)
                     
