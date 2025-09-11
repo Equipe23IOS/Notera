@@ -66,6 +66,7 @@ struct PasswordValidationView: View {
                                             .fill(Colors.backgroundColor.opacity(0.2))
                                             .stroke(Colors.textColor, lineWidth: 2)
                                     )
+                                    .padding()
                             }
                         }
                         

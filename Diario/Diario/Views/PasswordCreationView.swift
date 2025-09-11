@@ -28,6 +28,7 @@ struct PasswordCreationView: View {
                     Group {
                         if(isSecure) {
                             TextFieldComponent(text: "Enter a password", size: 20, textFieldVariable: $password)
+                                .padding()
                         } else {
                             SecureField("Enter a password", text: $password)
                                 .textFieldStyle(.plain)
@@ -39,6 +40,7 @@ struct PasswordCreationView: View {
                                         .fill(Colors.backgroundColor.opacity(0.2))
                                         .stroke(Colors.textColor, lineWidth: 2)
                                 )
+                                .padding()
                         }
                     }
                     

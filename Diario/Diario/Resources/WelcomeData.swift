@@ -14,6 +14,7 @@ struct WelcomeData {
         PageInfo(label: "What are notebooks?", text: "You may document anything you please in notebooks, and if you feel like you need some more organization, create a new one!"),
         PageInfo(label: "Your notes\nare private", text: "Everything you write in Notera is protected and accessible only to you."),
         PageInfo(label: "Capture your emotions!", text: "Keeping track of your feelings’s also important! For that, use our Humortracking feature!"),
+        PageInfo(label: "Settings", text: "To acess the settings tab, just click at Notera after you created your first notebook!"),
         PageInfo(label: "Begin your personal journey", text: "Take the first step. Writing can transform your days ― one moment at a time.")
     ]
 }
