@@ -53,7 +53,7 @@ struct CreationNotebookView: View{
                 }
                 
                 ButtonComponent(text: "Create Notebook", size: 16, width: 160, height: 40, shape: Capsule(), action: {
-                    if(notebookName == "") {
+                    if(notebookName.trimmingCharacters(in: .whitespaces) == "") {
                         showPopupEmptyName.toggle()
                     } else if(selectedSprite == "") {
                         showPopupEmptySprite.toggle()

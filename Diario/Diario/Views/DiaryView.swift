@@ -102,9 +102,9 @@ struct Diary: View {
                             dismiss()
                         }
                     } else {
-                        if(diaryTitle == "") {
+                        if(diaryTitle.trimmingCharacters(in: .whitespaces) == "") {
                             emptyNotebookPopup.toggle()
-                        } else if(diaryEntry == "") {
+                        } else if(diaryEntry.trimmingCharacters(in: .whitespaces) == "") {
                             emptyEntryPopup.toggle()
                         } else {
                             diaryContentViewModel.createEntry(diaryTitle, diaryEntry, notebookID)
