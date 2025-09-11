@@ -82,12 +82,15 @@ struct ContentView: View {
                             Spacer()
                             
                             TitleComponent(title: "Notera", weight: .bold)
-                            
+                                .padding()
+
                             TextComponent(text: "Get started with a new notebook\n It's quick and easy!")
-                            
+                                .padding()
+
                             ButtonComponent(text: "New", size: 24, width: 160, height: 40, shape: Capsule()) {
                                 activateSheet = true
                             }
+                            .padding()
                             
                             Spacer()
                         } else {
