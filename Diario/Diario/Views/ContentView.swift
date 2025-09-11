@@ -130,12 +130,15 @@ struct ContentView: View {
                 }
             }
             .tabItem() {
+                Image(systemName: "pencil.and.scribble")
                 Text("Notebooks")
+
             }
             
             HumorTrackerView()
                 .tabItem() {
-                    Text("Humor Tracker")
+                    Image(systemName: "calendar")
+                    Text("Calendar")
                 }
         }
     }
